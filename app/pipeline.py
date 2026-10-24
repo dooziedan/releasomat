@@ -814,9 +814,11 @@ class Refresh:
     async def save_update(self, song_ids: list[str], stored_id: str | None) -> tuple[str, str]:
         """Update mode: replace the songs of the same Navidrome playlist (its ID stays)."""
         navidrome = self.services.navidrome
-        if stored_id and await navidrome.get_playlist(stored_id) is not None:
+        existing = await navidrome.get_playlist(stored_id) if stored_id else None
+        if existing is not None:
             await navidrome.replace_playlist(stored_id, song_ids)
-            return stored_id, f"Navidrome playlist updated ({songs(song_ids)})."
+            renamed = await self.rename_dated(stored_id, existing.get("name") or "")
+            return stored_id, f"Navidrome playlist updated ({songs(song_ids)}).{renamed}"
         new_id = await navidrome.create_playlist(self.title, song_ids)
         await self.comment(new_id, f"Kept up to date by Releasomat from {self.url}")
         with Session(self.engine) as session:
@@ -824,6 +826,19 @@ class Refresh:
             session.commit()
         again = " (the old one was gone)" if stored_id else ""
         return new_id, f"Navidrome playlist created{again} ({songs(song_ids)})."
+
+    async def rename_dated(self, navidrome_id: str, name: str) -> str:
+        """An older name with a date after a comma ("Weekly Exploration for rob, week of
+        2026-10-19 Mon") becomes the current, undated one, once. Any other name stays: the owner
+        may have renamed the playlist in Navidrome on purpose."""
+        if name == self.title or not name.startswith(f"{self.title}, "):
+            return ""
+        try:
+            await self.services.navidrome.update_playlist(navidrome_id, name=self.title)
+        except NavidromeError as exc:  # only the name; never worth failing for
+            log.info("Renaming Navidrome playlist %s failed: %s", navidrome_id, exc)
+            return ""
+        return f" Renamed to “{self.title}”."
 
     async def save_snapshot(self, song_ids: list[str], keep: int) -> tuple[str, str]:
         """Snapshot mode: a new Navidrome playlist named with the date. With

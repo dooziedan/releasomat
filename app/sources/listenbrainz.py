@@ -166,8 +166,9 @@ def _snapshot(data: object, url: str, series_playlist: str | None) -> PlaylistSn
     tracks = [track for item in items if (track := _track(item))]
     skipped = len(items) - len(tracks)
     require_tracks(tracks, "ListenBrainz", url)
+    title = playlist.get("title") or "ListenBrainz playlist"
     return PlaylistSnapshot(
-        title=playlist.get("title") or "ListenBrainz playlist",
+        title=without_date(title) if series_playlist else title,
         tracks=tracks,
         cover_url=next((t.cover_url for t in tracks if t.cover_url), None),
         description=html_to_text(playlist.get("annotation")),
@@ -244,6 +245,18 @@ def series_ref(user: str, series: str) -> PlaylistRef:
         kind="series",
         label=f"ListenBrainz · {SERIES[series]} for {user}",
     )
+
+
+# ListenBrainz names each "Created for you" playlist after its week or day:
+# "Weekly Exploration for rob, week of 2026-10-19 Mon", "Daily Jams for rob, 2026-10-24 Fri".
+_WHEN = re.compile(r",\s*(?:week of\s+)?\d{4}-\d{2}-\d{2}(?:\s+[A-Za-z]{3})?\s*$")
+
+
+def without_date(title: str) -> str:
+    """'Weekly Exploration for rob, week of 2026-10-19 Mon' -> 'Weekly Exploration for rob'.
+    A series always shows its newest playlist, so the date in the name would only be right for
+    one week (one day for Daily Jams)."""
+    return _WHEN.sub("", title).strip() or title
 
 
 def series_title(ref_id: str) -> str:

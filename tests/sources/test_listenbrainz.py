@@ -5,7 +5,7 @@ import pytest
 import respx
 
 from app.sources.base import PlaylistRef, SourceError
-from app.sources.listenbrainz import API, ListenBrainz, series_ref
+from app.sources.listenbrainz import API, ListenBrainz, series_ref, without_date
 
 PLAYLIST = "55f2a01f-3974-46ca-8461-a8a84886eba4"  # rob's Weekly Exploration (saved)
 REF = PlaylistRef(
@@ -71,7 +71,7 @@ async def test_series_takes_the_newest_playlist_of_its_kind_across_pages(saved, 
     assert [c.request.url.params["offset"] for c in pages.calls] == ["0", "3"]
     assert playlist.called
     assert snapshot.playlist_id == PLAYLIST
-    assert snapshot.title.startswith("Weekly Exploration for rob")
+    assert snapshot.title == "Weekly Exploration for rob"  # no week: always the newest
 
 
 @respx.mock
@@ -208,3 +208,17 @@ async def test_reads_the_token_from_the_saved_settings(engine, saved, monkeypatc
         )
         await ListenBrainz().fetch(REF)
     assert route.calls.last.request.headers["Authorization"] == f"Token {TOKEN}"
+
+
+@pytest.mark.parametrize(
+    ("title", "plain"),
+    [
+        ("Weekly Exploration for rob, week of 2026-10-19 Mon", "Weekly Exploration for rob"),
+        ("Weekly Jams for rob, week of 2026-08-17 Mon", "Weekly Jams for rob"),
+        ("Daily Jams for rob, 2026-10-24 Fri", "Daily Jams for rob"),
+        ("Top Discoveries of 2025 for rob", "Top Discoveries of 2025 for rob"),
+        ("My playlist, 2026 edition", "My playlist, 2026 edition"),
+    ],
+)
+def test_series_names_lose_their_date(title, plain):
+    assert without_date(title) == plain

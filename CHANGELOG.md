@@ -5,6 +5,12 @@ Each version's section becomes the text of its GitHub Release page.
 
 ## Unreleased
 
+### Changed
+- ListenBrainz "Created for you" playlists (Weekly Exploration, Weekly Jams, Daily Jams) are named
+  without their week or day, e.g. "Weekly Exploration for rob": they always show the newest one.
+  Navidrome playlists that still carry an old date in their name get the new name with the next
+  refresh; a name you gave a playlist in Navidrome yourself stays.
+
 ### Added
 - Follow playlists from ListenBrainz (including "Created for you": Weekly Exploration, Weekly Jams,
   Daily Jams), Apple Music, Deezer, Tidal, YouTube Music, YouTube, SoundCloud and Beatport by
