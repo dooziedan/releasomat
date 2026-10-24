@@ -1,0 +1,22 @@
+{% from "macros.html" import status_badge, error_report %}
+{% for run in runs %}
+<tr>
+  <td class="nowrap">{{ run.started_at | localtime }}</td>
+  {% if titles %}<td><a href="/playlists/{{ run.playlist_id }}">{{ titles.get(run.playlist_id, "Removed playlist") }}</a></td>{% endif %}
+  <td>{{ "Schedule" if run.trigger == "schedule" else "Refresh now" }}</td>
+  <td>
+    {{ status_badge(run.status) }}
+    {% if stop_buttons and run.status == "running" %}
+    <form class="stop run-stop" method="post" action="/runs/{{ run.id }}/stop" hx-post="/runs/{{ run.id }}/stop" hx-target="#runs" hx-swap="innerHTML" hx-disabled-elt="find button">
+      <button type="submit" class="outline secondary" title="Stop now. Downloads already saved stay; the Navidrome playlist stays as it is.">Stop</button>
+    </form>
+    {% endif %}
+  </td>
+  <td class="nowrap">{{ run.started_at | duration(run.finished_at) }}</td>
+  <td class="message">
+    {{ run.message or "" }}
+    {{ error_report(run, titles.get(run.playlist_id) if titles else None) }}
+    {% if run.log %}<details class="log"><summary class="muted">Log</summary><pre>{{ run.log }}</pre></details>{% endif %}
+  </td>
+</tr>
+{% endfor %}

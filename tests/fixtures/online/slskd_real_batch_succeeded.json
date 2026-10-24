@@ -1,0 +1,32 @@
+{
+ "id": "f732e277-ed50-4f22-90d6-365129f74cd7",
+ "username": "peer-009",
+ "direction": "Download",
+ "createdAt": "2026-10-23T15:23:31.977517Z",
+ "transfers": [
+  {
+   "batchId": "f732e277-ed50-4f22-90d6-365129f74cd7",
+   "id": "913be152-89be-46f5-bfa3-a58ebf11de07",
+   "username": "peer-009",
+   "direction": "Download",
+   "filename": "@@share\\Music\\Rendah\\Rocker _ Darkness\\01 - Rocker.flac",
+   "size": 33971848,
+   "state": "Completed, Succeeded",
+   "requestedAt": "2026-10-23T15:23:32.1207701",
+   "enqueuedAt": "2026-10-23T15:23:33.5034184",
+   "startedAt": "2026-10-23T15:23:34.04639Z",
+   "endedAt": "2026-10-23T15:23:37.6438421Z",
+   "bytesTransferred": 33971848,
+   "averageSpeed": 9443307.945642974,
+   "attempts": 1,
+   "removed": false,
+   "bytesRemaining": 0,
+   "elapsedTime": "00:00:03.5974521",
+   "percentComplete": 100,
+   "remainingTime": "00:00:00"
+  }
+ ],
+ "options": {
+  "destination": "@@share\\Music\\releasomat\\f732e277-ed50-4f22-90d6-365129f74cd7"
+ }
+}

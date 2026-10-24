@@ -1,0 +1,23 @@
+{
+ "data": [
+  {
+   "id": "1971298",
+   "type": "tracks",
+   "meta": {
+    "itemId": "a1b2c3d4-0000-4000-8000-000000000004",
+    "addedAt": "2026-10-20T08:00:00Z"
+   }
+  },
+  {
+   "id": "99999999",
+   "type": "tracks",
+   "meta": {
+    "itemId": "a1b2c3d4-0000-4000-8000-000000000005",
+    "addedAt": "2026-10-20T08:00:00Z"
+   }
+  }
+ ],
+ "links": {
+  "self": "/playlists/36ea71a8-445e-41a4-82ab-6628c581535d/relationships/items?countryCode=US&page%5Bcursor%5D=3nI1Esi"
+ }
+}

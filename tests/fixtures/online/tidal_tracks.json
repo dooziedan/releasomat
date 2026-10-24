@@ -1,0 +1,259 @@
+{
+ "data": [
+  {
+   "id": "77646169",
+   "type": "tracks",
+   "attributes": {
+    "title": "Get Lucky",
+    "version": "Radio Edit",
+    "isrc": "USQX91300108",
+    "duration": "PT4M8S",
+    "explicit": false,
+    "popularity": 0.5,
+    "bpm": 116.0,
+    "key": "FSharp",
+    "keyScale": "MINOR",
+    "accessType": "PUBLIC",
+    "mediaTags": [
+     "LOSSLESS"
+    ],
+    "externalLinks": [
+     {
+      "href": "https://tidal.com/browse/track/77646169",
+      "meta": {
+       "type": "TIDAL_SHARING"
+      }
+     }
+    ]
+   },
+   "relationships": {
+    "artists": {
+     "data": [
+      {
+       "id": "8847",
+       "type": "artists"
+      },
+      {
+       "id": "3624",
+       "type": "artists"
+      }
+     ],
+     "links": {
+      "self": "/tracks/77646169/relationships/artists?countryCode=US"
+     }
+    },
+    "albums": {
+     "data": [
+      {
+       "id": "77646164",
+       "type": "albums"
+      }
+     ],
+     "links": {
+      "self": "/tracks/77646169/relationships/albums?countryCode=US"
+     }
+    }
+   }
+  },
+  {
+   "id": "1971298",
+   "type": "tracks",
+   "attributes": {
+    "title": "Windowlicker",
+    "version": null,
+    "isrc": "GBBPW9900014",
+    "duration": "PT6M7S",
+    "explicit": false,
+    "popularity": 0.5,
+    "bpm": 126.0,
+    "key": "UNKNOWN",
+    "keyScale": "UNKNOWN",
+    "accessType": "PUBLIC",
+    "mediaTags": [
+     "LOSSLESS"
+    ],
+    "externalLinks": [
+     {
+      "href": "https://tidal.com/browse/track/1971298",
+      "meta": {
+       "type": "TIDAL_SHARING"
+      }
+     }
+    ]
+   },
+   "relationships": {
+    "artists": {
+     "data": [
+      {
+       "id": "3958",
+       "type": "artists"
+      }
+     ],
+     "links": {
+      "self": "/tracks/1971298/relationships/artists?countryCode=US"
+     }
+    },
+    "albums": {
+     "data": [
+      {
+       "id": "1971293",
+       "type": "albums"
+      }
+     ],
+     "links": {
+      "self": "/tracks/1971298/relationships/albums?countryCode=US"
+     }
+    }
+   }
+  },
+  {
+   "id": "457581771",
+   "type": "tracks",
+   "attributes": {
+    "title": "Children",
+    "version": "Dream Version",
+    "isrc": "ITB009500080",
+    "duration": "PT7M3S",
+    "explicit": false,
+    "popularity": 0.5,
+    "bpm": 137.5,
+    "key": "Ab",
+    "keyScale": "MINOR",
+    "accessType": "PUBLIC",
+    "mediaTags": [
+     "LOSSLESS"
+    ],
+    "externalLinks": [
+     {
+      "href": "https://tidal.com/browse/track/457581771",
+      "meta": {
+       "type": "TIDAL_SHARING"
+      }
+     }
+    ]
+   },
+   "relationships": {
+    "artists": {
+     "data": [
+      {
+       "id": "19396",
+       "type": "artists"
+      }
+     ],
+     "links": {
+      "self": "/tracks/457581771/relationships/artists?countryCode=US"
+     }
+    },
+    "albums": {
+     "data": [
+      {
+       "id": "457581770",
+       "type": "albums"
+      }
+     ],
+     "links": {
+      "self": "/tracks/457581771/relationships/albums?countryCode=US"
+     }
+    }
+   }
+  }
+ ],
+ "included": [
+  {
+   "id": "8847",
+   "type": "artists",
+   "attributes": {
+    "name": "Daft Punk",
+    "popularity": 0.6,
+    "externalLinks": []
+   }
+  },
+  {
+   "id": "3624",
+   "type": "artists",
+   "attributes": {
+    "name": "Pharrell Williams",
+    "popularity": 0.6,
+    "externalLinks": []
+   }
+  },
+  {
+   "id": "3958",
+   "type": "artists",
+   "attributes": {
+    "name": "Aphex Twin",
+    "popularity": 0.6,
+    "externalLinks": []
+   }
+  },
+  {
+   "id": "19396",
+   "type": "artists",
+   "attributes": {
+    "name": "Robert Miles",
+    "popularity": 0.6,
+    "externalLinks": []
+   }
+  },
+  {
+   "id": "77646164",
+   "type": "albums",
+   "attributes": {
+    "title": "Get Lucky",
+    "barcodeId": "0000000000000",
+    "numberOfVolumes": 1,
+    "numberOfItems": 10,
+    "duration": "PT40M",
+    "explicit": false,
+    "releaseDate": "2013-05-17",
+    "popularity": 0.7,
+    "mediaTags": [
+     "LOSSLESS"
+    ],
+    "type": "ALBUM",
+    "externalLinks": []
+   }
+  },
+  {
+   "id": "1971293",
+   "type": "albums",
+   "attributes": {
+    "title": "Windowlicker",
+    "barcodeId": "0000000000000",
+    "numberOfVolumes": 1,
+    "numberOfItems": 10,
+    "duration": "PT40M",
+    "explicit": false,
+    "releaseDate": "2013-05-17",
+    "popularity": 0.7,
+    "mediaTags": [
+     "LOSSLESS"
+    ],
+    "type": "ALBUM",
+    "externalLinks": []
+   }
+  },
+  {
+   "id": "457581770",
+   "type": "albums",
+   "attributes": {
+    "title": "Dreamland",
+    "barcodeId": "0000000000000",
+    "numberOfVolumes": 1,
+    "numberOfItems": 10,
+    "duration": "PT40M",
+    "explicit": false,
+    "releaseDate": "2013-05-17",
+    "popularity": 0.7,
+    "mediaTags": [
+     "LOSSLESS"
+    ],
+    "type": "ALBUM",
+    "externalLinks": []
+   }
+  }
+ ],
+ "links": {
+  "self": "/tracks?countryCode=US&filter%5Bid%5D=457581771&filter%5Bid%5D=77646169&filter%5Bid%5D=1971298&filter%5Bid%5D=99999999&include=artists&include=albums"
+ }
+}

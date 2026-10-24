@@ -1,0 +1,45 @@
+{% from "macros.html" import status_badge, cover %}
+{% if rows %}
+<article>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Playlist</th>
+          <th scope="col">Tracks</th>
+          <th scope="col">Schedule</th>
+          <th scope="col">Next refresh</th>
+          <th scope="col">Last refresh</th>
+          <th scope="col"><span class="visually-hidden">Actions</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}{% set p = row.playlist %}{% set c = row.counts %}
+        <tr>
+          <td>
+            <div class="playlist-cell">
+              {{ cover(p) }}
+              <div><a href="/playlists/{{ p.id }}">{{ p.title }}</a><small>{{ source_label(p.source) }}{% if p.kind == "series" %} · series{% endif %}</small></div>
+            </div>
+          </td>
+          <td class="counts">
+            {% if c.total %}{{ c.total }}<small>{{ c.in_library }} in library · {{ c.downloaded }} downloaded · {{ c.missing }} missing · {{ c.failed }} failed</small>
+            {% else %}<span class="muted">–</span>{% endif %}
+          </td>
+          <td>{% if p.enabled %}{{ describe_schedule(p.schedule) }}{% else %}<span class="muted">Paused</span>{% endif %}</td>
+          <td class="nowrap">{{ p.next_refresh_at | localtime or "–" }}</td>
+          <td>{{ status_badge(row.state or p.last_status) }}{% if p.last_refresh_at %}<small>{{ p.last_refresh_at | localtime }}</small>{% endif %}</td>
+          <td>{% with playlist_id=p.id, state=row.state %}{% include "partials/refresh_button.html" %}{% endwith %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</article>
+{% else %}
+<article class="empty">
+  <strong>No playlists yet</strong>
+  Add one by pasting a link from ListenBrainz, Apple Music, Deezer, Tidal, YouTube (Music), SoundCloud or Beatport.
+  <p><a href="/playlists/new" role="button" class="outline">Add playlist</a></p>
+</article>
+{% endif %}

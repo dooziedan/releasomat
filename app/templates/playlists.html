@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Playlists{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Playlists</h1>
+    <p class="muted">Playlists Releasomat follows and keeps in sync with Navidrome.</p>
+  </div>
+  <a href="/playlists/new" role="button">Add playlist</a>
+</div>
+{% if request.query_params.get("removed") %}<p class="notice">The playlist was removed. Its downloaded files stay where they are.</p>{% endif %}
+{# Reloaded live when a refresh starts or ends (Server-Sent Events from /api/events). #}
+<div hx-ext="sse" sse-connect="/api/events">
+  <div id="playlist-list" hx-get="/partials/playlists" hx-trigger="sse:run delay:500ms">
+    {% include "partials/playlist_rows.html" %}
+  </div>
+</div>
+{% endblock %}

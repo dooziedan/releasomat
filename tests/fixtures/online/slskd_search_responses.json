@@ -1,0 +1,266 @@
+[
+  {
+    "fileCount": 2,
+    "files": [
+      {
+        "bitDepth": 16,
+        "bitRate": null,
+        "code": 1,
+        "extension": "flac",
+        "filename": "@@hoard\\Music\\Daft Punk\\Random Access Memories (2013) [FLAC]\\08 - Get Lucky (feat. Pharrell Williams & Nile Rodgers).flac",
+        "isVariableBitRate": null,
+        "length": 369,
+        "sampleRate": 44100,
+        "size": 41234567,
+        "isLocked": false
+      },
+      {
+        "bitDepth": 16,
+        "bitRate": null,
+        "code": 1,
+        "extension": "flac",
+        "filename": "@@hoard\\Music\\Daft Punk\\Random Access Memories (2013) [FLAC]\\07 - Lose Yourself to Dance.flac",
+        "isVariableBitRate": null,
+        "length": 353,
+        "sampleRate": 44100,
+        "size": 39876543,
+        "isLocked": false
+      }
+    ],
+    "hasFreeUploadSlot": true,
+    "lockedFileCount": 0,
+    "lockedFiles": [],
+    "queueLength": 0,
+    "token": 1347,
+    "uploadSpeed": 5242880,
+    "username": "flac_hoarder"
+  },
+  {
+    "fileCount": 1,
+    "files": [
+      {
+        "bitDepth": null,
+        "bitRate": 320,
+        "code": 1,
+        "extension": "",
+        "filename": "@@mp3\\Electronic\\Daft Punk - Random Access Memories\\08. Daft Punk - Get Lucky.mp3",
+        "isVariableBitRate": false,
+        "length": 369,
+        "sampleRate": 44100,
+        "size": 14782000,
+        "isLocked": false
+      }
+    ],
+    "hasFreeUploadSlot": true,
+    "lockedFileCount": 0,
+    "lockedFiles": [],
+    "queueLength": 2,
+    "token": 1347,
+    "uploadSpeed": 2000000,
+    "username": "mp3_collector"
+  },
+  {
+    "fileCount": 1,
+    "files": [
+      {
+        "bitDepth": 24,
+        "bitRate": null,
+        "code": 1,
+        "extension": "flac",
+        "filename": "@@vault\\Hi-Res\\Daft Punk - Random Access Memories (2013) [24-88]\\08 Get Lucky.flac",
+        "isVariableBitRate": null,
+        "length": 369,
+        "sampleRate": 88200,
+        "size": 92345678,
+        "isLocked": false
+      }
+    ],
+    "hasFreeUploadSlot": false,
+    "lockedFileCount": 0,
+    "lockedFiles": [],
+    "queueLength": 31,
+    "token": 1347,
+    "uploadSpeed": 800000,
+    "username": "hires_vault"
+  },
+  {
+    "fileCount": 2,
+    "files": [
+      {
+        "bitDepth": null,
+        "bitRate": 128,
+        "code": 1,
+        "extension": "mp3",
+        "filename": "@@rips\\Radio\\Daft Punk - Get Lucky (Radio Edit).mp3",
+        "isVariableBitRate": false,
+        "length": 248,
+        "sampleRate": 44100,
+        "size": 3968000,
+        "isLocked": false
+      },
+      {
+        "bitDepth": null,
+        "bitRate": 128,
+        "code": 1,
+        "extension": "mp3",
+        "filename": "@@rips\\Radio\\Daft Punk - Get Lucky.mp3",
+        "isVariableBitRate": false,
+        "length": 368,
+        "sampleRate": 44100,
+        "size": 5888000,
+        "isLocked": false
+      }
+    ],
+    "hasFreeUploadSlot": true,
+    "lockedFileCount": 0,
+    "lockedFiles": [],
+    "queueLength": 0,
+    "token": 1347,
+    "uploadSpeed": 600000,
+    "username": "radio_rips"
+  },
+  {
+    "fileCount": 1,
+    "files": [
+      {
+        "bitDepth": 16,
+        "bitRate": null,
+        "code": 1,
+        "extension": "flac",
+        "filename": "@@boot\\Daft Punk - Alive 2017\\04 Get Lucky (Live).flac",
+        "isVariableBitRate": null,
+        "length": 372,
+        "sampleRate": 44100,
+        "size": 42000000,
+        "isLocked": false
+      }
+    ],
+    "hasFreeUploadSlot": true,
+    "lockedFileCount": 0,
+    "lockedFiles": [],
+    "queueLength": 0,
+    "token": 1347,
+    "uploadSpeed": 3000000,
+    "username": "live_bootlegs"
+  },
+  {
+    "fileCount": 1,
+    "files": [
+      {
+        "bitDepth": null,
+        "bitRate": 256,
+        "code": 1,
+        "extension": "m4a",
+        "filename": "@@it\\iTunes Media\\Music\\Daft Punk\\Random Access Memories\\08 Get Lucky.m4a",
+        "isVariableBitRate": null,
+        "length": 369,
+        "sampleRate": 44100,
+        "size": 11812000,
+        "isLocked": false
+      }
+    ],
+    "hasFreeUploadSlot": true,
+    "lockedFileCount": 0,
+    "lockedFiles": [],
+    "queueLength": 0,
+    "token": 1347,
+    "uploadSpeed": 4000000,
+    "username": "itunes_fan"
+  },
+  {
+    "fileCount": 1,
+    "files": [
+      {
+        "bitDepth": 16,
+        "bitRate": null,
+        "code": 1,
+        "extension": "flac",
+        "filename": "@@tidy\\Albums\\Random Access Memories\\08 Get Lucky.flac",
+        "isVariableBitRate": null,
+        "length": 370,
+        "sampleRate": 44100,
+        "size": 41300000,
+        "isLocked": false
+      }
+    ],
+    "hasFreeUploadSlot": true,
+    "lockedFileCount": 0,
+    "lockedFiles": [],
+    "queueLength": 5,
+    "token": 1347,
+    "uploadSpeed": 1500000,
+    "username": "tidy_tagger"
+  },
+  {
+    "fileCount": 1,
+    "files": [
+      {
+        "bitDepth": 16,
+        "bitRate": null,
+        "code": 1,
+        "extension": "",
+        "filename": "@@dj\\Crates\\Nu Disco\\Daft Punk - Get Lucky.aif",
+        "isVariableBitRate": null,
+        "length": 369,
+        "sampleRate": 44100,
+        "size": 65100000,
+        "isLocked": false
+      }
+    ],
+    "hasFreeUploadSlot": true,
+    "lockedFileCount": 0,
+    "lockedFiles": [],
+    "queueLength": 0,
+    "token": 1347,
+    "uploadSpeed": 2500000,
+    "username": "dj_aiff"
+  },
+  {
+    "fileCount": 1,
+    "files": [
+      {
+        "bitDepth": null,
+        "bitRate": 320,
+        "code": 1,
+        "extension": "mp3",
+        "filename": "@@band\\Pop Covers 2013\\Get Lucky - Studio Band.mp3",
+        "isVariableBitRate": false,
+        "length": 365,
+        "sampleRate": 44100,
+        "size": 14700000,
+        "isLocked": false
+      }
+    ],
+    "hasFreeUploadSlot": true,
+    "lockedFileCount": 0,
+    "lockedFiles": [],
+    "queueLength": 0,
+    "token": 1347,
+    "uploadSpeed": 900000,
+    "username": "studio_band"
+  },
+  {
+    "fileCount": 0,
+    "files": [],
+    "hasFreeUploadSlot": true,
+    "lockedFileCount": 1,
+    "lockedFiles": [
+      {
+        "bitDepth": 16,
+        "bitRate": null,
+        "code": 1,
+        "extension": "flac",
+        "filename": "@@fo\\Daft Punk\\Random Access Memories (2013) [FLAC]\\08 - Get Lucky.flac",
+        "isVariableBitRate": null,
+        "length": 369,
+        "sampleRate": 44100,
+        "size": 41234000,
+        "isLocked": true
+      }
+    ],
+    "queueLength": 0,
+    "token": 1347,
+    "uploadSpeed": 1000000,
+    "username": "friends_only"
+  }
+]

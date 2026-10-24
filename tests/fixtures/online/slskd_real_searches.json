@@ -1,0 +1,3968 @@
+{
+ "_note": "Real answers of slskd 0.26.1 (recorded 2026-10-23, peer names and share paths made anonymous).",
+ "searches": {
+  "Rendah - Rocker": {
+   "track": {
+    "artist": "Rendah",
+    "title": "Rocker",
+    "album": "Rocker / Darkness",
+    "duration": 264.27
+   },
+   "responses": [
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 24,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\00-nukg\\VA - We Are Crucast 7 (2024) FLAC [16-24bit-44.1-48kHz]\\07. Rendah - Rocker.flac",
+       "length": 264,
+       "sampleRate": 44100,
+       "size": 56673362,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 22,
+     "token": 29393,
+     "uploadSpeed": 597880,
+     "username": "peer-001"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\old mixing bowl\\2025 3Q DNB\\Rendah - Rocker.mp3",
+       "length": 264,
+       "size": 10846545,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29393,
+     "uploadSpeed": 970610,
+     "username": "peer-002"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 254,
+       "code": 1,
+       "extension": "m4a",
+       "filename": "@@share\\Music\\Rendah\\Rocker _ Darkness - Single\\01 Rocker.m4a",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 8899118,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29393,
+     "uploadSpeed": 6856578,
+     "username": "peer-003"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Playlist\\TIDAL JUMP\\44 - Rendah - Rocker.flac",
+       "length": 264,
+       "sampleRate": 44100,
+       "size": 33741460,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29393,
+     "uploadSpeed": 0,
+     "username": "peer-004"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Music\\Drum & Bass\\Rendah - Rocker.mp3",
+       "length": 264,
+       "size": 10846545,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29393,
+     "uploadSpeed": 2206111,
+     "username": "peer-005"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\12\\VA-We_Are_Crucast_7--WEB-2024-MKD\\07-rendah-rocker-mkd.mp3",
+       "length": 264,
+       "size": 10703821,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\2024\\Tracks\\Rendah - Rocker.mp3",
+       "length": 264,
+       "size": 10572277,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 5305,
+     "token": 29393,
+     "uploadSpeed": 151139,
+     "username": "peer-006"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\january 2024\\january2024vol05\\Rendah - Rocker.mp3",
+       "length": 264,
+       "size": 10630665,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 7,
+     "token": 29393,
+     "uploadSpeed": 722157,
+     "username": "peer-007"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\LDS244 - DJ Service Music Archive\\18.EXTREME_JAMS_PT12_LDS244\\Rendah - Rocker.mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10627477,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29393,
+     "uploadSpeed": 4745806,
+     "username": "peer-008"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\Rendah\\Rocker _ Darkness\\01 - Rocker.flac",
+       "length": 264,
+       "sampleRate": 44100,
+       "size": 33971848,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "jpg",
+       "filename": "@@share\\Music\\Rendah\\Rocker _ Darkness\\cover.jpg",
+       "size": 723872,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29393,
+     "uploadSpeed": 10862195,
+     "username": "peer-009"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\_Drum & Bass\\Drum & Bass\\Rendah - Rocker [CRUCAST] [CRU280] [178] [4A] [2024].mp3",
+       "length": 264,
+       "size": 10960370,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 401,
+     "token": 29393,
+     "uploadSpeed": 695036,
+     "username": "peer-010"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DNB\\FDLM2024\\Rendah - Rocker (Original Mix).mp3",
+       "length": 264,
+       "size": 10574368,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 77,
+     "token": 29393,
+     "uploadSpeed": 1123885,
+     "username": "peer-011"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\2022.09\\03\\Rendah - Rocker (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10573321,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 19,
+     "token": 29393,
+     "uploadSpeed": 1156438,
+     "username": "peer-012"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 4,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\CRUCAST\\Rendah - Rocker _ Darkness (2024)\\1. Rendah - Rocker.wav",
+       "length": 264,
+       "sampleRate": 44100,
+       "size": 47271588,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\CRUCAST\\Rendah - Rocker _ Darkness (2024)\\2. Rendah - Darkness.wav",
+       "length": 289,
+       "sampleRate": 44100,
+       "size": 51749600,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\CRUCAST\\Rendah - Rocker _ Darkness (2024)\\cover.jpg",
+       "size": 653664,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\CRUCAST\\VARIOUS ARTISTS - We Are Crucast 7 (2024)\\07. Rendah - Rocker.wav",
+       "length": 264,
+       "sampleRate": 44100,
+       "size": 47048146,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 50,
+     "token": 29393,
+     "uploadSpeed": 1002552,
+     "username": "peer-013"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 3,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Crucast\\[2024-01-05] Rendah - Rocker, Darkness [CRU281]\\101. Rendah - Rocker.m4a",
+       "length": 264,
+       "sampleRate": 44100,
+       "size": 33980549,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Crucast\\[2024-01-05] Rendah - Rocker, Darkness [CRU281]\\102. Rendah - Darkness.m4a",
+       "length": 289,
+       "sampleRate": 44100,
+       "size": 40765326,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Crucast\\[2024-12-20] Various Artists - We Are Crucast 7 [CRU322]\\107. Rendah - Rocker.m4a",
+       "length": 264,
+       "sampleRate": 44100,
+       "size": 33929349,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29393,
+     "uploadSpeed": 508576,
+     "username": "peer-014"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Compilations\\2024 - New Music Releases (320)\\Rendah - Rocker.mp3",
+       "isVariableBitRate": false,
+       "length": 267,
+       "size": 10846545,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 186,
+     "token": 29393,
+     "uploadSpeed": 92366,
+     "username": "peer-015"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 1411,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\complete\\Drum and Bass\\Rendah - Rocker (Original Mix).aif",
+       "length": 264,
+       "size": 47025576,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 27,
+     "token": 29393,
+     "uploadSpeed": 2024917,
+     "username": "peer-016"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\zzzzzzzzz4\\13.01.2024 – ALL electronicfresh.com (260 TRACKS)\\Rendah - Rocker (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10691208,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\aaaaaaaaaaaa4\\Winter\\Rendah - Rocker.mp3",
+       "isVariableBitRate": false,
+       "length": 267,
+       "size": 10846545,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 19,
+     "token": 29393,
+     "uploadSpeed": 1582946,
+     "username": "peer-017"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\24_01_22\\Beatport Top 100 Downloads January 2024 New\\Rendah - Rocker (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10785806,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 140,
+     "token": 29393,
+     "uploadSpeed": 643645,
+     "username": "peer-018"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Nov 13\\2025MogulSmoker\\Rocker - Rendah.flac",
+       "length": 264,
+       "sampleRate": 44100,
+       "size": 33281318,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29393,
+     "uploadSpeed": 3531434,
+     "username": "peer-019"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\dec24\\VA-We_Are_Crucast_7--WEB-2024-MKD\\07-rendah-rocker-mkd.mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10703821,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\grabbed_to_car\\dec24\\07-rendah-rocker-mkd.mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10703821,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29393,
+     "uploadSpeed": 1713914,
+     "username": "peer-020"
+    },
+    {
+     "fileCount": 6,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Beatport\\Beatport Chart Toppers 2024 Drum n Bass\\18. Rendah - Rocker (Original Mix).flac",
+       "length": 264,
+       "sampleRate": 44100,
+       "size": 33442956,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Ny mappe\\2024 DNB Crate\\_Rendah - Rocker (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10574368,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Ny mappe (4)\\Drum-N-Bass\\Rendah - Rocker.mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10846545,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DRUM\\Drum & Bass\\Rendah - Rocker (Original Mix).aif",
+       "length": 264,
+       "sampleRate": 44100,
+       "size": 47002812,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\drum bass4\\Best Of Beatport Drum & Bass 2024 Picks 2\\Rocker - Rendah (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10577720,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\drum bass4\\Drum & Bass\\Rendah - Rocker (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 11340227,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 423,
+     "token": 29393,
+     "uploadSpeed": 3969676,
+     "username": "peer-021"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\2024\\Beatport Top 100 Downloads January 2024\\Rendah - Rocker (Original Mix) [4DJsonline.com].mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10600887,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\2024\\Beatport Top 100 Downloads January 2024\\Rendah - Rocker (Original Mix) [4DJsonline.com].mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10600887,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 41,
+     "token": 29393,
+     "uploadSpeed": 952524,
+     "username": "peer-022"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Drum & Bass\\Jump Up\\Rendah - Rocker Original Mix.mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10580819,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\music\\Unsorted\\Rendah - Rocker.mp3",
+       "isVariableBitRate": false,
+       "length": 264,
+       "size": 10848203,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 9,
+     "token": 29393,
+     "uploadSpeed": 52873,
+     "username": "peer-023"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 257,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\CRUCAST\\[2023-12-19] Rendah - Rocker (Coming Soon)\\01 Rendah - Rocker (Coming Soon).m4a",
+       "isVariableBitRate": false,
+       "length": 32,
+       "size": 1055924,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\CRUCAST\\[2023-12-19] Rendah - Rocker (Coming Soon)\\cover.jpg",
+       "size": 1455585,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 35,
+     "token": 29393,
+     "uploadSpeed": 1019672,
+     "username": "peer-024"
+    }
+   ]
+  },
+  "Basstripper - Typhoon": {
+   "track": {
+    "artist": "Basstripper",
+    "title": "Typhoon",
+    "album": "Rush / Typhoon",
+    "duration": 274.3
+   },
+   "responses": [
+    {
+     "fileCount": 6,
+     "files": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Drum & Bass\\basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\00-basstripper-rush__typhoon-(lddr108)-web-2019.jpg",
+       "size": 143316,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Drum & Bass\\basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\00-basstripper-rush__typhoon-(lddr108)-web-2019.m3u",
+       "size": 69,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Drum & Bass\\basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\00-basstripper-rush__typhoon-(lddr108)-web-2019.nfo",
+       "size": 560,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Drum & Bass\\basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\00-basstripper-rush__typhoon-(lddr108)-web-2019.sfv",
+       "size": 89,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Drum & Bass\\basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\01-basstripper-rush-f622b7ea.mp3",
+       "length": 274,
+       "size": 11130379,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Drum & Bass\\basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\02-basstripper-typhoon-23eda8d2.mp3",
+       "length": 274,
+       "size": 11130385,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 2,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\00-drum & bass\\basstripper - typhoon\\basstripper - rush.flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 32132807,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\00-drum & bass\\basstripper - typhoon\\basstripper - typhoon.flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 35812421,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 22,
+     "token": 29415,
+     "uploadSpeed": 597880,
+     "username": "peer-001"
+    },
+    {
+     "fileCount": 4,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\+unsorted singles\\FLAC\\172 - Basstripper - Typhoon.flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 35905001,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Low Down Deep Recordings [Logan D]\\[LDDR108] Basstripper - Rush # Typhoon (2019)\\01. Basstripper - Rush.flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 31550053,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Low Down Deep Recordings [Logan D]\\[LDDR108] Basstripper - Rush # Typhoon (2019)\\02. Basstripper - Typhoon.flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 35906223,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Low Down Deep Recordings [Logan D]\\[LDDR108] Basstripper - Rush # Typhoon (2019)\\cover.jpg",
+       "size": 126492,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 35,
+     "token": 29415,
+     "uploadSpeed": 1211583,
+     "username": "peer-025"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 15,
+     "lockedFiles": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\SS\\Basstripper-Rush__Typhoon-LDDR108-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.jpg",
+       "size": 143316,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\SS\\Basstripper-Rush__Typhoon-LDDR108-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.m3u",
+       "size": 69,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\SS\\Basstripper-Rush__Typhoon-LDDR108-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.nfo",
+       "size": 560,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\SS\\Basstripper-Rush__Typhoon-LDDR108-WEB-2019-ENSLAVE\\01-basstripper-rush-f622b7ea.mp3",
+       "length": 274,
+       "size": 11130379,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\SS\\Basstripper-Rush__Typhoon-LDDR108-WEB-2019-ENSLAVE\\02-basstripper-typhoon-23eda8d2.mp3",
+       "length": 274,
+       "size": 11130385,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LDD\\LDDR108 Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.jpg",
+       "size": 143316,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LDD\\LDDR108 Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.m3u",
+       "size": 69,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LDD\\LDDR108 Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.nfo",
+       "size": 560,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LDD\\LDDR108 Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.sfv",
+       "size": 89,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LDD\\LDDR108 Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\01-basstripper-rush-f622b7ea.mp3",
+       "length": 274,
+       "size": 11130379,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LDD\\LDDR108 Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\02-basstripper-typhoon-23eda8d2.mp3",
+       "length": 274,
+       "size": 11130385,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\+ MORE\\[LDDR108] Basstripper - Rush # Typhoon (2019)\\01. Basstripper - Rush.flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 31550053,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\+ MORE\\[LDDR108] Basstripper - Rush # Typhoon (2019)\\01. Basstripper - Rush.wav",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 48513810,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\+ MORE\\[LDDR108] Basstripper - Rush # Typhoon (2019)\\02. Basstripper - Typhoon.flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 35906223,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\+ MORE\\[LDDR108] Basstripper - Rush # Typhoon (2019)\\02. Basstripper - Typhoon.wav",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 48513814,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 50,
+     "token": 29415,
+     "uploadSpeed": 1002552,
+     "username": "peer-013"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\@@otalk\\songs\\02_basstripper_-_typhoon.wav",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 48386754,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29415,
+     "uploadSpeed": 0,
+     "username": "peer-026"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\HISLOTH\\dnb\\Basstripper - Typhoon.mp3",
+       "length": 274,
+       "size": 11315119,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29415,
+     "uploadSpeed": 0,
+     "username": "peer-027"
+    },
+    {
+     "fileCount": 6,
+     "files": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\alldrum\\[lddr108] basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\00-basstripper-rush__typhoon-(lddr108)-web-2019.m3u",
+       "size": 69,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\alldrum\\[lddr108] basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\00-basstripper-rush__typhoon-(lddr108)-web-2019.nfo",
+       "size": 560,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\alldrum\\[lddr108] basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\00-basstripper-rush__typhoon-(lddr108)-web-2019.sfv",
+       "size": 138,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\alldrum\\basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\00-basstripper-rush__typhoon-(lddr108)-web-2019.m3u",
+       "size": 69,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\alldrum\\basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\00-basstripper-rush__typhoon-(lddr108)-web-2019.nfo",
+       "size": 560,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\alldrum\\basstripper-rush__typhoon-(lddr108)-web-2019-enslave\\00-basstripper-rush__typhoon-(lddr108)-web-2019.sfv",
+       "size": 89,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 144,
+     "token": 29415,
+     "uploadSpeed": 1529449,
+     "username": "peer-028"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\Basstripper\\Rush + Typhoon (2019)\\Basstripper - Rush + Typhoon - 01 - Rush.flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 30946361,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\Basstripper\\Rush + Typhoon (2019)\\Basstripper - Rush + Typhoon - 02 - Typhoon.flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 35709560,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29415,
+     "uploadSpeed": 10000934,
+     "username": "peer-029"
+    },
+    {
+     "fileCount": 3,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Singles\\Basstripper - Rush & Typhoon\\01 - Rush.mp3",
+       "isVariableBitRate": false,
+       "length": 274,
+       "size": 11635301,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Singles\\Basstripper - Rush & Typhoon\\02 - Typhoon.mp3",
+       "isVariableBitRate": false,
+       "length": 274,
+       "size": 11635307,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Singles\\Basstripper - Rush & Typhoon\\cover.jpg",
+       "size": 1309854,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29415,
+     "uploadSpeed": 2823357,
+     "username": "peer-030"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Library\\Basstripper - Typhoon .mp3",
+       "isVariableBitRate": false,
+       "length": 274,
+       "size": 10986680,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29415,
+     "uploadSpeed": 3761885,
+     "username": "peer-031"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DnB\\DNB Rollers UK😮‍💨\\463 - Basstripper - Typhoon.flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 35752977,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Ny mappe\\Underground Jump Up__DnB\\303 - Basstripper - Typhoon.mp3",
+       "isVariableBitRate": false,
+       "length": 274,
+       "size": 11149911,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 473,
+     "token": 29415,
+     "uploadSpeed": 3969676,
+     "username": "peer-021"
+    },
+    {
+     "fileCount": 3,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Basstripper\\Rush _ Typhoon (2019) []\\01 Rush.mp3",
+       "isVariableBitRate": false,
+       "length": 274,
+       "size": 11635301,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Basstripper\\Rush _ Typhoon (2019) []\\02 Typhoon.mp3",
+       "isVariableBitRate": false,
+       "length": 274,
+       "size": 11635307,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "jpg",
+       "filename": "@@share\\Music\\Basstripper\\Rush _ Typhoon (2019) []\\cover.jpg",
+       "size": 1309854,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29415,
+     "uploadSpeed": 116702,
+     "username": "peer-032"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 258,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Basstripper\\[2019-11-26] Typhoon\\01 Basstripper - Typhoon.m4a",
+       "isVariableBitRate": false,
+       "length": 274,
+       "size": 8895733,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Basstripper\\[2019-11-26] Typhoon\\cover.png",
+       "size": 7726,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 35,
+     "token": 29415,
+     "uploadSpeed": 1019672,
+     "username": "peer-024"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\Single\\(2019) Rush Typhoon\\01 - Basstripper - Rush [Digital Media] [FLAC].flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 31623442,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\Single\\(2019) Rush Typhoon\\02 - Basstripper - Typhoon [Digital Media] [FLAC].flac",
+       "length": 274,
+       "sampleRate": 44100,
+       "size": 35979612,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29415,
+     "uploadSpeed": 655957,
+     "username": "peer-033"
+    },
+    {
+     "fileCount": 6,
+     "files": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LOW_DOWN_DEEP_RECORDINGS\\LOW_DOWN_DEEP_RECORDINGS-LDDR108__Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.jpg",
+       "size": 143316,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LOW_DOWN_DEEP_RECORDINGS\\LOW_DOWN_DEEP_RECORDINGS-LDDR108__Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.m3u",
+       "size": 69,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LOW_DOWN_DEEP_RECORDINGS\\LOW_DOWN_DEEP_RECORDINGS-LDDR108__Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.nfo",
+       "size": 560,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LOW_DOWN_DEEP_RECORDINGS\\LOW_DOWN_DEEP_RECORDINGS-LDDR108__Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\00-basstripper-rush__typhoon-(lddr108)-web-2019.sfv",
+       "size": 89,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LOW_DOWN_DEEP_RECORDINGS\\LOW_DOWN_DEEP_RECORDINGS-LDDR108__Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\01-basstripper-rush-f622b7ea.mp3",
+       "isVariableBitRate": false,
+       "length": 274,
+       "size": 11130379,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\LOW_DOWN_DEEP_RECORDINGS\\LOW_DOWN_DEEP_RECORDINGS-LDDR108__Basstripper-Rush__Typhoon-(LDDR108)-WEB-2019-ENSLAVE\\02-basstripper-typhoon-23eda8d2.mp3",
+       "isVariableBitRate": false,
+       "length": 274,
+       "size": 11130385,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 10739,
+     "token": 29415,
+     "uploadSpeed": 30006,
+     "username": "peer-034"
+    }
+   ]
+  },
+  "Delta Heavy - Vandal": {
+   "track": {
+    "artist": "Delta Heavy",
+    "title": "Vandal",
+    "album": "Vandal",
+    "duration": 161.379
+   },
+   "responses": [
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\@@otalk\\songs\\01. Delta Heavy - Vandal-MKD.wav",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 28467494,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 0,
+     "username": "peer-026"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 24,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\Delta Heavy - Vandal - 01 - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 36329299,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 7060132,
+     "username": "peer-035"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 2304,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\MIXES\\Delta Heavy - Shambhala 2025_ Delta Heavy at the Village Stage (DJ Mix) (2025)\\05. Vandal (Mixed).m4a",
+       "length": 65,
+       "size": 16530520,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 12,
+     "token": 29453,
+     "uploadSpeed": 1346272,
+     "username": "peer-036"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\[DOWNLOAD]\\VA - 2025 - Bass Box (2025-08-29) FLAC\\Delta Heavy  - Vandal.wav",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 28467356,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 1450501,
+     "username": "peer-037"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\complete\\Beatport - Top Streamed Tracks 2026 Drum & Bass\\4A - 87 - Vandal - Delta Heavy (Original Mix) 166.mp3",
+       "length": 161,
+       "size": 6811006,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 41,
+     "token": 29453,
+     "uploadSpeed": 0,
+     "username": "peer-038"
+    },
+    {
+     "fileCount": 7,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Beatport\\Beatport Top 100 2025-09 September 2025\\Delta Heavy - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 21853353,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Beatport Top Streamed Tracks 2025\\BP Top Streamed Tracks 2025 Drum & Bass\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6524911,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Delta Heavy\\Delta Heavy - Vandal\\Delta Heavy - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 22033084,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Delta Heavy\\Delta Heavy - Vandal\\cover.jpg",
+       "size": 174638,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Jungle N' DNB\\BP Top Streamed Tracks 2025 Drum & Bass\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6524911,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Jungle N' DNB\\Beatport - Top Streamed Tracks 2026 Drum & Bass\\Vandal - Delta Heavy (Original Mix) 166.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6813830,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Nicotine++\\wav\\Delta Heavy - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 22033084,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 452,
+     "token": 29453,
+     "uploadSpeed": 3969676,
+     "username": "peer-021"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\2026-03-03\\BP Top Streamed Tracks 2025 Drum & Bass\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6524911,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 1049,
+     "token": 29453,
+     "uploadSpeed": 5526237,
+     "username": "peer-039"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Delta Heavy\\[DH012] Delta Heavy - Vandal (2025)\\01. Delta Heavy - Vandal (Original Mix).flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 23343241,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 2989603,
+     "username": "peer-040"
+    },
+    {
+     "fileCount": 4,
+     "files": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\08\\Delta_Heavy-Vandal--WEB-2025-MKD\\00-delta_heavy-vandal--web-2025-mkd.m3u",
+       "size": 31,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\08\\Delta_Heavy-Vandal--WEB-2025-MKD\\00-delta_heavy-vandal--web-2025-mkd.nfo",
+       "size": 622,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\08\\Delta_Heavy-Vandal--WEB-2025-MKD\\00-delta_heavy-vandal--web-2025-mkd.sfv",
+       "size": 114,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\08\\Delta_Heavy-Vandal--WEB-2025-MKD\\01-delta_heavy-vandal-mkd.mp3",
+       "length": 161,
+       "size": 6633955,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 5305,
+     "token": 29453,
+     "uploadSpeed": 151139,
+     "username": "peer-006"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Dnb 2025\\Delta Heavy - Vandal\\01. Delta Heavy - Vandal-MKD.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 22033084,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Dnb 2025\\Delta Heavy - Vandal\\cover.jpg",
+       "size": 174638,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 31,
+     "token": 29453,
+     "uploadSpeed": 1211583,
+     "username": "peer-025"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\september 2025\\september2025vol09\\01-delta_heavy-vandal.mp3",
+       "length": 161,
+       "size": 6473342,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 7,
+     "token": 29453,
+     "uploadSpeed": 722157,
+     "username": "peer-007"
+    },
+    {
+     "fileCount": 4,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\JP IMMERSION incomplete\\Juno Top Mainstage - Big Room  Future Rave     Bass House  - Future Bass\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6457468,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Jungle N' DNB\\BP Top Streamed Tracks 2025 Drum & Bass\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6524911,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Jungle N' DNB\\Beatport - Top Streamed Tracks 2026 Drum & Bass\\Vandal - Delta Heavy (Original Mix) 166.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6813830,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Beatport Top 100 Downloads\\Beatport New Top 100 Downloads September 2025\\63. Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6857054,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 280,
+     "token": 29453,
+     "uploadSpeed": 2698614,
+     "username": "peer-041"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\2025\\0904\\Delta Heavy - Vandal (Original Mix) Clean 4A 87.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6515869,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\2025\\0912\\Delta Heavy - Vandal (Clean) 4A 87.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6470027,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 4280534,
+     "username": "peer-042"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\4b8\\e1f\\2025 Delta Heavy - Vandal [Delta Heavy] (P).flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 21978918,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 1466029,
+     "username": "peer-043"
+    },
+    {
+     "fileCount": 4,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\Delta Heavy - Vandal - 01 - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 30895516,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "lrc",
+       "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\Delta Heavy - Vandal - 01 - Vandal.lrc",
+       "size": 1532,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "jpg",
+       "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\cover.jpg",
+       "size": 1168931,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "png",
+       "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\cover.png",
+       "size": 8997628,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 651357,
+     "username": "peer-044"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 24,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\01 - Delta Heavy - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 36329299,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 5409423,
+     "username": "peer-045"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\09-Exclusive\\Drum & Bass\\Delta Heavy - Vandal (Original Mix) [Delta Heavy].mp3",
+       "isVariableBitRate": false,
+       "length": 160,
+       "size": 6456960,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 6046,
+     "token": 29453,
+     "uploadSpeed": 64698,
+     "username": "peer-046"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\01-01 Vandal.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6898775,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 38,
+     "token": 29453,
+     "uploadSpeed": 70470,
+     "username": "peer-047"
+    },
+    {
+     "fileCount": 5,
+     "files": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DnB\\Delta_Heavy-Vandal-(DH012)-SINGLE-WEB-2025-PTC\\00-delta_heavy-vandal-(dh012)-single-web-2025-cover.jpg",
+       "size": 1192358,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DnB\\Delta_Heavy-Vandal-(DH012)-SINGLE-WEB-2025-PTC\\00-delta_heavy-vandal-(dh012)-single-web-2025.m3u",
+       "size": 26,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DnB\\Delta_Heavy-Vandal-(DH012)-SINGLE-WEB-2025-PTC\\00-delta_heavy-vandal-(dh012)-single-web-2025.nfo",
+       "size": 16834,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DnB\\Delta_Heavy-Vandal-(DH012)-SINGLE-WEB-2025-PTC\\00-delta_heavy-vandal-(dh012)-single-web-2025.sfv",
+       "size": 36,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DnB\\Delta_Heavy-Vandal-(DH012)-SINGLE-WEB-2025-PTC\\01-delta_heavy-vandal.mp3",
+       "length": 161,
+       "size": 6461692,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 10,
+     "token": 29453,
+     "uploadSpeed": 1048542,
+     "username": "peer-048"
+    },
+    {
+     "fileCount": 3,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Singles\\Vandal (2025)\\01 - Vandal.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6461692,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "nfo",
+       "filename": "@@share\\Music\\Singles\\Vandal (2025)\\album.nfo",
+       "size": 299,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "jpg",
+       "filename": "@@share\\Music\\Singles\\Vandal (2025)\\folder.jpg",
+       "size": 431086,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 3122907,
+     "username": "peer-049"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\01-01 Vandal.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6898775,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 61187,
+     "username": "peer-050"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DESCARGAS MÚSICA\\Music\\Delta Heavy - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 21853353,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DESCARGAS MÚSICA\\Music\\Delta Heavy - Vandal_639147462025291177.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 21853353,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 156,
+     "token": 29453,
+     "uploadSpeed": 763540,
+     "username": "peer-051"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Beatport\\Beatport Top 100 2025-09 September 2025\\Delta Heavy - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 21853353,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 69,
+     "token": 29453,
+     "uploadSpeed": 3677321,
+     "username": "peer-052"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\JUMP-UP\\Delta Heavy - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 22030667,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 766947,
+     "username": "peer-053"
+    },
+    {
+     "fileCount": 11,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\VA 30 AUG\\VA - Summer Hot 2025 Closing Compilation\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6544711,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\VA 02 SEP\\Beatport New Top 100 Downloads September 2025\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6544696,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\VA 02 SEP\\Beatport Top 100 Downloads September 2025 flac\\Delta Heavy - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 21991019,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\13-14\\Drum Bass  13-14 SEP\\Delta Heavy - Vandal (Original Mix) [Delta Heavy].mp3",
+       "isVariableBitRate": false,
+       "length": 160,
+       "size": 6496220,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\VA 01 JAN\\Beatport Top Streamed Tracks 2025 Drum & Bass\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6545782,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Dj Pools Music Pack [15 December 2025]\\Traxsource New Releases\\Delta Heavy - Vandal (Original Mix) 174.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6460224,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Dj Pools Music Pack [23 March 2026]\\Beatport - Top Streamed Tracks 2026 Drum & Bass\\Vandal - Delta Heavy (Original Mix) 166.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6809664,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\26\\Traxsource New Releases 26 AUG\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6544699,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\VA\\Beatport Top 100 Downloads September 2025\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6507747,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\04\\Club Killers  04 SEP\\Delta Heavy - Vandal (Original Mix) Clean 4A 87.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6549142,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\12\\The Mash Up  12 SEP\\Delta Heavy - Vandal (Clean) 4A 87.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6544777,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 62487,
+     "token": 29453,
+     "uploadSpeed": 4753,
+     "username": "peer-054"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\BEATPORT TOP STREAMED TRACKS 2025\\BP TOP STREAMED TRACKS 2025 DRUM & BASS\\DELTA HEAVY - VANDAL (ORIGINAL MIX) - 04A - 87.mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6524911,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 2980213,
+     "username": "peer-055"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 24,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Singles\\Vandal (2025)\\01. Delta Heavy - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 35947190,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Singles\\Vandal (2025)\\cover.jpg",
+       "size": 4658858,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 2867,
+     "token": 29453,
+     "uploadSpeed": 105635,
+     "username": "peer-056"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\26 March\\Beatport Top 100 2025-09 September 2025\\Delta Heavy - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 21853353,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 89,
+     "token": 29453,
+     "uploadSpeed": 2881119,
+     "username": "peer-057"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\01 - Vandal.flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 22305727,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "png",
+       "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\cover.png",
+       "size": 8997628,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 3543813,
+     "username": "peer-058"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 257,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DELTD HEDVY\\[2025-07-28] Vandal\\01 Delta Heavy - Vandal.m4a",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 5210774,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 35,
+     "token": 29453,
+     "uploadSpeed": 1019672,
+     "username": "peer-024"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DnB\\Delta Heavy - Vandal (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 161,
+       "size": 6560669,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 930218,
+     "username": "peer-059"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 24,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\Single\\(2025) Vandal\\01 - Delta Heavy - Vandal [Digital Media] [FLAC 24bit].flac",
+       "length": 161,
+       "sampleRate": 44100,
+       "size": 40500962,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29453,
+     "uploadSpeed": 655957,
+     "username": "peer-033"
+    }
+   ]
+  },
+  "Simula - Angels (Mefjus Remix)": {
+   "track": {
+    "artist": "Simula",
+    "title": "Angels (Mefjus Remix)",
+    "album": "Angels (Mefjus Remix)",
+    "duration": 183.771
+   },
+   "responses": [
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\@@quijl\\Drum n bass 1\\01-simula-angels_(mefjus_remix)-mkd.mp3",
+       "length": 183,
+       "size": 7502493,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 2954187,
+     "username": "peer-060"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 4,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Simula\\Angels(MefjusRemix)\\025E15FE_01 - Simula - Angels (Mefjus Remix).wav",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 32579954,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\PROJECTS\\SXPK ANINA\\01 - Simula - Angels (Mefjus Remix).wav",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 32579922,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\SXPK ANINA\\sxpk anina 16 bit wav\\01 - Simula - Angels (Mefjus Remix).wav",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 32576448,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\TRAKTOR\\SXPK SQUARE\\01 - Simula - Angels (Mefjus Remix).wav",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 32579964,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 0,
+     "username": "peer-004"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\downloads\\2024 de impartit in foldere\\Simula - Angels (Mefjus Remix).flac",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 24212521,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 867368,
+     "username": "peer-061"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\@@otalk\\songs\\Simula - Angels (Mefjus Remix).wav",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 32417362,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 0,
+     "username": "peer-026"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Music\\Drum & Bass\\Simula - Angels (Mefjus Remix).mp3",
+       "length": 183,
+       "size": 7355552,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 2206111,
+     "username": "peer-005"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\LDS244 - DJ Service Music Archive\\18.EXTREME_JAMS_PT13_LDS244\\Simula - Angels (Mefjus Remix).mp3",
+       "isVariableBitRate": false,
+       "length": 183,
+       "size": 7408276,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 4745806,
+     "username": "peer-008"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Songs\\Simula\\Simula - Angels (Mefjus Remix) (Clean) 127.mp3",
+       "length": 183,
+       "size": 7367298,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 6,
+     "token": 29472,
+     "uploadSpeed": 3187568,
+     "username": "peer-062"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\@@eciai\\rekordbox collection\\Simula - Angels (Mefjus Remix).mp3",
+       "length": 183,
+       "size": 7550586,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 1273051,
+     "username": "peer-063"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\MP3s\\Simula - Angels (Mefjus Remix).mp3",
+       "isVariableBitRate": false,
+       "length": 183,
+       "size": 7419611,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 1,
+     "token": 29472,
+     "uploadSpeed": 6928138,
+     "username": "peer-064"
+    },
+    {
+     "fileCount": 4,
+     "files": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\12\\Simula-Angels_(Mefjus_Remix)--WEB-2023-MKD\\00-simula-angels_(mefjus_remix)--web-2023-mkd.m3u",
+       "size": 41,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\12\\Simula-Angels_(Mefjus_Remix)--WEB-2023-MKD\\00-simula-angels_(mefjus_remix)--web-2023-mkd.nfo",
+       "size": 643,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\12\\Simula-Angels_(Mefjus_Remix)--WEB-2023-MKD\\00-simula-angels_(mefjus_remix)--web-2023-mkd.sfv",
+       "size": 134,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\12\\Simula-Angels_(Mefjus_Remix)--WEB-2023-MKD\\01-simula-angels_(mefjus_remix)-mkd.mp3",
+       "length": 183,
+       "size": 7502493,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 5306,
+     "token": 29472,
+     "uploadSpeed": 151139,
+     "username": "peer-006"
+    },
+    {
+     "fileCount": 3,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Singles\\Angels (Mefjus remix) (2023)\\01 - Angels (Mefjus remix).mp3",
+       "isVariableBitRate": false,
+       "length": 183,
+       "size": 7521391,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "nfo",
+       "filename": "@@share\\Music\\Singles\\Angels (Mefjus remix) (2023)\\album.nfo",
+       "size": 316,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "jpg",
+       "filename": "@@share\\Music\\Singles\\Angels (Mefjus remix) (2023)\\folder.jpg",
+       "size": 157591,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 3122907,
+     "username": "peer-049"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 128,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Playlists\\Drum and Bass\\Simula - Angels - Mefjus Remix.mp3",
+       "isVariableBitRate": false,
+       "length": 183,
+       "size": 2993101,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 45,
+     "token": 29472,
+     "uploadSpeed": 827283,
+     "username": "peer-065"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 1411,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\complete\\Drum and Bass\\Simula - Angels (Mefjus Remix).aif",
+       "length": 183,
+       "size": 32588376,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 27,
+     "token": 29472,
+     "uploadSpeed": 2024917,
+     "username": "peer-016"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Simula\\Angels (Mefjus remix)\\01 - Angels (Mefjus remix).mp3",
+       "isVariableBitRate": false,
+       "length": 183,
+       "size": 7397419,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 818869,
+     "username": "peer-066"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\_Drum & Bass\\Drum & Bass\\Simula - Angels (Mefjus Remix) [SIMULA AUDIO] [3617380517997] [175] [9A] [2023].mp3",
+       "length": 183,
+       "size": 7512296,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 397,
+     "token": 29472,
+     "uploadSpeed": 695036,
+     "username": "peer-010"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Dj Pools Music Pack [23 September 2025]\\Russian Pack\\Simula - Angels (Mefjus Remix) 125.mp3",
+       "isVariableBitRate": false,
+       "length": 183,
+       "size": 7704080,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\18\\The Mash Up  18 NOV\\Simula - Angels (Mefjus Remix) (Clean) 9A 116.mp3",
+       "isVariableBitRate": false,
+       "length": 183,
+       "size": 7441537,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 62498,
+     "token": 29472,
+     "uploadSpeed": 4753,
+     "username": "peer-054"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Nov 2024\\Smoker\\01-simula-angels_(mefjus_remix).flac",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 24213249,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Nov 2024\\Smoker\\Simula - Angels (Mefjus Remix).flac",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 24212521,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 3531434,
+     "username": "peer-019"
+    },
+    {
+     "fileCount": 4,
+     "files": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\dec23\\Simula-Angels_(Mefjus_Remix)--WEB-2023-MKD\\00-simula-angels_(mefjus_remix)--web-2023-mkd.m3u",
+       "size": 41,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\dec23\\Simula-Angels_(Mefjus_Remix)--WEB-2023-MKD\\00-simula-angels_(mefjus_remix)--web-2023-mkd.nfo",
+       "size": 643,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\dec23\\Simula-Angels_(Mefjus_Remix)--WEB-2023-MKD\\00-simula-angels_(mefjus_remix)--web-2023-mkd.sfv",
+       "size": 134,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\dec23\\Simula-Angels_(Mefjus_Remix)--WEB-2023-MKD\\01-simula-angels_(mefjus_remix)-mkd.mp3",
+       "isVariableBitRate": false,
+       "length": 183,
+       "size": 7502493,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 1713914,
+     "username": "peer-020"
+    },
+    {
+     "fileCount": 4,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DnB\\DnB - 2022-2023\\Simula - Angels (Mefjus Remix).mp3",
+       "isVariableBitRate": false,
+       "length": 183,
+       "size": 7961458,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DRUM\\Drum & Bass\\Simula - Angels (Mefjus Remix).aif",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 32571892,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Drum N' Bass\\Simula\\01, Simula - Angels (Mefjus Remix).flac",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 24072162,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Ny mappe\\2023 - UKF On Air, Live From A Train (ÖBB)\\39 - Simula - Angels (Mefjus Remix) (Mixed).flac",
+       "length": 65,
+       "sampleRate": 44100,
+       "size": 8649651,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 431,
+     "token": 29472,
+     "uploadSpeed": 3969676,
+     "username": "peer-021"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\00-drum & bass\\simula-angels_(mefjus_remix)\\01-simula-angels_(mefjus_remix).flac",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 24213249,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 21,
+     "token": 29472,
+     "uploadSpeed": 597880,
+     "username": "peer-001"
+    },
+    {
+     "fileCount": 5,
+     "files": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Closing Essentials 2024\\Closing Essentials 2024_ Drum & Bass\\Simula - Angels Mefjus Remix - www.electronicfresh.com.mp3",
+       "size": 8120866,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\12.2023 – ALL electronicfresh.com\\02.12.2023 – ALL electronicfresh.com (280 TRACKS)\\Simula - Angels (Mefjus Remix).mp3",
+       "size": 7961458,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Beatport - Music\\Beatport Exclusives Only Week 49 (2023)\\Simula - Angels (Mefjus Remix).mp3",
+       "size": 7397894,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\VA - MUSIC 2023 NEW\\VA - Merry Christmas Compilation Top Tracks\\Simula - Angels (Mefjus Remix).mp3",
+       "size": 7547335,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Winter 2024\\Beatport Hype Top 100 Songs & DJ Tracks February 2024\\Simula - Angels (Mefjus Remix).mp3",
+       "size": 7397894,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 355,
+     "token": 29472,
+     "uploadSpeed": 670796,
+     "username": "peer-067"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Simula\\Angels (Mefjus Remix)\\01 Angels (Mefjus Remix).aif",
+       "length": 183,
+       "sampleRate": 48000,
+       "size": 35363652,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 341999,
+     "username": "peer-068"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\JUMP-UP\\Simula - Angels (Mefjus Remix).flac",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 24205963,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 766947,
+     "username": "peer-053"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Camo & Krooked\\2023 - UKF On Air, Live From A Train (ÖBB)\\39 - Simula - Angels (Mefjus Remix) (Mixed).flac",
+       "length": 65,
+       "sampleRate": 44100,
+       "size": 8649651,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 1354393,
+     "username": "peer-069"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\music\\Unsorted\\Simula - Angels _Mefjus Remix_.mp3",
+       "isVariableBitRate": false,
+       "length": 183,
+       "size": 7550984,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 8,
+     "token": 29472,
+     "uploadSpeed": 52873,
+     "username": "peer-023"
+    },
+    {
+     "fileCount": 3,
+     "files": [
+      {
+       "bitRate": 257,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Simula\\[20231130]\\Simula - ANGELS (MEFJUS REMIX).m4a",
+       "isVariableBitRate": false,
+       "length": 46,
+       "size": 1514396,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Simula Audio\\[2023-12-01] Simula - Angels (Mefjus Remix)\\01 Simula - Angels (Mefjus Remix).flac",
+       "length": 183,
+       "sampleRate": 44100,
+       "size": 24068486,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Simula Audio\\[2023-12-01] Simula - Angels (Mefjus Remix)\\cover.jpg",
+       "size": 567742,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 35,
+     "token": 29472,
+     "uploadSpeed": 1019672,
+     "username": "peer-024"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\cha music\\DNB\\Simula - Angels (Mefjus Remix).mp3",
+       "length": 183,
+       "size": 7453028,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29472,
+     "uploadSpeed": 694373,
+     "username": "peer-070"
+    }
+   ]
+  },
+  "SOTA - Harter Street VIP": {
+   "track": {
+    "artist": "SOTA",
+    "title": "Harter Street VIP",
+    "album": "Harter Street VIP",
+    "duration": 143.448
+   },
+   "responses": [
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 2,
+     "lockedFiles": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Sota\\HarterStreetVIP\\01851237_Sota - Harter Street VIP (Original.mp3",
+       "length": 143,
+       "size": 5898031,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\SOTA\\ALL 05.10\\Sota - Harter Street VIP (Original Mix).mp3",
+       "length": 143,
+       "size": 5835318,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 0,
+     "username": "peer-004"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 2,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\00-drum & bass\\sota - harter street vip [(ela139) (single) (web) (flac) (2023)]\\01 - sota - harter street (vip).flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 20442515,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\00-drum & bass\\sota - harter street vip [(ela139) (single) (web) (flac) (2023)]\\cover.jpg",
+       "size": 41810,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 22,
+     "token": 29491,
+     "uploadSpeed": 597880,
+     "username": "peer-001"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 2,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\@@otalk\\songs\\Harter_Street_VIP__Sota_2023.wav",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 25304354,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\@@otalk\\songs\\Sota - Harter Street VIP.wav",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 25304422,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 0,
+     "username": "peer-026"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\SUPASTUFF\\DRUM N BASS\\SOTA - Harter Street VIP.mp3",
+       "length": 143,
+       "size": 5789820,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\SOTA\\Harter Street VIP\\SOTA - Harter Street VIP.mp3",
+       "length": 143,
+       "size": 5789820,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 396,
+     "token": 29491,
+     "uploadSpeed": 798209,
+     "username": "peer-071"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\2020's\\2023 - MXD BAG 12\\Sota - Harter Street VIP.mp3",
+       "length": 143,
+       "size": 5740713,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 2,
+     "token": 29491,
+     "uploadSpeed": 536910,
+     "username": "peer-072"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\RELEASED\\JUMP UP\\SOTA - HARTER STREET VIP.MP3",
+       "length": 143,
+       "size": 5796060,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 0,
+     "username": "peer-073"
+    },
+    {
+     "fileCount": 5,
+     "files": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\05\\Sota-Harter_Street_VIP-(ELA139)-SINGLE-WEB-2023-PTC\\00-sota-harter_street_vip-(ela139)-single-web-2023.m3u",
+       "size": 30,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\05\\Sota-Harter_Street_VIP-(ELA139)-SINGLE-WEB-2023-PTC\\00-sota-harter_street_vip-(ela139)-single-web-2023.nfo",
+       "size": 16837,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\05\\Sota-Harter_Street_VIP-(ELA139)-SINGLE-WEB-2023-PTC\\00-sota-harter_street_vip-(ela139)-single-web-2023.sfv",
+       "size": 40,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\05\\Sota-Harter_Street_VIP-(ELA139)-SINGLE-WEB-2023-PTC\\01-sota-harter_street_vip.mp3",
+       "length": 143,
+       "size": 5743045,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\12\\VA-Best_Of_Elevate_Records_2023-(ELA166)-WEB-2023-PTC\\09-sota-harter_street_vip.mp3",
+       "length": 143,
+       "size": 5741060,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 5307,
+     "token": 29491,
+     "uploadSpeed": 151139,
+     "username": "peer-006"
+    },
+    {
+     "fileCount": 8,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\+unsorted singles\\320\\Sota - Harter Street VIP (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 5796060,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Elevate Records [FLAC]\\Sota_-_Harter_Street_VIP-(ELA139)-WEB-FLAC-2023\\00_sota_-_harter_street_vip-(ela139)-web-flac-2023.jpg",
+       "size": 503666,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Elevate Records [FLAC]\\Sota_-_Harter_Street_VIP-(ELA139)-WEB-FLAC-2023\\00_sota_-_harter_street_vip-(ela139)-web-flac-2023.m3u",
+       "size": 34,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Elevate Records [FLAC]\\Sota_-_Harter_Street_VIP-(ELA139)-WEB-FLAC-2023\\00_sota_-_harter_street_vip-(ela139)-web-flac-2023.nfo",
+       "size": 756,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Elevate Records [FLAC]\\Sota_-_Harter_Street_VIP-(ELA139)-WEB-FLAC-2023\\00_sota_-_harter_street_vip-(ela139)-web-flac-2023.sfv",
+       "size": 85,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Elevate Records [FLAC]\\Sota_-_Harter_Street_VIP-(ELA139)-WEB-FLAC-2023\\01_sota_-_harter_street_vip.flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 20604185,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\dnb 2023\\VA-Best_Of_Elevate_Records_2023-(ELA166)-WEB-2023-PTC\\09-sota-harter_street_vip.mp3",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 5741060,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\dnb 2023\\VA_-_Best_Of_Elevate_Records_2023-(ELA166)-WEB-FLAC-2023\\09_sota_-_harter_street_(vip).flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 20589494,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 28,
+     "token": 29491,
+     "uploadSpeed": 1211583,
+     "username": "peer-025"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\[Elevate_Records]\\[ELA166][2023][Best_of_Elevate_Records_2023]\\[09][Sota][Harter_Street_VIP].mp3",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 5749183,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 1,
+     "token": 29491,
+     "uploadSpeed": 5265400,
+     "username": "peer-074"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\SOTA\\Harter Street VIP\\01 - Harter Street VIP.flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 21133723,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "jpg",
+       "filename": "@@share\\Music\\SOTA\\Harter Street VIP\\cover.jpg",
+       "size": 725044,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 10862195,
+     "username": "peer-009"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DnB\\Korsakov\\01. Sota - Harter Street VIP.flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 22201329,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 2541,
+     "token": 29491,
+     "uploadSpeed": 1152648,
+     "username": "peer-075"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\2022.09\\02\\SOTA - Harter Street VIP (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 5740668,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 26,
+     "token": 29491,
+     "uploadSpeed": 1156438,
+     "username": "peer-012"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\миксы\\2023-21\\Sota - Harter Street VIP.mp3",
+       "length": 143,
+       "size": 5757263,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 0,
+     "username": "peer-076"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 270,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Sota\\Harter Street VIP\\Sota - Harter Street VIP.mp3",
+       "isVariableBitRate": true,
+       "length": 143,
+       "size": 4993752,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 3761885,
+     "username": "peer-031"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\zzzzzzzzzz3\\VA-Best_Of_Elevate_Records_2023-(ELA166)-WEB-2023-PTC\\09-sota-harter_street_vip.mp3",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 5741060,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 33,
+     "token": 29491,
+     "uploadSpeed": 1582946,
+     "username": "peer-017"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Music\\Sort Me Sempai\\SOTA - Harter Street VIP (Original Mix).mp3",
+       "length": 143,
+       "size": 5746336,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 87,
+     "token": 29491,
+     "uploadSpeed": 749972,
+     "username": "peer-077"
+    },
+    {
+     "fileCount": 3,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\nick\\Music\\01 Sota - Harter Street VIP.mp3",
+       "isVariableBitRate": false,
+       "size": 6365436,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Music\\ELA166 - Various Artists - Best Of Elevate Records 2023\\09 Sota - Harter Street VIP.mp3",
+       "isVariableBitRate": false,
+       "size": 6392060,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\Sota\\Harter Street VIP\\01 Harter Street VIP.mp3",
+       "isVariableBitRate": false,
+       "size": 6365436,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 12,
+     "token": 29491,
+     "uploadSpeed": 3383183,
+     "username": "peer-078"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Elevate Recordings\\[ELA139] Sota - Harter Street VIP (2023)\\01. Sota - Harter Street VIP.flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 22201329,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Elevate Recordings\\[ELA166] VA - Best Of Elevate Records 2023 (2023)\\09. SOTA - Harter Street VIP.flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 20584440,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": false,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 403022,
+     "username": "peer-079"
+    },
+    {
+     "fileCount": 0,
+     "files": [],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 1,
+     "lockedFiles": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DRUM & BASS 2024\\SOTA - Harter Street VIP.flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 20599243,
+       "isLocked": false
+      }
+     ],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 766947,
+     "username": "peer-053"
+    },
+    {
+     "fileCount": 7,
+     "files": [
+      {
+       "bitDepth": 24,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Ny mappe (4)\\DnB\\sota_-_harter_street_vip.wav",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 37956868,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Ny mappe (4)\\Drum & Bass\\Sota - Harter Street VIP (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 5872814,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Ny mappe (4)\\Drum N' Bass\\Sota - Harter Street VIP (Original Mix).mp3",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 5804005,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Ny mappe (4)\\Drum-N-Bass\\Sota - Harter Street VIP [www.slider.kz].mp3",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 5741754,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Ny mappe (4)\\__RANDOM__SoulSeek_DNB\\SOTA - Harter Street VIP.flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 20471436,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 24,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\drum and bass\\DnB\\sota_-_harter_street_vip.wav",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 37956868,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 24,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Drum N' Bass\\min D&B\\sota_-_harter_street_vip.wav",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 37956868,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 410,
+     "token": 29491,
+     "uploadSpeed": 3969676,
+     "username": "peer-021"
+    },
+    {
+     "fileCount": 2,
+     "files": [
+      {
+       "bitRate": 1149,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\SOTA\\Harter Street VIP\\01 Harter Street VIP.flac",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 20599243,
+       "isLocked": false
+      },
+      {
+       "bitRate": 1536,
+       "code": 1,
+       "extension": "mp3",
+       "filename": "@@share\\Music\\TUNES\\Drum and bass\\Sota - Harter Street VIP.wav",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 27542320,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 952332,
+     "username": "peer-080"
+    },
+    {
+     "fileCount": 3,
+     "files": [
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\2023-May-05\\Sota-Harter_Street_VIP-ELA139-SINGLE-WEB-2023-PTC\\00-sota-harter_street_vip-(ela139)-single-web-2023.m3u",
+       "size": 30,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\2023-May-05\\Sota-Harter_Street_VIP-ELA139-SINGLE-WEB-2023-PTC\\00-sota-harter_street_vip-(ela139)-single-web-2023.nfo",
+       "size": 16837,
+       "isLocked": false
+      },
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\2023-May-05\\Sota-Harter_Street_VIP-ELA139-SINGLE-WEB-2023-PTC\\01-sota-harter_street_vip.mp3",
+       "isVariableBitRate": true,
+       "length": 143,
+       "size": 5737166,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 1019,
+     "token": 29491,
+     "uploadSpeed": 2683374,
+     "username": "peer-081"
+    },
+    {
+     "fileCount": 4,
+     "files": [
+      {
+       "bitRate": 257,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Elevate Records\\[2023-05-05] Harter Street VIP\\01 Sota - Harter Street VIP.m4a",
+       "isVariableBitRate": false,
+       "length": 143,
+       "size": 4649013,
+       "isLocked": false
+      },
+      {
+       "bitRate": 257,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Sota\\[2023-04-17] Harter Street VIP [CLIP]\\01 Sota - Harter Street VIP [CLIP].m4a",
+       "isVariableBitRate": false,
+       "length": 67,
+       "size": 2188195,
+       "isLocked": false
+      },
+      {
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Sota\\[2023-04-17] Harter Street VIP [CLIP]\\cover.jpg",
+       "size": 1348391,
+       "isLocked": false
+      },
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\Elevate Records\\[2023-12-08] Various Artists - Best Of Elevate Records 2023\\09 SOTA - Harter Street VIP.flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 20436077,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 35,
+     "token": 29491,
+     "uploadSpeed": 1019672,
+     "username": "peer-024"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitDepth": 16,
+       "code": 1,
+       "extension": "flac",
+       "filename": "@@share\\Music\\downloads\\Sota\\01 - Harter Street VIP.flac",
+       "length": 143,
+       "sampleRate": 44100,
+       "size": 20604185,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 1979764,
+     "username": "peer-082"
+    },
+    {
+     "fileCount": 1,
+     "files": [
+      {
+       "bitRate": 320,
+       "code": 1,
+       "extension": "",
+       "filename": "@@share\\Music\\DNB\\Sota-Harter_Street_VIP-ELA139-SINGLE-WEB-2023-PTC\\01-sota-harter_street_vip.mp3",
+       "length": 143,
+       "size": 5757606,
+       "isLocked": false
+      }
+     ],
+     "hasFreeUploadSlot": true,
+     "lockedFileCount": 0,
+     "lockedFiles": [],
+     "queueLength": 0,
+     "token": 29491,
+     "uploadSpeed": 694373,
+     "username": "peer-070"
+    }
+   ]
+  }
+ }
+}

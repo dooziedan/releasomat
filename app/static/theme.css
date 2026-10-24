@@ -1,0 +1,121 @@
+/* Releasomat colour tokens. Loaded after pico.min.css and before app.css.
+
+   A calm, neutral look with one accent colour (teal). The visual identity will be decided
+   later with the owner; until then every colour lives here, as a token, so it can change in
+   one place.
+
+   Rules (CLAUDE.md):
+   - Colours only here. app.css and the templates use var(--rm-…) and Pico's variables.
+   - Plain colour values only: no color-mix(), relative colours or other newer CSS. The owner's
+     browser didn't apply color-mix() in Tagwerk (white-on-white).
+   - Light and dark follow the system setting (prefers-color-scheme).
+   - Text on its background at least 4.5:1. */
+
+:root {
+  --rm-bg: #f6f7f6;            /* page */
+  --rm-surface: #ffffff;       /* cards, tables */
+  --rm-surface-2: #eef1f0;     /* table heads, insets, hover */
+  --rm-border: #d9dedc;
+  --rm-text: #1d2321;          /* 15.1:1 on surface */
+  --rm-text-muted: #56615d;    /* 6.3:1 on surface */
+
+  --rm-accent: #0f766e;        /* links, buttons, focus. 5.5:1 on white */
+  --rm-accent-hover: #115e59;
+  --rm-accent-soft: #dff2ee;   /* tinted backgrounds (running, detected link) */
+  --rm-on-accent: #ffffff;     /* text on accent buttons */
+  --rm-focus: rgba(15, 118, 110, 0.35);
+
+  --rm-ok: #166534;            /* done */
+  --rm-ok-bg: #dcf5e3;
+  --rm-error: #b42318;         /* failed, form errors */
+  --rm-error-bg: #fde8e6;
+  --rm-warn: #7a4f00;          /* skipped, waiting */
+  --rm-warn-bg: #fbf0d2;
+  --rm-neutral-bg: #eceeed;    /* pending, off */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --rm-bg: #111415;
+    --rm-surface: #191d1e;
+    --rm-surface-2: #222728;
+    --rm-border: #313839;
+    --rm-text: #e6ebe9;          /* 14.3:1 on surface */
+    --rm-text-muted: #9ca7a3;    /* 7.0:1 on surface */
+
+    --rm-accent: #2dd4bf;        /* 10.1:1 on surface */
+    --rm-accent-hover: #5eead4;
+    --rm-accent-soft: #133633;
+    --rm-on-accent: #04201d;
+    --rm-focus: rgba(45, 212, 191, 0.35);
+
+    --rm-ok: #86efac;
+    --rm-ok-bg: #133022;
+    --rm-error: #fca5a5;
+    --rm-error-bg: #3b1818;
+    --rm-warn: #fcd34d;
+    --rm-warn-bg: #3a2d0c;
+    --rm-neutral-bg: #262b2c;
+  }
+}
+
+/* Pico's own variables, so every Pico component follows the tokens in both modes. The selector
+   matches Pico's (light and dark) and comes later, so it wins. */
+:root:not([data-theme]) {
+  --pico-background-color: var(--rm-bg);
+  --pico-color: var(--rm-text);
+  --pico-muted-color: var(--rm-text-muted);
+  --pico-muted-border-color: var(--rm-border);
+  --pico-h1-color: var(--rm-text);
+  --pico-h2-color: var(--rm-text);
+  --pico-h3-color: var(--rm-text);
+  --pico-h4-color: var(--rm-text);
+  --pico-h5-color: var(--rm-text);
+  --pico-h6-color: var(--rm-text);
+
+  --pico-primary: var(--rm-accent);
+  --pico-primary-background: var(--rm-accent);
+  --pico-primary-border: var(--rm-accent);
+  --pico-primary-underline: var(--rm-accent);
+  --pico-primary-hover: var(--rm-accent-hover);
+  --pico-primary-hover-background: var(--rm-accent-hover);
+  --pico-primary-hover-border: var(--rm-accent-hover);
+  --pico-primary-hover-underline: var(--rm-accent-hover);
+  --pico-primary-focus: var(--rm-focus);
+  --pico-primary-inverse: var(--rm-on-accent);
+
+  --pico-secondary: var(--rm-text-muted);
+  --pico-secondary-background: var(--rm-surface-2);
+  --pico-secondary-border: var(--rm-border);
+  --pico-secondary-underline: var(--rm-text-muted);
+  --pico-secondary-hover: var(--rm-text);
+  --pico-secondary-hover-background: var(--rm-border);
+  --pico-secondary-hover-border: var(--rm-border);
+  --pico-secondary-hover-underline: var(--rm-text);
+  --pico-secondary-focus: var(--rm-focus);
+  --pico-secondary-inverse: var(--rm-text);
+
+  --pico-card-background-color: var(--rm-surface);
+  --pico-card-sectioning-background-color: var(--rm-surface-2);
+  --pico-card-border-color: var(--rm-border);
+  --pico-table-border-color: var(--rm-border);
+  --pico-table-row-stripped-background-color: var(--rm-surface-2);
+  --pico-code-background-color: var(--rm-surface-2);
+  --pico-code-color: var(--rm-text);
+
+  --pico-form-element-background-color: var(--rm-surface);
+  --pico-form-element-selected-background-color: var(--rm-surface-2);
+  --pico-form-element-border-color: var(--rm-border);
+  --pico-form-element-color: var(--rm-text);
+  --pico-form-element-placeholder-color: var(--rm-text-muted);
+  --pico-form-element-active-background-color: var(--rm-surface);
+  --pico-form-element-active-border-color: var(--rm-accent);
+  --pico-form-element-focus-color: var(--rm-focus);
+  --pico-form-element-invalid-border-color: var(--rm-error);
+  --pico-form-element-invalid-active-border-color: var(--rm-error);
+  --pico-switch-checked-background-color: var(--rm-accent);
+  --pico-dropdown-background-color: var(--rm-surface);
+  --pico-dropdown-border-color: var(--rm-border);
+  --pico-dropdown-color: var(--rm-text);
+  --pico-dropdown-hover-background-color: var(--rm-surface-2);
+}

@@ -1,0 +1,6 @@
+{
+ "scope": "",
+ "token_type": "Bearer",
+ "expires_in": 86400,
+ "access_token": "FAKE-TIDAL-ACCESS-TOKEN-0123456789abcdef"
+}

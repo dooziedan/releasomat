@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>{% block title %}Releasomat{% endblock %} · Releasomat</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='pico.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='theme.css') }}?v={{ static_version('theme.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='app.css') }}?v={{ static_version('app.css') }}">
+  <link rel="icon" href="{{ url_for('static', path='icon.svg') }}" type="image/svg+xml">
+  <script src="{{ url_for('static', path='htmx.min.js') }}" defer></script>
+  <script src="{{ url_for('static', path='sse.js') }}?v={{ static_version('sse.js') }}" defer></script>
+  <script src="{{ url_for('static', path='report.js') }}?v={{ static_version('report.js') }}" defer></script>
+</head>
+<body>
+  {% macro nav(href, label, name) %}<li><a href="{{ href }}"{% if page == name %} aria-current="page"{% endif %}>{{ label }}</a></li>{% endmacro %}
+  <header class="topbar">
+    <nav class="container" aria-label="Main menu">
+      <ul>
+        <li><a class="brand" href="/"><img src="{{ url_for('static', path='icon.svg') }}" alt="">Releasomat</a></li>
+      </ul>
+      <ul>
+        {{ nav("/", "Playlists", "playlists") }}
+        {{ nav("/playlists/new", "Add playlist", "new") }}
+        {{ nav("/activity", "Activity", "activity") }}
+        {{ nav("/settings", "Settings", "settings") }}
+        <li><a href="/docs">API</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site">
+    <div class="container">
+      <small>Releasomat v{{ version }} · <a href="{{ repository }}">Source code</a> (AGPL-3.0)</small>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,172 @@
+{
+ "owned": false,
+ "id": "PL4fGSI1pDJn6puJdseH2Rt9sMvt9E2M4i",
+ "privacy": "PUBLIC",
+ "description": "This week's ranking of the most popular songs on YouTube.",
+ "views": null,
+ "duration": "6 hours, 16 minutes",
+ "trackCount": 4,
+ "title": "Top 100 Songs Global",
+ "thumbnails": [
+  {
+   "url": "https://yt3.googleusercontent.com/BjBCAYsHjHATqZmStIL1exiaW3tcppBr2ZtwvOs_Oar0F49TplFSsm5IvTcrLciRihWBirvEYQ=s192",
+   "width": 192,
+   "height": 192
+  },
+  {
+   "url": "https://yt3.googleusercontent.com/BjBCAYsHjHATqZmStIL1exiaW3tcppBr2ZtwvOs_Oar0F49TplFSsm5IvTcrLciRihWBirvEYQ=s576",
+   "width": 576,
+   "height": 576
+  },
+  {
+   "url": "https://yt3.googleusercontent.com/BjBCAYsHjHATqZmStIL1exiaW3tcppBr2ZtwvOs_Oar0F49TplFSsm5IvTcrLciRihWBirvEYQ=s1200",
+   "width": 1200,
+   "height": 1200
+  }
+ ],
+ "author": {
+  "name": "YouTube Charts",
+  "id": "FEmusic_charts"
+ },
+ "year": "2026",
+ "related": [],
+ "tracks": [
+  {
+   "videoId": "fcnDmrtj6Sk",
+   "title": "Dai Dai",
+   "artists": [
+    {
+     "name": "Shakira",
+     "id": "UCo6JijJGA3IvIiPsawDK3Ww"
+    },
+    {
+     "name": "Burna Boy",
+     "id": "UCr61sufuLt7_eB7ak1bXHIg"
+    }
+   ],
+   "album": null,
+   "likeStatus": "INDIFFERENT",
+   "inLibrary": false,
+   "pinnedToListenAgain": false,
+   "thumbnails": [
+    {
+     "url": "https://i.ytimg.com/vi/fcnDmrtj6Sk/hqdefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCggAEOADGC0guwJIWg&rs=AMzJL3mFBjDX1AqBR7GAJFC4rNd4ZdCZGw",
+     "width": 400,
+     "height": 225
+    }
+   ],
+   "isAvailable": true,
+   "isExplicit": false,
+   "videoType": "MUSIC_VIDEO_TYPE_OMV",
+   "views": null,
+   "communityVoteStatus": null,
+   "duration": "4:01",
+   "duration_seconds": 241
+  },
+  {
+   "videoId": "xvT1jH8B9AM",
+   "title": "KALYANI (Remix)",
+   "artists": [
+    {
+     "name": "ARJN",
+     "id": "UCnLiIyZ23f4AjD0ijZ9xB0A"
+    },
+    {
+     "name": "KDS",
+     "id": "UCBUaoDclTlDUi1ar-q5V6Tg"
+    },
+    {
+     "name": "FIFTY4",
+     "id": "UCWxfZAseKwcd_GRUBqleHnw"
+    },
+    {
+     "name": "Shreya Ghoshal",
+     "id": "UCrC-7fsdTCYeaRBpwA6j-Eg"
+    }
+   ],
+   "album": null,
+   "likeStatus": "INDIFFERENT",
+   "inLibrary": false,
+   "pinnedToListenAgain": false,
+   "thumbnails": [
+    {
+     "url": "https://i.ytimg.com/vi/xvT1jH8B9AM/hqdefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCggAEOADGC0guwJIWg&rs=AMzJL3m53cWS7n2cEI7YfHWO6Y0xfDnE7A",
+     "width": 400,
+     "height": 225
+    }
+   ],
+   "isAvailable": true,
+   "isExplicit": false,
+   "videoType": "MUSIC_VIDEO_TYPE_OMV",
+   "views": null,
+   "communityVoteStatus": null,
+   "duration": "4:48",
+   "duration_seconds": 288
+  },
+  {
+   "videoId": "fRIhCiUVaKs",
+   "title": "BbY WOW",
+   "artists": [
+    {
+     "name": "KAROL G",
+     "id": "UC7n3gWRN0vQzgiOKc51aZ4w"
+    },
+    {
+     "name": "Judeline",
+     "id": null
+    },
+    {
+     "name": "rusowsky",
+     "id": "UCYcm1D23PES7WPlnOevJynA"
+    }
+   ],
+   "album": null,
+   "likeStatus": "INDIFFERENT",
+   "inLibrary": false,
+   "pinnedToListenAgain": false,
+   "thumbnails": [
+    {
+     "url": "https://i.ytimg.com/vi/fRIhCiUVaKs/hqdefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCggAEOADGC0guwJIWg&rs=AMzJL3n3_4Oo-gGLAznj0LgGPe7G-Y4t4g",
+     "width": 400,
+     "height": 225
+    }
+   ],
+   "isAvailable": true,
+   "isExplicit": false,
+   "videoType": "MUSIC_VIDEO_TYPE_OMV",
+   "views": null,
+   "communityVoteStatus": null,
+   "duration": "3:46",
+   "duration_seconds": 226
+  },
+  {
+   "videoId": "0rW7Fbm4S7g",
+   "title": "TRALALA",
+   "artists": [
+    {
+     "name": "manifest",
+     "id": "UCavTTSUSD6aYPeF-F3ND9Yg"
+    }
+   ],
+   "album": null,
+   "likeStatus": "INDIFFERENT",
+   "inLibrary": false,
+   "pinnedToListenAgain": false,
+   "thumbnails": [
+    {
+     "url": "https://i.ytimg.com/vi/0rW7Fbm4S7g/hqdefault.jpg?sqp=-oaymwEWCJADEOEBIAQqCggAEOADGC0guwJIWg&rs=AMzJL3nnV2r_prQDbcIrNLGjJtqgcjHi1A",
+     "width": 400,
+     "height": 225
+    }
+   ],
+   "isAvailable": true,
+   "isExplicit": false,
+   "videoType": "MUSIC_VIDEO_TYPE_OMV",
+   "views": null,
+   "communityVoteStatus": null,
+   "duration": "3:50",
+   "duration_seconds": 230
+  }
+ ],
+ "duration_seconds": 22611
+}

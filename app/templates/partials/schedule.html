@@ -1,0 +1,37 @@
+{# The schedule fields. Changing the preset, time or day reloads this block (htmx), so only the
+   fields that matter are shown, with the next refresh time. #}
+<fieldset id="schedule" hx-post="/partials/schedule" hx-trigger="change" hx-target="this" hx-swap="outerHTML">
+  <legend>Schedule</legend>
+  <div class="inline-fields">
+    <label>Refresh
+      <select name="schedule_preset">
+        {% for key, text in presets.items() %}<option value="{{ key }}" {% if schedule.preset == key %}selected{% endif %}>{{ text }}</option>{% endfor %}
+      </select>
+    </label>
+    {% if schedule.preset == "weekly" %}
+    <label>On
+      <select name="schedule_weekday">
+        {% for key, name in weekdays.items() %}<option value="{{ key }}" {% if schedule.weekday == key %}selected{% endif %}>{{ name }}</option>{% endfor %}
+      </select>
+    </label>
+    {% endif %}
+    {% if schedule.preset in ("daily", "weekly") %}
+    <label>At
+      <input type="time" name="schedule_time" value="{{ schedule.time }}" required>
+    </label>
+    {% endif %}
+    {% if schedule.preset == "custom" %}
+    <label>Cron expression
+      <input type="text" name="schedule_cron" value="{{ schedule.cron }}" placeholder="0 6 * * mon" autocomplete="off"
+             {% if schedule_error %}aria-invalid="true"{% endif %}
+             hx-post="/partials/schedule" hx-trigger="input changed delay:400ms" hx-target="#next-run" hx-select="#next-run" hx-swap="outerHTML">
+    </label>
+    {% endif %}
+  </div>
+  <p id="next-run" class="next-run {% if schedule_error %}field-error{% else %}muted{% endif %}" aria-live="polite">
+    {%- if schedule_error %}{{ schedule_error }}
+    {%- elif upcoming %}Next refresh: {{ upcoming | localtime }} ({{ zone }})
+    {%- else %}Refreshes only when you press Refresh now.{% endif -%}
+  </p>
+  {% if schedule.preset == "custom" %}<small class="muted">Minute, hour, day of month, month, weekday, like cron: <code>0 6 * * 1-5</code> is 06:00 on weekdays, <code>0 */6 * * *</code> every 6 hours. Weekday 0 or 7 is Sunday.</small>{% endif %}
+</fieldset>

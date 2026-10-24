@@ -1,0 +1,36 @@
+{# A "list" setting (download sources, Soulseek's formats): one row per entry with a switch and
+   ▲/▼ buttons; the switched-on entries come first, numbered in their order. A switch or a button
+   asks the server for the list again (htmx, nothing saved yet); "Save settings" saves it. Without
+   JavaScript a ▲/▼ button sends the whole form, which saves it in the new order. #}
+<fieldset id="list-{{ l.key }}" class="order-list"
+          {% if not l.locked %}hx-post="/partials/settings-list/{{ l.key }}" hx-trigger="change" hx-target="this" hx-swap="outerHTML"{% endif %}>
+  <legend class="label-row">{{ l.label }}{% if l.locked %} <span class="badge locked">set by the container</span>{% endif %}</legend>
+  {% if not l.locked %}<input type="hidden" name="shown_{{ l.key }}" value="1">{% endif %}
+  <ol class="order-rows">
+    {% for r in l.rows %}
+    <li class="order-row{% if not r.on %} off{% endif %}">
+      <span class="order-pos" aria-hidden="true">{{ r.position or "–" }}</span>
+      <div class="order-main">
+        <label for="{{ l.key }}-{{ r.name }}">
+          <input type="checkbox" role="switch" id="{{ l.key }}-{{ r.name }}" name="{{ l.key }}" value="{{ r.name }}"
+                 {% if r.on %}checked{% endif %} {% if l.locked %}disabled{% endif %}
+                 {% if r.badge or r.hint %}aria-describedby="hint-{{ l.key }}-{{ r.name }}"{% endif %}>
+          <span class="order-name">{{ r.label }}</span>
+        </label>
+        {% if r.badge or r.hint %}<small class="order-hint" id="hint-{{ l.key }}-{{ r.name }}">{% if r.badge %}<span class="badge {{ r.badge_class }}">{{ r.badge }}</span> {% endif %}{{ r.hint }}</small>{% endif %}
+      </div>
+      <div class="order-move">
+        <button type="submit" class="secondary outline" id="up-{{ l.key }}-{{ r.name }}" name="move" value="{{ l.key }}:{{ r.name }}:up"
+                hx-post="/partials/settings-list/{{ l.key }}" aria-label="Move {{ r.label }} up"
+                {% if l.locked or not r.on or r.first %}disabled{% endif %}>▲</button>
+        <button type="submit" class="secondary outline" id="down-{{ l.key }}-{{ r.name }}" name="move" value="{{ l.key }}:{{ r.name }}:down"
+                hx-post="/partials/settings-list/{{ l.key }}" aria-label="Move {{ r.label }} down"
+                {% if l.locked or not r.on or r.last %}disabled{% endif %}>▼</button>
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+  {% if l.error %}<small class="field-error">{{ l.error }}</small>{% endif %}
+  {% if l.summary %}<p class="order-summary">{{ l.summary }}</p>{% endif %}
+  {% if l.unsaved %}<p class="order-unsaved" role="status">Not saved yet: press <strong>Save settings</strong>.</p>{% endif %}
+</fieldset>

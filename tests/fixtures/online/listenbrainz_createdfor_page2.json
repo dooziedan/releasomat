@@ -1,0 +1,78 @@
+{
+ "count": 3,
+ "offset": 3,
+ "playlist_count": 46,
+ "playlists": [
+  {
+   "playlist": {
+    "annotation": "<p>The ListenBrainz Weekly Jams playlist features songs that you have listened to before, \n    arranged into a comfortable playlist that doesn't require active listening on your part.</p>\n\n    <p>Generated on Monday morning, in accordance with your timezone settings.</p>\n",
+    "creator": "listenbrainz",
+    "date": "2026-08-16T22:07:13.829812+00:00",
+    "extension": {
+     "https://musicbrainz.org/doc/jspf#playlist": {
+      "additional_metadata": {
+       "algorithm_metadata": {
+        "source_patch": "weekly-jams"
+       },
+       "expires_at": "2026-08-30T22:07:10.725719+00:00"
+      },
+      "created_for": "rob",
+      "creator": "listenbrainz",
+      "last_modified_at": "2026-08-16T22:07:13.829812+00:00",
+      "public": true
+     }
+    },
+    "identifier": "https://listenbrainz.org/playlist/97311398-1604-4bb3-8a6e-435e5e241dd2",
+    "title": "Weekly Jams for rob, week of 2026-08-17 Mon",
+    "track": []
+   }
+  },
+  {
+   "playlist": {
+    "annotation": "<p>The ListenBrainz Weekly Exploration playlist helps you discover new music! \n    It may require active listening and skips. The playlist features tracks you haven't heard before, \n    selected by a collaborative filtering algorithm.</p>\n\n    <p>Updated every Monday morning based on your timezone.</p>\n",
+    "creator": "listenbrainz",
+    "date": "2026-07-28T12:24:12.184152+00:00",
+    "extension": {
+     "https://musicbrainz.org/doc/jspf#playlist": {
+      "additional_metadata": {
+       "algorithm_metadata": {
+        "source_patch": "weekly-exploration"
+       },
+       "expires_at": "2026-08-11T12:24:12.180226+00:00"
+      },
+      "created_for": "rob",
+      "creator": "listenbrainz",
+      "last_modified_at": "2026-07-28T12:24:12.184152+00:00",
+      "public": true
+     }
+    },
+    "identifier": "https://listenbrainz.org/playlist/865982ba-7d21-48f5-81ce-893a3f341faa",
+    "title": "Weekly Exploration for rob, week of 2026-07-28 Tue",
+    "track": []
+   }
+  },
+  {
+   "playlist": {
+    "annotation": "\n            <p>\n                This playlist contains the top tracks for rob that were first listened to in 2025.\n            </p>\n            <p>\n                For more information on how this playlist is generated, please see our\n                <a href=\"https://musicbrainz.org/doc/YIM2025Playlists\">Year in Music 2025 Playlists</a> page.\n            </p>\n        ",
+    "creator": "listenbrainz",
+    "date": "2026-02-22T10:42:29.813561+00:00",
+    "extension": {
+     "https://musicbrainz.org/doc/jspf#playlist": {
+      "additional_metadata": {
+       "algorithm_metadata": {
+        "source_patch": "top-discoveries-of-2025"
+       }
+      },
+      "created_for": "rob",
+      "creator": "listenbrainz",
+      "last_modified_at": "2026-02-22T10:42:29.813561+00:00",
+      "public": true
+     }
+    },
+    "identifier": "https://listenbrainz.org/playlist/3c8f40f3-0e59-4275-8b86-8f3d3588b4d8",
+    "title": "Top Discoveries of 2025 for rob",
+    "track": []
+   }
+  }
+ ]
+}

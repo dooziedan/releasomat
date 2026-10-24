@@ -1,0 +1,73 @@
+[project]
+name = "releasomat"
+version = "0.0.1"
+description = "Self-hosted playlist downloader: turns streaming playlists into Navidrome playlists."
+readme = "README.md"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "jinja2>=3.1",
+    "pydantic-settings>=2.6",
+    # 0.0.48: datetime columns keep their time zone (UTC), see app/models.py.
+    "sqlmodel>=0.0.48",
+    "alembic>=1.14",
+    "python-multipart>=0.0.18",
+    "httpx>=0.28",
+    # Per-playlist schedules (ADR 0005). Version 4 is a rewrite with a different API.
+    "apscheduler>=3.11,<4",
+    "mutagen>=1.47",
+    # yt-dlp and ytmusicapi run as Python libraries (each download in a fresh worker process,
+    # ADR 0007). "default" adds yt-dlp-ejs (YouTube's JavaScript challenges), "deno" the Deno
+    # runtime that runs them, as a PyPI package: the same in the image and in a local venv.
+    "yt-dlp[default,deno]>=2026.10.21",
+    "ytmusicapi>=1.12",
+    "rapidfuzz>=3.10",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=1.0",
+    "respx>=0.22",
+    "ruff>=0.8",
+    "pre-commit>=4.0",
+    "playwright>=1.48",
+]
+
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.setuptools.package-data]
+app = [
+    "templates/*.html",
+    "templates/partials/*.html",
+    "static/*",
+    "migrations/*.py",
+    "migrations/*.mako",
+    "migrations/versions/*.py",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+# Async tests (the pipeline, the worker) run without an extra marker.
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+filterwarnings = [
+    # Starlette suggests another HTTP client for its TestClient; httpx works fine for now.
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]

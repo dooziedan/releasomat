@@ -1,0 +1,5 @@
+{% if ref %}
+<p class="result ok" data-source="{{ ref.source }}">✓ <strong>{{ ref.label }}</strong> <small class="muted">· ID {{ ref.id }}</small></p>
+{% elif error %}
+<p class="result error">{{ error }}</p>
+{% endif %}

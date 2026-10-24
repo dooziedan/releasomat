@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% from "macros.html" import field_error %}
+{% block title %}Add playlist{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Add playlist</h1>
+    <p class="muted">Releasomat follows the playlist and keeps a copy of it in Navidrome.</p>
+  </div>
+</div>
+
+<article>
+  <header><h2>Paste a link</h2></header>
+  <div class="source-picker">
+    <p class="muted" id="sources-intro">Links from these services work. Tap one to see what its links look like.</p>
+    <ul class="source-row" aria-labelledby="sources-intro">
+      {% for source in sources.values() %}
+      <li><button type="button" class="source-chip" data-source="{{ source.type }}"
+                  aria-expanded="false" aria-controls="example-{{ source.type }}">{{ source.label }}</button></li>
+      {% endfor %}
+    </ul>
+    {% set notes = {
+      "listenbrainz": "Or follow a “Created for you” series below.",
+      "apple_music": "Shared playlists: in Apple Music, … → Share → Copy Link.",
+      "deezer": "Short links (link.deezer.com): open them in the browser first and copy the full address.",
+      "tidal": "Needs a client ID and secret from developer.tidal.com in Settings → Tidal.",
+      "soundcloud": "Short links (on.soundcloud.com): open them in the browser first and copy the full address.",
+      "beatport": "Charts and the Top 100 / Hype 100 lists, overall or per genre.",
+    } %}
+    {% for source in sources.values() %}
+    <p class="source-example" id="example-{{ source.type }}" hidden>
+      <strong>{{ source.label }}</strong>:
+      {% for example in source.examples %}<code>{{ example }}</code>{% if not loop.last %}, {% endif %}{% endfor %}
+      {% if notes.get(source.type) %}<br><small class="muted">{{ notes[source.type] }}</small>{% endif %}
+    </p>
+    {% endfor %}
+  </div>
+  <form method="post" action="/playlists">
+    <input type="hidden" name="kind" value="playlist">
+    <label for="url">Playlist link</label>
+    <input type="text" id="url" name="url" value="{{ form.get('url', '') }}" inputmode="url"
+           placeholder="https://music.apple.com/…/playlist/…" autocomplete="off" autofocus required
+           {% if errors.get('url') %}aria-invalid="true" aria-describedby="detected"{% endif %}
+           hx-post="/partials/detect" hx-trigger="input changed delay:300ms" hx-target="#detected">
+    <div id="detected" aria-live="polite">
+      {% if errors.get('url') %}<p class="result error">{{ errors.url }}</p>{% endif %}
+    </div>
+    <button type="submit">Add playlist</button>
+  </form>
+</article>
+
+<article>
+  <header><h2>ListenBrainz “Created for you”</h2></header>
+  <p class="muted">ListenBrainz makes a new playlist of these every week or day. Releasomat follows the series and always takes the newest one.</p>
+  <form method="post" action="/playlists">
+    <input type="hidden" name="kind" value="series">
+    <div class="inline-fields">
+      <label>Series
+        <select name="listenbrainz_series" {% if errors.get('series') %}aria-invalid="true"{% endif %}>
+          {% for key, name in series.items() %}<option value="{{ key }}" {% if form.get('listenbrainz_series') == key %}selected{% endif %}>{{ name }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>ListenBrainz user
+        <input type="text" name="listenbrainz_user" value="{{ form.get('listenbrainz_user') or listenbrainz_user }}" placeholder="Your user name" autocomplete="off">
+      </label>
+    </div>
+    {{ field_error(errors, "series") }}
+    <button type="submit" class="outline">Follow series</button>
+  </form>
+</article>
+
+<style>
+  /* The row of sources on this page. Colours only through the tokens in theme.css. The
+     selectors start with .source-row so they win over Pico's button styles. */
+  .source-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0;
+    margin: 0 0 0.75rem;
+  }
+  .source-row li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .source-row button.source-chip {
+    width: auto;
+    margin: 0;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 1rem;
+    border: 1px solid var(--rm-border);
+    background: var(--rm-surface);
+    color: var(--rm-text);
+    box-shadow: none;
+  }
+  .source-row button.source-chip:hover,
+  .source-row button.source-chip[aria-expanded="true"] {
+    background: var(--rm-surface-2);
+    border-color: var(--rm-text-muted);
+    color: var(--rm-text);
+  }
+  .source-row button.source-chip:focus-visible {
+    outline: 2px solid var(--rm-accent);
+    outline-offset: 2px;
+  }
+  .source-row button.source-chip.detected {
+    background: var(--rm-accent-soft);
+    border-color: var(--rm-accent);
+    color: var(--rm-text);
+    font-weight: 700;
+  }
+  .source-row button.source-chip.detected::before {
+    content: "✓ ";
+    color: var(--rm-accent);
+  }
+  .source-example {
+    padding: 0.6rem 0.9rem;
+    border-radius: var(--pico-border-radius);
+    background: var(--rm-surface-2);
+    color: var(--rm-text);
+    overflow-wrap: anywhere;
+  }
+</style>
+<script>
+  // Tapping a source shows what its links look like. When a pasted link is recognised, the
+  // answer in #detected names its source (data-source) and that source is highlighted.
+  (function () {
+    var chips = document.querySelectorAll(".source-chip");
+
+    function showExample(chip) {
+      var open = chip.getAttribute("aria-expanded") !== "true";
+      chips.forEach(function (other) {
+        other.setAttribute("aria-expanded", "false");
+        document.getElementById(other.getAttribute("aria-controls")).hidden = true;
+      });
+      chip.setAttribute("aria-expanded", open ? "true" : "false");
+      document.getElementById(chip.getAttribute("aria-controls")).hidden = !open;
+    }
+
+    function highlightDetected() {
+      var found = document.querySelector("#detected [data-source]");
+      var source = found ? found.getAttribute("data-source") : "";
+      chips.forEach(function (chip) {
+        chip.classList.toggle("detected", chip.getAttribute("data-source") === source);
+      });
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener("click", function () { showExample(chip); });
+    });
+    document.body.addEventListener("htmx:afterSwap", function (event) {
+      if (event.target.id === "detected") highlightDetected();
+    });
+  })();
+</script>
+{% endblock %}

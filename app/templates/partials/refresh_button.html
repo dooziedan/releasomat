@@ -1,0 +1,13 @@
+{# Refresh now, and Stop while the playlist waits or refreshes. htmx swaps the whole block. #}
+<div class="refresh-controls">
+  <form class="refresh" method="post" action="/playlists/{{ playlist_id }}/refresh" hx-post="/playlists/{{ playlist_id }}/refresh" hx-target="closest .refresh-controls" hx-swap="outerHTML">
+    {% if state %}<button type="submit" class="secondary" disabled aria-busy="true">{{ status_labels[state] }}…</button>
+    {% else %}<button type="submit" class="outline">Refresh now</button>{% endif %}
+  </form>
+  {% if state in ("waiting", "running") %}
+  <form class="stop" method="post" action="/playlists/{{ playlist_id }}/stop" hx-post="/playlists/{{ playlist_id }}/stop" hx-target="closest .refresh-controls" hx-swap="outerHTML" hx-disabled-elt="find button">
+    <button type="submit" class="outline secondary" title="Stop now. Downloads already saved stay; the Navidrome playlist stays as it is.">Stop</button>
+  </form>
+  {% endif %}
+  {% if note %}<small class="muted refresh-note" role="status">{{ note }}</small>{% endif %}
+</div>

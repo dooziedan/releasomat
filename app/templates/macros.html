@@ -1,0 +1,54 @@
+{# A run's or playlist's status as a coloured label. #}
+{% macro status_badge(status) -%}
+  {%- if status -%}<span class="badge {{ status }}">{{ status_labels.get(status, status) }}</span>{%- else -%}<span class="badge">Never refreshed</span>{%- endif -%}
+{%- endmacro %}
+
+{# The cover, or the first letter of the title on a plain square. #}
+{% macro cover(playlist, size="") -%}
+  {%- if playlist.cover_url -%}<img class="cover {{ size }}" src="{{ playlist.cover_url }}" alt="" loading="lazy">
+  {%- else -%}<span class="cover {{ size }}" aria-hidden="true">{{ (playlist.title or "?")[:1] | upper }}</span>{%- endif -%}
+{%- endmacro %}
+
+{% macro field_error(errors, name) -%}
+  {%- if errors.get(name) %}<small class="field-error" id="{{ name }}-error">{{ errors[name] }}</small>{% endif -%}
+{%- endmacro %}
+
+{# A track's state on the playlist page. #}
+{% macro track_badge(status) -%}
+  <span class="badge track-{{ status }}">{{ track_labels.get(status, status) }}</span>
+{%- endmacro %}
+
+{# A run's error report: the plain message, the details on demand and a Copy report button
+   (app/static/report.js copies the hidden text; the same text is at /api/runs/<id>/report). #}
+{% macro error_report(run, playlist_title=None, show_message=True) -%}
+{% set r = run.report %}
+{% if r %}
+<div class="report">
+  {% if show_message and r.message != run.message %}<p class="report-message">{{ r.message }}</p>{% endif %}
+  <details>
+    <summary>{{ "Report" if run.status == "stopped" else "Error report" }}</summary>
+    <dl class="report-details">
+      <dt>Step</dt><dd>{{ r.step_label or r.step }}</dd>
+      {% if r.source %}<dt>Source</dt><dd>{{ r.source }}{% if r.link %} · <a href="{{ r.link }}" rel="noreferrer" target="_blank">link</a>{% endif %}</dd>{% endif %}
+      {% if r.error_type %}<dt>Error type</dt><dd><code>{{ r.error_type }}</code></dd>{% endif %}
+      {% if r.http_status %}<dt>HTTP status</dt><dd>{{ r.http_status }}</dd>{% endif %}
+      {% if r.excerpt %}<dt>Answer</dt><dd><code class="excerpt">{{ r.excerpt }}</code></dd>{% endif %}
+      {% for key, value in (r.details or {}).items() %}<dt>{{ key | replace("_", " ") | capitalize }}</dt><dd>{{ value }}</dd>{% endfor %}
+      <dt>Versions</dt><dd>Releasomat {{ r.versions.releasomat }}, yt-dlp {{ r.versions.yt_dlp }}, Deno {{ r.versions.deno }}</dd>
+      <dt>Time</dt><dd>{{ r.time }}</dd>
+    </dl>
+    {% if r.tracks %}
+    <ul class="report-tracks">
+      {% for t in r.tracks %}
+      <li><strong>#{{ t.position }} {{ t.artist }} – {{ t.title }}</strong>: {{ t.message }}
+        {% if t.tried %}<ul>{% for a in t.tried %}<li><small>{{ a.candidate or a.downloader }}: {{ a.reason }}</small></li>{% endfor %}</ul>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </details>
+  <textarea id="report-text-{{ run.id }}" class="report-text" readonly hidden>{{ report_text(r, playlist_title) }}</textarea>
+  <button type="button" class="outline secondary copy-report" data-copy="report-text-{{ run.id }}">Copy report</button>
+</div>
+{% endif %}
+{%- endmacro %}

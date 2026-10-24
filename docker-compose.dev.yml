@@ -1,0 +1,72 @@
+# Services for local development only (never for the real library). See docs/development.md.
+#
+#   scripts/dev_up.sh                                             # prepares dev/, starts Navidrome
+#   docker compose -f docker-compose.dev.yml --profile app up --build releasomat   # app in Docker
+#
+# Every folder lives under dev/ (git-ignored). Run scripts/dev_up.sh once first: it creates the
+# folders as your user. `create_host_path: false` makes Docker stop with an error instead of
+# creating missing folders as root (which you could not delete without sudo).
+
+name: releasomat-dev
+
+services:
+  # Test Navidrome with the demo library (dev/library). Login: see dev/.env.
+  navidrome:
+    image: deluan/navidrome:0.64.2
+    user: "1000:1000"
+    ports:
+      - "4533:4533"
+    environment:
+      TZ: Europe/Berlin
+      ND_LOGLEVEL: info
+      # Scan only when asked (Releasomat or the "Scan" button), like Releasomat expects:
+      ND_SCANNER_SCHEDULE: "0" # no scheduled scans
+      ND_SCANNER_WATCHERWAIT: "0" # no automatic scan when files change
+      ND_SCANNER_SCANONSTARTUP: "false"
+      # A test instance: no usage statistics, no artist info from the internet.
+      ND_ENABLEINSIGHTSCOLLECTOR: "false"
+      ND_ENABLEEXTERNALSERVICES: "false"
+    volumes:
+      - type: bind
+        source: ./dev/navidrome-data
+        target: /data
+        bind: { create_host_path: false }
+      - type: bind
+        source: ./dev/library
+        target: /music
+        read_only: true
+        bind: { create_host_path: false }
+
+  # Releasomat in Docker, the way it runs on Unraid, against the dev Navidrome.
+  releasomat:
+    build: .
+    profiles: [app]
+    ports:
+      - "8431:8430"
+    env_file:
+      # Navidrome login and the other settings from dev/.env ...
+      - path: ./dev/.env
+        required: false
+    environment:
+      # ... with the values that differ inside the container:
+      PUID: "1000"
+      PGID: "1000"
+      CONFIG_DIR: /config
+      MUSIC_DIR: /music
+      SLSKD_DOWNLOADS_DIR: /slskd
+      NAVIDROME_URL: http://navidrome:4533
+    volumes:
+      - type: bind
+        source: ./dev/config-docker
+        target: /config
+        bind: { create_host_path: false }
+      - type: bind
+        source: ./dev/library/Releasomat
+        target: /music
+        bind: { create_host_path: false }
+      - type: bind
+        source: ./dev/slskd
+        target: /slskd
+        bind: { create_host_path: false }
+    depends_on:
+      - navidrome

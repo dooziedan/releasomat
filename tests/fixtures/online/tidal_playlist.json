@@ -1,0 +1,81 @@
+{
+ "data": {
+  "id": "36ea71a8-445e-41a4-82ab-6628c581535d",
+  "type": "playlists",
+  "attributes": {
+   "name": "Electronic: Fixture Picks",
+   "description": "Fresh electronic tracks.",
+   "bounded": true,
+   "duration": "PT21M3S",
+   "numberOfItems": 6,
+   "numberOfTrackItems": 5,
+   "numberOfVideoItems": 1,
+   "externalLinks": [
+    {
+     "href": "https://tidal.com/browse/playlist/36ea71a8-445e-41a4-82ab-6628c581535d",
+     "meta": {
+      "type": "TIDAL_SHARING"
+     }
+    }
+   ],
+   "createdAt": "2024-03-01T10:00:00Z",
+   "lastModifiedAt": "2026-10-20T08:00:00Z",
+   "accessType": "PUBLIC",
+   "playlistType": "EDITORIAL",
+   "numberOfFollowers": 1234
+  },
+  "relationships": {
+   "coverArt": {
+    "data": [
+     {
+      "id": "Fb0Zr6xYw2Lq",
+      "type": "artworks"
+     }
+    ],
+    "links": {
+     "self": "/playlists/36ea71a8-445e-41a4-82ab-6628c581535d/relationships/coverArt?countryCode=US"
+    }
+   },
+   "items": {
+    "links": {
+     "self": "/playlists/36ea71a8-445e-41a4-82ab-6628c581535d/relationships/items?countryCode=US"
+    }
+   }
+  }
+ },
+ "included": [
+  {
+   "id": "Fb0Zr6xYw2Lq",
+   "type": "artworks",
+   "attributes": {
+    "mediaType": "IMAGE",
+    "files": [
+     {
+      "href": "https://resources.tidal.com/images/5f1c2b4a/9d1e/4c1d/8f6a/2b5e7c9d0a1f/2000x2000.jpg",
+      "meta": {
+       "width": 2000,
+       "height": 2000
+      }
+     },
+     {
+      "href": "https://resources.tidal.com/images/5f1c2b4a/9d1e/4c1d/8f6a/2b5e7c9d0a1f/1080x1080.jpg",
+      "meta": {
+       "width": 1080,
+       "height": 1080
+      }
+     },
+     {
+      "href": "https://resources.tidal.com/images/5f1c2b4a/9d1e/4c1d/8f6a/2b5e7c9d0a1f/480x480.jpg",
+      "meta": {
+       "width": 480,
+       "height": 480
+      }
+     }
+    ]
+   }
+  }
+ ],
+ "links": {
+  "self": "/playlists/36ea71a8-445e-41a4-82ab-6628c581535d?countryCode=US&include=coverArt"
+ }
+}

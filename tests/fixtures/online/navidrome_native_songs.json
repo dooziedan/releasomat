@@ -1,0 +1,76 @@
+[
+ {
+  "bookmarkPosition": 0,
+  "imageAbsent": true,
+  "id": "1SAbPINQ00E16hdqkuP8Dw",
+  "libraryId": 1,
+  "libraryPath": "/music",
+  "libraryName": "Music Library",
+  "folderId": "0PaqUcHgeluNkbecnaIJtv",
+  "path": "Demo/Beyoncé/I Am... Sasha Fierce/02 Halo.mp3",
+  "title": "Halo",
+  "album": "I Am... Sasha Fierce",
+  "artistId": "3iyHg6jQfKnLyo8uIPPS4u",
+  "artist": "Beyoncé",
+  "albumArtistId": "3iyHg6jQfKnLyo8uIPPS4u",
+  "albumArtist": "Beyoncé",
+  "albumId": "2Zhs2AFP0cL6AWkPgnVHrL",
+  "hasCoverArt": false,
+  "trackNumber": 2,
+  "discNumber": 0,
+  "year": 2008,
+  "date": "2008",
+  "originalYear": 0,
+  "releaseYear": 0,
+  "size": 522698,
+  "suffix": "mp3",
+  "duration": 261.14,
+  "bitRate": 16,
+  "sampleRate": 8000,
+  "channels": 1,
+  "codec": "MP3",
+  "genre": "R&B",
+  "genres": [
+   {
+    "id": "2f7aaJitwP7x2JEJpKyaLA",
+    "name": "R&B"
+   }
+  ],
+  "orderTitle": "halo",
+  "orderAlbumName": "i am... sasha fierce",
+  "orderArtistName": "beyonce",
+  "orderAlbumArtistName": "beyonce",
+  "compilation": false,
+  "lyrics": "[]",
+  "explicitStatus": "",
+  "rgAlbumGain": null,
+  "rgAlbumPeak": null,
+  "rgTrackGain": null,
+  "rgTrackPeak": null,
+  "tags": {
+   "genre": [
+    "R&B"
+   ]
+  },
+  "participants": {
+   "albumartist": [
+    {
+     "id": "3iyHg6jQfKnLyo8uIPPS4u",
+     "name": "Beyoncé",
+     "missing": false
+    }
+   ],
+   "artist": [
+    {
+     "id": "3iyHg6jQfKnLyo8uIPPS4u",
+     "name": "Beyoncé",
+     "missing": false
+    }
+   ]
+  },
+  "missing": false,
+  "birthTime": "2026-10-21T18:44:23.214552392Z",
+  "createdAt": "2026-10-21T18:48:09.104203888Z",
+  "updatedAt": "2026-10-22T18:07:02.287667039Z"
+ }
+]

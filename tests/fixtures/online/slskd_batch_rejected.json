@@ -1,0 +1,37 @@
+{
+  "searchId": null,
+  "id": "0f6b2f3e-6c55-4b8e-9d2a-5d1f1e7c9a42",
+  "username": "flac_hoarder",
+  "direction": "Download",
+  "createdAt": "2026-10-23T14:02:31.0987654Z",
+  "transfers": [
+    {
+      "batchId": "0f6b2f3e-6c55-4b8e-9d2a-5d1f1e7c9a42",
+      "id": "8d7e3c1a-2b4f-4e6d-9a8b-7c6d5e4f3a21",
+      "username": "flac_hoarder",
+      "direction": "Download",
+      "filename": "@@hoard\\Music\\Daft Punk\\Random Access Memories (2013) [FLAC]\\08 - Get Lucky (feat. Pharrell Williams & Nile Rodgers).flac",
+      "size": 41234567,
+      "state": "Completed, Rejected",
+      "requestedAt": "2026-10-23T14:02:31.1234567Z",
+      "enqueuedAt": null,
+      "startedAt": null,
+      "endedAt": "2026-10-23T14:02:32.0123456Z",
+      "bytesTransferred": 0,
+      "averageSpeed": 0,
+      "placeInQueue": null,
+      "exception": "File not shared.",
+      "attempts": 0,
+      "nextAttemptAt": null,
+      "removed": false,
+      "bytesRemaining": 41234567,
+      "elapsedTime": null,
+      "percentComplete": 0,
+      "remainingTime": null
+    }
+  ],
+  "options": {
+    "destination": "releasomat/0f6b2f3e-6c55-4b8e-9d2a-5d1f1e7c9a42",
+    "externalId": null
+  }
+}

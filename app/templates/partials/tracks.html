@@ -1,0 +1,39 @@
+{% from "macros.html" import track_badge %}
+{# The tracks table of a playlist page: reloaded live while a refresh changes the tracks. #}
+<article>
+  <header><h2>Tracks</h2></header>
+  {% if tracks %}
+  <div class="table-wrap">
+    <table class="tracks">
+      <thead><tr><th scope="col">#</th><th scope="col">Track</th><th scope="col">Length</th><th scope="col">Status</th><th scope="col">Where from</th></tr></thead>
+      <tbody>
+        {% for t in tracks %}
+        <tr>
+          <td>{{ t.position }}</td>
+          <td>{{ t.title }}<small>{{ t.artist }}{% if t.album %} · {{ t.album }}{% endif %}</small></td>
+          <td class="nowrap">{{ t.duration | clock }}</td>
+          <td class="nowrap">{{ track_badge(t.status) }}</td>
+          <td class="track-source">
+            {% if t.status == "in_library" %}
+              Your library{% if t.matched_by %}<small>{{ matched_by.get(t.matched_by, t.matched_by) }}</small>{% endif %}
+            {% elif t.status == "done" %}
+              {{ "YouTube" if t.downloader == "youtube" else (t.downloader or "") }}{% if t.format %} · {{ t.format }}{% if t.bitrate %} {{ t.bitrate }} kbit/s{% endif %}{% endif %}
+              {% if t.origin %}<small><a href="{{ t.origin }}" rel="noreferrer" target="_blank">source</a>{% if not t.navidrome_song_id %} · not in Navidrome yet{% endif %}</small>{% endif %}
+            {% endif %}
+            {% if t.error and t.status != "done" %}
+            <details class="track-error">
+              <summary title="{{ t.error }}">Why?</summary>
+              <p>{{ t.error }}</p>
+              {% if t.tried %}<ul>{% for a in t.tried %}<li><small>{{ a.candidate or a.downloader }}: {{ a.reason }}</small></li>{% endfor %}</ul>{% endif %}
+            </details>
+            {% elif t.error %}<small>{{ t.error }}</small>{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="empty"><strong>No tracks yet</strong>Press Refresh now: the tracks show up here after the first refresh.</p>
+  {% endif %}
+</article>

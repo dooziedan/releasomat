@@ -1,0 +1,45 @@
+{
+  "version": {
+    "full": "0.26.1.0+b1f4ad0e",
+    "current": "0.26.1",
+    "latest": "0.26.1",
+    "isUpdateAvailable": false,
+    "isCanary": false,
+    "isDevelopment": false
+  },
+  "pendingReconnect": false,
+  "pendingRestart": false,
+  "server": {
+    "address": "vps.slsknet.org:2271",
+    "ipEndPoint": "192.0.2.10:2271",
+    "state": "Connected, LoggedIn",
+    "isConnected": true,
+    "isConnecting": false,
+    "isLoggedIn": true,
+    "isLoggingIn": false,
+    "isTransitioning": false
+  },
+  "connectionWatchdog": {
+    "isEnabled": true,
+    "isAttemptingConnection": false,
+    "isAwaitingVpn": false,
+    "nextAttemptAt": null
+  },
+  "user": {
+    "username": "owner_account",
+    "privileges": { "isPrivileged": false, "privilegesRemaining": 0 },
+    "statistics": { "averageSpeed": 0, "directoryCount": 12, "fileCount": 140, "uploadCount": 0 }
+  },
+  "shares": {
+    "scanPending": false,
+    "scanning": false,
+    "ready": true,
+    "faulted": false,
+    "cancelled": false,
+    "scanProgress": 1,
+    "directories": 12,
+    "files": 140
+  },
+  "rooms": [],
+  "users": []
+}

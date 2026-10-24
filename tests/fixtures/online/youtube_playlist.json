@@ -1,0 +1,177 @@
+{
+ "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+ "title": "Popular Music Videos",
+ "availability": "public",
+ "channel_follower_count": null,
+ "description": "",
+ "tags": [],
+ "thumbnails": [
+  {
+   "url": "https://i.ytimg.com/vi/fOT0BUpITw8/hqdefault.jpg?sqp=-oaymwEWCKgBEF5IWvKriqkDCQgBFQAAiEIYAQ==&rs=AOn4CLCRGVQz7WlA4UpQK0AVib1eZrqu_w",
+   "height": 94,
+   "width": 168,
+   "id": "0",
+   "resolution": "168x94"
+  },
+  {
+   "url": "https://i.ytimg.com/vi/fOT0BUpITw8/hqdefault.jpg?sqp=-oaymwEWCMQBEG5IWvKriqkDCQgBFQAAiEIYAQ==&rs=AOn4CLAVibzMQo9p_lFF31OFmVzbhcJxvA",
+   "height": 110,
+   "width": 196,
+   "id": "1",
+   "resolution": "196x110"
+  },
+  {
+   "url": "https://i.ytimg.com/vi/fOT0BUpITw8/hqdefault.jpg?sqp=-oaymwEXCPYBEIoBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDRkTUPE3vs1oZ4H75HwRxPMAEMCA",
+   "height": 138,
+   "width": 246,
+   "id": "2",
+   "resolution": "246x138"
+  },
+  {
+   "url": "https://i.ytimg.com/vi/fOT0BUpITw8/hqdefault.jpg?sqp=-oaymwEXCNACELwBSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDjsUIQ80ddZ3EkanNxx85JVi-MFg",
+   "height": 188,
+   "width": 336,
+   "id": "3",
+   "resolution": "336x188"
+  }
+ ],
+ "modified_date": "20260717",
+ "view_count": 1045672093,
+ "playlist_count": 5,
+ "channel": "Music",
+ "channel_id": "UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+ "uploader_id": null,
+ "uploader": "Music",
+ "channel_url": "https://www.youtube.com/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+ "uploader_url": null,
+ "_type": "playlist",
+ "entries": [
+  {
+   "title": "BELLAKEO (Video Oficial) - Peso Pluma, Anitta",
+   "thumbnails": [
+    {
+     "url": "https://i.ytimg.com/vi/fOT0BUpITw8/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDIUMo6wmNwCk7_4gaFgstLo8XRVQ",
+     "height": 188,
+     "width": 336
+    }
+   ],
+   "duration": 235,
+   "view_count": 770000000,
+   "timestamp": null,
+   "live_status": null,
+   "availability": null,
+   "channel_url": "https://www.youtube.com/channel/UCzrM_068Odho89mTRrrxqbA",
+   "uploader_url": null,
+   "creators": null,
+   "channel": "Peso Pluma",
+   "channel_id": "UCzrM_068Odho89mTRrrxqbA",
+   "uploader": "Peso Pluma",
+   "ie_key": "Youtube",
+   "id": "fOT0BUpITw8",
+   "_type": "url",
+   "url": "https://www.youtube.com/watch?v=fOT0BUpITw8",
+   "__x_forwarded_for_ip": null
+  },
+  {
+   "title": "Arcángel - FN8 ( Video Lyric )",
+   "thumbnails": [
+    {
+     "url": "https://i.ytimg.com/vi/NFvDHYMzj9U/hqdefault.jpg?sqp=-oaymwE2CNACELwBSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB_gmAAtAFigIMCAAQARhjIGMoYzAP&rs=AOn4CLBfwrF8-B99YkS29S2MbyVfQrPfjQ",
+     "height": 188,
+     "width": 336
+    }
+   ],
+   "duration": 650,
+   "view_count": 32000000,
+   "timestamp": null,
+   "live_status": null,
+   "availability": null,
+   "channel_url": "https://www.youtube.com/channel/UCu4bj03KW4CwAsYtHSwMEsQ",
+   "uploader_url": null,
+   "creators": null,
+   "channel": "Arcangel",
+   "channel_id": "UCu4bj03KW4CwAsYtHSwMEsQ",
+   "uploader": "Arcangel",
+   "ie_key": "Youtube",
+   "id": "NFvDHYMzj9U",
+   "_type": "url",
+   "url": "https://www.youtube.com/watch?v=NFvDHYMzj9U",
+   "__x_forwarded_for_ip": null
+  },
+  {
+   "title": "Becky G - POR EL CONTRARIO (Performance Video) ft. Ángela Aguilar, Leonardo Aguilar",
+   "thumbnails": [
+    {
+     "url": "https://i.ytimg.com/vi/8c7KOGxeY3w/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAc8FMXFBxT72mBl7UTb-La5RqIWQ",
+     "height": 188,
+     "width": 336
+    }
+   ],
+   "duration": 235,
+   "view_count": 787000000,
+   "timestamp": null,
+   "live_status": null,
+   "availability": null,
+   "channel_url": "https://www.youtube.com/channel/UCgtNC51EUSgcZ6kKyVoPxKA",
+   "uploader_url": null,
+   "creators": null,
+   "channel": "Becky G",
+   "channel_id": "UCgtNC51EUSgcZ6kKyVoPxKA",
+   "uploader": "Becky G",
+   "ie_key": "Youtube",
+   "id": "8c7KOGxeY3w",
+   "_type": "url",
+   "url": "https://www.youtube.com/watch?v=8c7KOGxeY3w",
+   "__x_forwarded_for_ip": null
+  },
+  {
+   "title": "Real Boston Richey - The Type (Official Music Video) ft. YTB Fatt",
+   "thumbnails": [
+    {
+     "url": "https://i.ytimg.com/vi/jWdxXdp8sZI/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCU4nNiLW-ejwKcP2XK93Pio-SQ_A",
+     "height": 188,
+     "width": 336
+    }
+   ],
+   "duration": 212,
+   "view_count": 42000000,
+   "timestamp": null,
+   "live_status": null,
+   "availability": null,
+   "channel_url": "https://www.youtube.com/channel/UCpkyspUtZwYhgUkepiREflg",
+   "uploader_url": null,
+   "creators": null,
+   "channel": "Real Boston Richey",
+   "channel_id": "UCpkyspUtZwYhgUkepiREflg",
+   "uploader": "Real Boston Richey",
+   "ie_key": "Youtube",
+   "id": "jWdxXdp8sZI",
+   "_type": "url",
+   "url": "https://www.youtube.com/watch?v=jWdxXdp8sZI",
+   "__x_forwarded_for_ip": null
+  },
+  {
+   "_type": "url",
+   "ie_key": "Youtube",
+   "id": "Xk2A1fQ0bLs",
+   "url": "https://www.youtube.com/watch?v=Xk2A1fQ0bLs",
+   "title": "[Private video]",
+   "description": null,
+   "duration": null,
+   "channel_id": null,
+   "channel": null,
+   "channel_url": null,
+   "uploader": null,
+   "thumbnails": [],
+   "view_count": null
+  }
+ ],
+ "extractor_key": "YoutubeTab",
+ "extractor": "youtube:tab",
+ "webpage_url": "https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+ "original_url": "https://www.youtube.com/playlist?list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+ "webpage_url_basename": "playlist",
+ "webpage_url_domain": "youtube.com",
+ "release_year": null,
+ "epoch": 1792692018
+}

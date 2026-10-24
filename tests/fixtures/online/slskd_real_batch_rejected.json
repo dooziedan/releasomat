@@ -1,0 +1,31 @@
+{
+ "id": "3d84f35d-3154-4071-bd76-2935410c8910",
+ "username": "peer-035",
+ "direction": "Download",
+ "createdAt": "2026-10-23T15:24:24.1070114Z",
+ "transfers": [
+  {
+   "batchId": "3d84f35d-3154-4071-bd76-2935410c8910",
+   "id": "064bdc5c-65ef-4727-98b2-60a9e0aff837",
+   "username": "peer-035",
+   "direction": "Download",
+   "filename": "@@share\\Music\\Delta Heavy\\Vandal (2025)\\Delta Heavy - Vandal - 01 - Vandal.flac",
+   "size": 36329299,
+   "state": "Completed, Rejected",
+   "requestedAt": "2026-10-23T15:24:24.1807326",
+   "startedAt": "2026-10-23T15:24:24.5293873Z",
+   "endedAt": "2026-10-23T15:24:24.5293873Z",
+   "bytesTransferred": 0,
+   "averageSpeed": 0,
+   "exception": "Transfer rejected: File not shared.",
+   "attempts": 1,
+   "removed": false,
+   "bytesRemaining": 36329299,
+   "elapsedTime": "00:00:00",
+   "percentComplete": 0
+  }
+ ],
+ "options": {
+  "destination": "@@share\\Music\\releasomat\\3d84f35d-3154-4071-bd76-2935410c8910"
+ }
+}

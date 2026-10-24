@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% from "macros.html" import cover, field_error %}
+{% block title %}{{ playlist.title }}{% endblock %}
+{% block content %}
+{% set q = request.query_params %}
+{% if q.get("added") %}<p class="notice">Added. Choose a schedule below, or press Refresh now.</p>{% endif %}
+{% if q.get("already") %}<p class="notice warn">Releasomat already follows this playlist.</p>{% endif %}
+{% if q.get("saved") %}<p class="notice">Settings saved.</p>{% endif %}
+{% if q.get("busy") %}<p class="notice warn">The playlist is refreshing. Remove it when the refresh is done.</p>{% endif %}
+{% if errors %}<p class="notice warn">Not saved: please check the marked fields.</p>{% endif %}
+
+<div class="playlist-head">
+  {{ cover(playlist, "large") }}
+  <div>
+    <h1>{{ playlist.title }}</h1>
+    <p class="muted">{{ source_label(playlist.source) }}{% if playlist.kind == "series" %} · “Created for you” series{% endif %} · <a href="{{ playlist.url }}" rel="noreferrer" target="_blank">Open on {{ source_label(playlist.source) }}</a></p>
+  </div>
+</div>
+
+{# Status, Refresh now, recent runs and the tracks: reloaded live during a refresh. #}
+<div hx-ext="sse" sse-connect="/api/events">
+  <div id="playlist-status" hx-get="/partials/playlists/{{ playlist.id }}/status" hx-trigger="sse:run delay:300ms">
+    {% include "partials/playlist_status.html" %}
+  </div>
+  <div id="tracks" hx-get="/partials/playlists/{{ playlist.id }}/tracks" hx-trigger="sse:track-{{ playlist.id }} delay:700ms, sse:run delay:700ms">
+    {% include "partials/tracks.html" %}
+  </div>
+</div>
+
+<article id="settings">
+  <header><h2>Settings</h2></header>
+  <form method="post" action="/playlists/{{ playlist.id }}/settings">
+    <label>
+      <input type="checkbox" role="switch" name="enabled" {% if playlist.enabled %}checked{% endif %}>
+      Refresh on schedule
+    </label>
+    <small class="muted">Off: the schedule pauses. Refresh now always works.</small>
+
+    {% include "partials/schedule.html" %}
+
+    <fieldset>
+      <legend>In Navidrome</legend>
+      <label><input type="radio" name="navidrome_mode" value="update" {% if playlist.navidrome_mode == "update" %}checked{% endif %}> Keep one playlist up to date</label>
+      <label><input type="radio" name="navidrome_mode" value="snapshot" {% if playlist.navidrome_mode == "snapshot" %}checked{% endif %}> A new playlist per refresh (named with the date)</label>
+      {% if snapshot_auto_delete %}
+      <label>Snapshots to keep
+        <input type="number" name="snapshot_keep" min="1" max="52" value="{{ playlist.snapshot_keep }}" {% if errors.get('snapshot_keep') %}aria-invalid="true"{% endif %}>
+      </label>
+      <small class="muted">Older snapshot playlists Releasomat made are deleted from Navidrome. Music files stay.</small>
+      {% else %}
+      <small class="muted">Old snapshots stay until you delete them — <a href="/settings#playlists">Settings</a>.</small>
+      {% endif %}
+      {{ field_error(errors, "snapshot_keep") }}{{ field_error(errors, "navidrome_mode") }}
+    </fieldset>
+
+    <p class="muted download-sources"><small>Downloads: {% if download_sources %}{{ download_sources }}{% else %}off, only songs already in Navidrome are linked{% endif %} (<a href="/settings#sources">Settings</a>). The same for every playlist.</small></p>
+
+    <p class="muted"><small>When a track leaves the playlist, it leaves the Navidrome playlist too. Its file stays: Releasomat never deletes music on its own.</small></p>
+
+    <button type="submit">Save settings</button>
+  </form>
+</article>
+
+<article>
+  <header><h2>Remove playlist</h2></header>
+  <p class="muted">Releasomat stops following this playlist and forgets its runs. Downloaded files stay where they are, and so does its playlist in Navidrome.</p>
+  <form method="post" action="/playlists/{{ playlist.id }}/delete" class="danger"
+        onsubmit="return confirm('Stop following “{{ playlist.title | replace("'", "") }}”? Files stay where they are.')">
+    <button type="submit" class="outline">Remove playlist</button>
+  </form>
+</article>
+{% endblock %}

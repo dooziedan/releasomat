@@ -1,0 +1,85 @@
+{
+ "version": {
+  "full": "0.26.1.0 (0.26.1.0+71dcc7a6)",
+  "current": "0.26.1.0",
+  "latest": "0.26.1.0",
+  "isUpdateAvailable": false,
+  "isCanary": false,
+  "isDevelopment": false
+ },
+ "pendingReconnect": false,
+ "pendingRestart": false,
+ "server": {
+  "address": "203.0.113.10",
+  "ipEndPoint": "203.0.113.10",
+  "state": "Connected, LoggedIn",
+  "isConnected": true,
+  "isConnecting": false,
+  "isLoggedIn": true,
+  "isLoggingIn": false,
+  "isTransitioning": false
+ },
+ "connectionWatchdog": {
+  "isEnabled": false,
+  "isAttemptingConnection": false,
+  "isAwaitingVpn": false
+ },
+ "vpn": {
+  "isReady": false,
+  "isConnected": false
+ },
+ "relay": {
+  "mode": "Controller",
+  "controller": {
+   "state": "Disconnected"
+  },
+  "agents": []
+ },
+ "health": {
+  "search": {
+   "incoming": {
+    "latency": 7.991955463578252,
+    "queueDepth": 0,
+    "dropRate": 0
+   }
+  }
+ },
+ "user": {
+  "username": "owner",
+  "privileges": {
+   "isPrivileged": false,
+   "privilegesRemaining": 0
+  },
+  "statistics": {
+   "averageSpeed": 1234810,
+   "directoryCount": 20,
+   "fileCount": 265,
+   "uploadCount": 9
+  }
+ },
+ "distributedNetwork": {
+  "branchLevel": 4,
+  "branchRoot": "peer-dist-1",
+  "canAcceptChildren": true,
+  "childLimit": 25,
+  "children": [],
+  "hasParent": true,
+  "isBranchRoot": false,
+  "parent": "peer-dist-2"
+ },
+ "shares": {
+  "scanPending": false,
+  "scanning": false,
+  "ready": true,
+  "faulted": false,
+  "cancelled": false,
+  "scanProgress": 1,
+  "hosts": [
+   "local"
+  ],
+  "directories": 20,
+  "files": 265
+ },
+ "rooms": [],
+ "users": []
+}

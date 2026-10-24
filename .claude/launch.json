@@ -1,0 +1,41 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "releasomat-local",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        ".venv/bin/uvicorn app.main:app --reload --port 8430 --env-file dev/.env"
+      ],
+      "port": 8430
+    },
+    {
+      "name": "navidrome-dev",
+      "runtimeExecutable": "docker",
+      "runtimeArgs": ["compose", "-f", "docker-compose.dev.yml", "up", "navidrome"],
+      "port": 4533
+    },
+    {
+      "name": "releasomat-docker",
+      "runtimeExecutable": "docker",
+      "runtimeArgs": [
+        "compose",
+        "-f",
+        "docker-compose.dev.yml",
+        "--profile",
+        "app",
+        "up",
+        "--build",
+        "releasomat"
+      ],
+      "port": 8431
+    },
+    {
+      "name": "fake-slskd",
+      "runtimeExecutable": ".venv/bin/python",
+      "runtimeArgs": ["scripts/fake_slskd.py", "--port", "5030", "--downloads-dir", "dev/slskd"],
+      "port": 5030
+    }
+  ]
+}

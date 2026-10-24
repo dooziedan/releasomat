@@ -1,0 +1,1 @@
+{"errors":[{"code":"UNAUTHORIZED","detail":"Invalid or missing Authorization Header","meta":{"category":"AUTHENTICATION_ERROR"}}]}

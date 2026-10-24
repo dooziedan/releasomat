@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Activity{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Activity</h1>
+    <p class="muted">Every refresh, newest first. Updates live while this page is open.</p>
+    <p class="muted"><small>Downloads with yt-dlp {{ versions.yt_dlp }} · Deno {{ versions.deno }} · Releasomat {{ versions.releasomat }}</small></p>
+  </div>
+</div>
+{# Reloaded on every run event (Server-Sent Events from /api/events). #}
+<div hx-ext="sse" sse-connect="/api/events">
+  <div id="runs" hx-get="/partials/runs" hx-trigger="sse:run delay:300ms">
+    {% include "partials/run_rows.html" %}
+  </div>
+</div>
+{% endblock %}

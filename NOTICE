@@ -1,0 +1,8 @@
+Releasomat
+Copyright (C) 2026 dooziedan
+Licensed under the GNU Affero General Public License v3.0 or later (see LICENSE).
+
+Releasomat is modelled on Explo (https://github.com/LumePart/Explo,
+MIT License, Copyright (c) LumePart and contributors). Explo served as a
+reference for how the problem can be approached; no Explo code is included.
+If code adapted from Explo is ever added, its MIT notice is listed here.

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Settings</h1>
+    <p class="muted">Download sources, connections to other services and download defaults. Fields marked “set by the container” come from the container's settings (on Unraid: the template) and can only be changed there.</p>
+  </div>
+</div>
+{% if request.query_params.get("saved") %}<p class="notice">Settings saved.</p>{% endif %}
+{% if errors %}<p class="notice warn">Not saved: please check the marked fields.</p>{% endif %}
+
+<form id="settings-form" method="post" action="/settings">
+  {% for group, views in groups.items() %}{% set group_id = group_ids[group] %}
+  <article id="{{ group_id }}">
+    <header><h2>{{ group }}</h2></header>
+    {% for s in views %}
+    {% set invalid = errors.get(s.key) %}
+    {% if s.kind == "list" %}
+      {% set l = lists[s.key] %}{% include "partials/order_list.html" %}
+    {% else %}
+    <label for="{{ s.key }}">
+      <span class="label-row">{{ s.label }}{% if s.locked %} <span class="badge locked">set by the container</span>{% endif %}</span>
+    </label>
+    {% if s.kind == "bool" %}
+      <input type="hidden" name="shown_{{ s.key }}" value="1">
+      <label class="switch-row"><input type="checkbox" role="switch" id="{{ s.key }}" name="{{ s.key }}" value="true"
+             {% if (submitted.get(s.key, s.value) | lower) == "true" %}checked{% endif %} {% if s.locked %}disabled{% endif %}></label>
+    {% elif s.kind == "secret" %}
+      <input type="password" id="{{ s.key }}" name="{{ s.key }}" value="" autocomplete="new-password"
+             placeholder="{% if s.is_set %}Saved: {{ s.value }} (leave empty to keep it){% else %}Not set{% endif %}"
+             {% if s.locked %}disabled{% endif %} {% if invalid %}aria-invalid="true"{% endif %}>
+      {% if s.is_set and not s.locked and s.source == "saved" %}
+      <label class="muted"><input type="checkbox" name="clear_{{ s.key }}"> Remove the saved {{ s.label | lower }}</label>
+      {% endif %}
+    {% else %}
+      <input type="{{ 'url' if s.kind == 'url' else ('number' if s.kind == 'int' else 'text') }}" id="{{ s.key }}" name="{{ s.key }}"
+             value="{{ submitted.get(s.key, s.value if s.source != 'default' else '') }}" placeholder="{{ s.default }}"
+             {% if s.locked %}disabled{% endif %} {% if invalid %}aria-invalid="true"{% endif %}>
+    {% endif %}
+    {% if invalid %}<small class="field-error">{{ invalid }}</small>{% endif %}
+    {% endif %}
+    {% if s.help %}<small class="muted{% if s.kind == 'list' %} list-help{% endif %}">{{ s.help }}{% if s.locked %} Env var: <code>{{ s.key }}</code>.{% endif %}</small>{% endif %}
+    {% if s.key == "SLSKD_API_KEY" %}
+    <button type="button" class="secondary" hx-post="/partials/slskd-test" hx-include="#settings-form" hx-target="#slskd-test" hx-indicator="this">Test connection</button>
+    <div id="slskd-test" aria-live="polite"></div>
+    {% endif %}
+    {% endfor %}
+    {% if group_id == "navidrome" %}
+    <button type="button" class="secondary" hx-post="/partials/navidrome-test" hx-include="#settings-form" hx-target="#navidrome-test" hx-indicator="this">Test connection</button>
+    <div id="navidrome-test" aria-live="polite"></div>
+    {% endif %}
+  </article>
+  {% endfor %}
+  <button type="submit">Save settings</button>
+</form>
+
+<article id="container">
+  <header><h2>Container</h2></header>
+  <p class="muted">Folders and system settings of the container itself. They are set in the container's environment (on Unraid: the template).</p>
+  <dl class="container-settings">
+    <dt>Music folder (MUSIC_DIR)</dt><dd><code>{{ config.music_dir }}</code>{% if not config.music_dir.is_dir() %} <span class="badge failed">missing</span>{% endif %}</dd>
+    <dt>App data (CONFIG_DIR)</dt><dd><code>{{ config.config_dir }}</code></dd>
+    <dt>slskd downloads (SLSKD_DOWNLOADS_DIR)</dt><dd><code>{{ config.slskd_downloads_dir }}</code>{% if not config.slskd_downloads_dir.is_dir() %} <span class="badge">not mounted</span>{% endif %}</dd>
+    <dt>Time zone (TZ)</dt><dd>{{ config.zone.key }}</dd>
+    <dt>User / group (PUID / PGID)</dt><dd>{{ config.puid }} / {{ config.pgid }}, UMASK {{ config.umask }}</dd>
+    <dt>Log level (LOG_LEVEL)</dt><dd>{{ config.log_level }}</dd>
+    <dt>yt-dlp</dt><dd>{{ versions.yt_dlp }}</dd>
+    <dt>Deno (for YouTube)</dt><dd>{{ versions.deno }}</dd>
+    <dt>YouTube cookies</dt><dd>{% if cookies %}<code>cookies.txt</code> found in the app data folder{% else %}None (optional: <code>cookies.txt</code> in the app data folder){% endif %}</dd>
+  </dl>
+</article>
+{% endblock %}

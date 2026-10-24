@@ -1,0 +1,21 @@
+{% from "macros.html" import status_badge, error_report %}
+<article>
+  <div class="status-line">
+    {{ status_badge(state or playlist.last_status) }}
+    {% if playlist.last_refresh_at %}<span class="muted">Last refresh {{ playlist.last_refresh_at | localtime }}</span>{% endif %}
+    <span class="muted">· {% if playlist.enabled and playlist.next_refresh_at %}Next {{ playlist.next_refresh_at | localtime }}{% elif not playlist.enabled %}Schedule paused{% else %}No schedule{% endif %}</span>
+    {% with playlist_id=playlist.id %}{% include "partials/refresh_button.html" %}{% endwith %}
+  </div>
+  {% if runs %}
+  <details>
+    <summary>Recent runs</summary>
+    {% with titles={} %}<div class="table-wrap"><table><tbody>{% include "partials/run_table_rows.html" %}</tbody></table></div>{% endwith %}
+    <p><a href="/activity">All activity →</a></p>
+  </details>
+  {% set latest = runs[0] %}
+  {% if latest.status == "running" and latest.message %}<p class="muted progress" aria-live="polite">{{ latest.message }}</p>
+  {% elif latest.message and latest.status in ("failed", "skipped") %}<p class="result error">{{ latest.message }}</p>
+  {% elif latest.message %}<p class="muted">{{ latest.message }}</p>{% endif %}
+  {{ error_report(latest, playlist.title) }}
+  {% endif %}
+</article>

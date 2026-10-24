@@ -1,0 +1,136 @@
+{
+ "subsonic-response": {
+  "status": "ok",
+  "version": "1.16.1",
+  "type": "navidrome",
+  "serverVersion": "0.64.2 (10114574)",
+  "openSubsonic": true,
+  "playlist": {
+   "id": "2jESo4alLvCLIG54wjv7gl",
+   "name": "Releasomat fixture",
+   "songCount": 2,
+   "duration": 531,
+   "owner": "admin",
+   "created": "2026-10-22T18:20:51.769910972Z",
+   "changed": "2026-10-22T18:20:51.783773773Z",
+   "coverArt": "pl-2jESo4alLvCLIG54wjv7gl",
+   "readonly": false,
+   "entry": [
+    {
+     "id": "1SAbPINQ00E16hdqkuP8Dw",
+     "parent": "2Zhs2AFP0cL6AWkPgnVHrL",
+     "isDir": false,
+     "title": "Halo",
+     "album": "I Am... Sasha Fierce",
+     "artist": "Beyoncé",
+     "track": 2,
+     "year": 2008,
+     "genre": "R&B",
+     "size": 522698,
+     "contentType": "audio/mpeg",
+     "suffix": "mp3",
+     "duration": 261,
+     "bitRate": 16,
+     "path": "Beyoncé/I Am... Sasha Fierce/02 - Halo.mp3",
+     "created": "2026-10-21T18:48:09.104203888Z",
+     "albumId": "2Zhs2AFP0cL6AWkPgnVHrL",
+     "artistId": "3iyHg6jQfKnLyo8uIPPS4u",
+     "type": "music",
+     "bpm": 0,
+     "comment": "",
+     "sortName": "halo",
+     "mediaType": "song",
+     "musicBrainzId": "",
+     "isrc": [],
+     "genres": [
+      {
+       "name": "R&B"
+      }
+     ],
+     "replayGain": {},
+     "channelCount": 1,
+     "samplingRate": 8000,
+     "bitDepth": 0,
+     "moods": [],
+     "artists": [
+      {
+       "id": "3iyHg6jQfKnLyo8uIPPS4u",
+       "name": "Beyoncé"
+      }
+     ],
+     "displayArtist": "Beyoncé",
+     "albumArtists": [
+      {
+       "id": "3iyHg6jQfKnLyo8uIPPS4u",
+       "name": "Beyoncé"
+      }
+     ],
+     "displayAlbumArtist": "Beyoncé",
+     "contributors": [],
+     "displayComposer": "",
+     "explicitStatus": "",
+     "groupings": [],
+     "works": [],
+     "movements": []
+    },
+    {
+     "id": "4Y4X2lrdwFv5WXBn4YfiBC",
+     "parent": "5lfgdp46Fhufm5mhcYa9Zl",
+     "isDir": false,
+     "title": "Halo",
+     "album": "Violator",
+     "artist": "Depeche Mode",
+     "track": 4,
+     "year": 1990,
+     "genre": "Synth-pop",
+     "size": 2324830,
+     "contentType": "audio/flac",
+     "suffix": "flac",
+     "duration": 270,
+     "bitRate": 69,
+     "path": "Depeche Mode/Violator/04 - Halo.flac",
+     "created": "2026-10-21T18:48:09.10751667Z",
+     "albumId": "5lfgdp46Fhufm5mhcYa9Zl",
+     "artistId": "1kwTBRxar6z713PUMy3P1g",
+     "type": "music",
+     "bpm": 0,
+     "comment": "",
+     "sortName": "halo",
+     "mediaType": "song",
+     "musicBrainzId": "",
+     "isrc": [],
+     "genres": [
+      {
+       "name": "Synth-pop"
+      }
+     ],
+     "replayGain": {},
+     "channelCount": 1,
+     "samplingRate": 8000,
+     "bitDepth": 24,
+     "moods": [],
+     "artists": [
+      {
+       "id": "1kwTBRxar6z713PUMy3P1g",
+       "name": "Depeche Mode"
+      }
+     ],
+     "displayArtist": "Depeche Mode",
+     "albumArtists": [
+      {
+       "id": "1kwTBRxar6z713PUMy3P1g",
+       "name": "Depeche Mode"
+      }
+     ],
+     "displayAlbumArtist": "Depeche Mode",
+     "contributors": [],
+     "displayComposer": "",
+     "explicitStatus": "",
+     "groupings": [],
+     "works": [],
+     "movements": []
+    }
+   ]
+  }
+ }
+}

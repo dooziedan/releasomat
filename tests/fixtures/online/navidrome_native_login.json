@@ -1,0 +1,9 @@
+{
+ "id": "fake-user-id",
+ "isAdmin": true,
+ "name": "Admin",
+ "subsonicSalt": "fakesalt",
+ "subsonicToken": "00000000000000000000000000000000",
+ "token": "FAKE.JWT.TOKEN-for-tests",
+ "username": "admin"
+}

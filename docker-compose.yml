@@ -1,0 +1,22 @@
+# A plain local container run: docker compose up --build  ->  http://localhost:8430
+# On Unraid, install via the template in unraid/releasomat.xml instead.
+#
+# Connections (Navidrome, slskd, …) can be entered on the Settings page. Inside the container,
+# "localhost" is the container itself: use your machine's IP address, or a Docker network name.
+services:
+  releasomat:
+    build: .
+    image: releasomat:dev
+    container_name: releasomat
+    ports:
+      - "8430:8430"
+    environment:
+      PUID: "${PUID:-1000}"   # your user on the dev PC; Unraid uses 99
+      PGID: "${PGID:-1000}"   # your group on the dev PC; Unraid uses 100
+      UMASK: "022"
+      TZ: "${TZ:-Europe/Berlin}"
+    volumes:
+      - ./dev/config:/config
+      - ./dev/library/Releasomat:/music   # Releasomat's own folder inside the (demo) library
+      - ./dev/slskd:/slskd                # slskd's download folder (optional)
+    restart: unless-stopped

@@ -1,0 +1,24 @@
+{% if runs %}
+<article>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Started</th>
+          <th scope="col">Playlist</th>
+          <th scope="col">Trigger</th>
+          <th scope="col">Status</th>
+          <th scope="col">Took</th>
+          <th scope="col">What happened</th>
+        </tr>
+      </thead>
+      <tbody>{% include "partials/run_table_rows.html" %}</tbody>
+    </table>
+  </div>
+</article>
+{% else %}
+<article class="empty">
+  <strong>Nothing happened yet</strong>
+  Refreshes show up here as they run: started by a playlist's schedule or by Refresh now.
+</article>
+{% endif %}

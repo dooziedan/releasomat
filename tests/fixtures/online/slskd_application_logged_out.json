@@ -1,0 +1,53 @@
+{
+  "version": {
+    "full": "0.26.1.0+b1f4ad0e",
+    "current": "0.26.1",
+    "latest": "0.26.1",
+    "isUpdateAvailable": false,
+    "isCanary": false,
+    "isDevelopment": false
+  },
+  "pendingReconnect": false,
+  "pendingRestart": false,
+  "server": {
+    "address": null,
+    "ipEndPoint": null,
+    "state": "Disconnected",
+    "isConnected": false,
+    "isConnecting": false,
+    "isLoggedIn": false,
+    "isLoggingIn": false,
+    "isTransitioning": false
+  },
+  "connectionWatchdog": {
+    "isEnabled": true,
+    "isAttemptingConnection": false,
+    "isAwaitingVpn": false,
+    "nextAttemptAt": null
+  },
+  "user": {
+    "username": null,
+    "privileges": {
+      "isPrivileged": false,
+      "privilegesRemaining": 0
+    },
+    "statistics": {
+      "averageSpeed": 0,
+      "directoryCount": 12,
+      "fileCount": 140,
+      "uploadCount": 0
+    }
+  },
+  "shares": {
+    "scanPending": false,
+    "scanning": false,
+    "ready": true,
+    "faulted": false,
+    "cancelled": false,
+    "scanProgress": 1,
+    "directories": 12,
+    "files": 140
+  },
+  "rooms": [],
+  "users": []
+}
