@@ -44,7 +44,7 @@ Navidrome". A few are deliberately tricky for matching: "feat." in the title and
 | `dev/.env` | Settings for running Releasomat locally, including the test Navidrome's login |
 | `dev/library/` | The test Navidrome's music folder |
 | `dev/library/Demo/` | The demo library |
-| `dev/library/Releasomat/` | Releasomat's own music folder (`MUSIC_DIR`); Navidrome sees it as `Releasomat` |
+| `dev/library/releasomat/` | Releasomat's own music folder (`MUSIC_DIR`); Navidrome sees it as `releasomat` |
 | `dev/config/` | Releasomat's database and `cookies.txt` when it runs locally (`CONFIG_DIR`) |
 | `dev/config-docker/` | The same for the Releasomat container (a separate database) |
 | `dev/slskd/` | `SLSKD_DOWNLOADS_DIR`: where the fake slskd puts its "downloads" |
@@ -76,7 +76,7 @@ Navidrome's default, like a normal installation.
 
 Open http://localhost:8430 (the API is at http://localhost:8430/docs). `--reload` restarts the app
 whenever you save a file. Releasomat uses `dev/config` for its database and saves music to
-`dev/library/Releasomat`, which the test Navidrome scans.
+`dev/library/releasomat`, which the test Navidrome scans.
 
 **Settings that are set in `dev/.env` are locked** on the Settings page: an env var always wins and
 is shown read-only. To try a setting in the UI, or to test the setup wizard of a fresh install,
@@ -94,7 +94,7 @@ docker compose -f docker-compose.dev.yml --profile app up --build releasomat
 ```
 
 Open http://localhost:8431. Stop it with Ctrl+C. The container reads the settings from `dev/.env`,
-but uses its own paths (`/config` = `dev/config-docker`, `/music` = `dev/library/Releasomat`,
+but uses its own paths (`/config` = `dev/config-docker`, `/music` = `dev/library/releasomat`,
 `/slskd` = `dev/slskd`) and reaches Navidrome by its Docker name, `http://navidrome:4533`, never
 `localhost`. It keeps its own database in `dev/config-docker`, separate from the local run's.
 
@@ -192,7 +192,7 @@ word ("Releasomat Test – stall", "Releasomat Test – wrongfile", …):
 | `exactfails` | only a search with a `*` wildcard finds something | the second, simpler search finds it |
 
 Finished downloads land in `dev/slskd/releasomat/<download id>/` and are moved from there into
-Releasomat's staging folder, then into `dev/library/Releasomat`. Only files in
+Releasomat's staging folder, then into `dev/library/releasomat`. Only files in
 `dev/slskd/releasomat/` are ever moved (ADR 0003); a wrong file stays there for you to look at.
 
 The tests use the same fake, in-process and 100 times faster (`tests/downloaders/`), plus saved
@@ -221,7 +221,7 @@ every download runs in a fresh Python process (`app/downloaders/youtube_job.py`)
 and Activity pages show the versions in use.
 
 Downloads first land in `dev/config/staging/` (cleaned up after each track and at start-up), then
-move into `dev/library/Releasomat` as `Artist/Artist - Title.opus` (or `.m4a`), tagged and with a
+move into `dev/library/releasomat` as `Artist/Artist - Title.opus` (or `.m4a`), tagged and with a
 cover. They are kept in YouTube's own format (no re-encoding).
 
 The demo library's songs have their real lengths, so real playlists find them "already in
@@ -248,7 +248,7 @@ scripts/dev_down.sh --reset       # stop and start over (shows what it deletes a
 ```
 
 `--reset` empties the test Navidrome's database (`dev/navidrome-data`), Releasomat's databases
-(`dev/config`, `dev/config-docker`) and the music Releasomat downloaded (`dev/library/Releasomat`).
+(`dev/config`, `dev/config-docker`) and the music Releasomat downloaded (`dev/library/releasomat`).
 It keeps `dev/.env`, `cookies.txt` and the demo library, and it
 never touches anything outside `dev/`. Afterwards run `scripts/dev_up.sh` again.
 

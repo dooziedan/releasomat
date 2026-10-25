@@ -17,6 +17,6 @@ services:
       TZ: "${TZ:-Europe/Berlin}"
     volumes:
       - ./dev/config:/config
-      - ./dev/library/Releasomat:/music   # Releasomat's own folder inside the (demo) library
+      - ./dev/library/releasomat:/music   # Releasomat's own folder inside the (demo) library
       - ./dev/slskd:/slskd                # slskd's download folder (optional)
     restart: unless-stopped

@@ -42,7 +42,7 @@ Inspired by [Explo](https://github.com/LumePart/Explo). Runs as one Docker conta
 
    | Field | What to enter |
    |---|---|
-   | **Releasomat Music Folder** (required) | A folder **inside** the music folder your Navidrome container uses, for example `/mnt/user/music/Releasomat`. Releasomat only ever writes here. |
+   | **Releasomat Music Folder** (required) | A folder **inside** the music folder your Navidrome container uses, for example `/mnt/user/music/releasomat`. Releasomat only ever writes here. |
    | App Data | Leave the default `/mnt/user/appdata/releasomat` (database, settings, YouTube cookies) |
    | slskd Downloads (for Soulseek) | The folder where your slskd container saves finished downloads, as Unraid sees it, for example `/mnt/user/downloads/slskd`. |
    | WebUI Port | `8430`, or any free port |
@@ -58,7 +58,7 @@ tags (`:latest`, `:X.Y.Z`) follow with the first release.
 
 1. **Settings → Navidrome**: its address as the container sees it (for example
    `http://192.168.1.10:4533`, never `localhost`), a Navidrome user with **admin** rights (needed to
-   start a scan) and the name of Releasomat's folder inside the library (`Releasomat` in the example
+   start a scan) and the name of Releasomat's folder inside the library (`releasomat` in the example
    above). Press **Test connection**.
 2. **Settings → Download sources**: switch sources on or off and put them in order. For Soulseek, add
    slskd's address and API key, your wanted formats and minimum bitrate, then **Test**.

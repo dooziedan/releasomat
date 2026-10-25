@@ -9,7 +9,7 @@ from app.settings import InvalidSetting, SettingLocked, get, get_int, is_locked,
 
 
 def test_default_then_saved_then_env(session, monkeypatch):
-    assert get(session, "NAVIDROME_SUBFOLDER") == "Releasomat"  # the default
+    assert get(session, "NAVIDROME_SUBFOLDER") == "releasomat"  # the default
     assert user_settings.source_of(session, "NAVIDROME_SUBFOLDER") == "default"
 
     save(session, "NAVIDROME_SUBFOLDER", "Downloads")
@@ -26,7 +26,7 @@ def test_default_then_saved_then_env(session, monkeypatch):
     monkeypatch.delenv("NAVIDROME_SUBFOLDER")
     assert get(session, "NAVIDROME_SUBFOLDER") == "Downloads"  # the saved value is still there
     save(session, "NAVIDROME_SUBFOLDER", "")  # empty: back to the default
-    assert get(session, "NAVIDROME_SUBFOLDER") == "Releasomat"
+    assert get(session, "NAVIDROME_SUBFOLDER") == "releasomat"
 
 
 def test_an_empty_env_var_does_not_lock(session, monkeypatch):

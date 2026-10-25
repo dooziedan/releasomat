@@ -28,7 +28,7 @@ done
 
 # --- 1. Folders -----------------------------------------------------------------------------------
 # Created here, as you, so Docker doesn't create them as root.
-mkdir -p dev/library/Demo dev/library/Releasomat dev/config dev/config-docker \
+mkdir -p dev/library/Demo dev/library/releasomat dev/config dev/config-docker \
 	dev/slskd dev/navidrome-data dev/screenshots
 
 # --- 2. dev/.env ----------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ if [[ ! -f $ENV_FILE ]]; then
 
 # Folders (relative to the Releasomat folder)
 CONFIG_DIR=dev/config
-MUSIC_DIR=dev/library/Releasomat
+MUSIC_DIR=dev/library/releasomat
 SLSKD_DOWNLOADS_DIR=dev/slskd
 TZ=Europe/Berlin
 LOG_LEVEL=DEBUG
@@ -68,7 +68,7 @@ LOG_LEVEL=DEBUG
 NAVIDROME_URL=http://localhost:4533
 NAVIDROME_USER=admin
 NAVIDROME_PASSWORD=$(random_secret)
-NAVIDROME_SUBFOLDER=Releasomat
+NAVIDROME_SUBFOLDER=releasomat
 
 # Your ListenBrainz user name, for your own playlists and "Created for you"
 # LISTENBRAINZ_USER=
@@ -176,7 +176,7 @@ cat <<EOF
 Dev environment is ready.
   Navidrome:       $NAVIDROME  (user '$ND_USER', password: NAVIDROME_PASSWORD in $ENV_FILE)
   Songs in it:     $songs (demo library: dev/library/Demo)
-  Releasomat's music folder: dev/library/Releasomat (Navidrome sees it as "Releasomat")
+  Releasomat's music folder: dev/library/releasomat (Navidrome sees it as "releasomat")
 
 Run Releasomat:   .venv/bin/uvicorn app.main:app --reload --port 8430 --env-file dev/.env
                   then open http://localhost:8430

@@ -574,7 +574,7 @@ characters, optional CIDR restriction), or the primary key in
 - If **"Report Real Path"** is enabled for the player (the Players admin
   page; `ND_SUBSONIC_DEFAULTREPORTREALPATH=true` turns it on for *new*
   players), the path is **absolute on Navidrome's filesystem** (library path +
-  relative path, e.g. `/music/Releasomat/…`). It is **not** relative to the
+  relative path, e.g. `/music/releasomat/…`). It is **not** relative to the
   library root. Releasomat would need a path mapping between Navidrome's mount
   and its own. It's off by default for security reasons (docs).
 - **The native API** (the one Navidrome's web UI uses; undocumented and not
@@ -617,7 +617,7 @@ characters, optional CIDR restriction), or the primary key in
   endpoints respect per-user library permissions. Playlists may mix songs
   from several libraries. Admins see all libraries.
 - For Releasomat: either put downloads *inside* the main library (e.g.
-  `/music/Releasomat/…`), or give them their own library whose path is
+  `/music/releasomat/…`), or give them their own library whose path is
   *outside* the main one, never nested.
 
 ### Other Navidrome options worth knowing

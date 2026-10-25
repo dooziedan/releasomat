@@ -147,7 +147,7 @@ refresh waits for it.
   area now, with what was wanted and which playlists contain them).
 - `POST adopt`, `returned`, `discarded`, `restored`, `delete`: `{"files": [{"path", "size",
   "id"}]}`, one answer per file (`ok` or a plain `reason`), idempotent. Paths inside the area in
-  NFC (`Releasomat/…` and `/music/Releasomat/…` accepted; `..` refused).
+  NFC (`releasomat/…` and `/music/releasomat/…` accepted; `..` refused).
 - Only `delete` touches a file, through Releasomat's own owner's delete
   (`lifecycle.delete_and_dislike` → `files.delete_by_owner`); every other call changes only the
   database.
@@ -209,7 +209,7 @@ Container settings (env vars only, see ADR 0002):
 
 User settings (editable in the UI; an env var with the same name wins and locks the field):
 `NAVIDROME_URL`, `NAVIDROME_USER`, `NAVIDROME_PASSWORD`, `NAVIDROME_SUBFOLDER` (name of Releasomat's
-folder as Navidrome sees it, e.g. `Releasomat`), `SLSKD_URL`, `SLSKD_API_KEY`, `LISTENBRAINZ_USER`,
+folder as Navidrome sees it, e.g. `releasomat`), `SLSKD_URL`, `SLSKD_API_KEY`, `LISTENBRAINZ_USER`,
 `LISTENBRAINZ_TOKEN`, `TIDAL_CLIENT_ID`, `TIDAL_CLIENT_SECRET`, `DOWNLOAD_CONCURRENCY` (default 2),
 `MATCH_THRESHOLD`, `PATH_TEMPLATE` (default `{artist}/{artist} - {title}.{ext}`),
 `SNAPSHOT_AUTO_DELETE` (default off), `DOWNLOAD_SOURCES` (global order of download sources, default

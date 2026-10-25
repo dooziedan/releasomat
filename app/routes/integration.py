@@ -10,7 +10,7 @@ Releasomat, never the other way round.
   <key>``; a missing or wrong key answers 401 ``wrong_key``. The key is checked before anything
   else (no key never gives 422), compared in constant time, and never logged or echoed.
 - Tagwerk names files by their **path inside Releasomat's folder** (``/``, Unicode NFC, e.g.
-  ``Röyksopp/Röyksopp - Eple.opus``; ``Releasomat/…`` and ``/music/Releasomat/…`` work too) plus
+  ``Röyksopp/Röyksopp - Eple.opus``; ``releasomat/…`` and ``/music/releasomat/…`` work too) plus
   their size. Answers carry Releasomat's file ``id``, which later notices may send along.
 - Every ``POST`` takes ``{"files": [...]}`` and answers per file, in the order sent: ``ok``, or a
   plain-language ``reason``. Repeating a call that went through answers ``ok`` again.
@@ -253,7 +253,7 @@ class FileRef(BaseModel):
 
     path: str = Field(
         description="Inside Releasomat's folder ('Röyksopp/Röyksopp - Eple.opus'); "
-        "'Releasomat/…' and '/music/Releasomat/…' work too.",
+        "'releasomat/…' and '/music/releasomat/…' work too.",
     )
     size: int | None = Field(
         default=None,

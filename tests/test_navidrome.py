@@ -214,7 +214,7 @@ async def test_scan_waits_then_scans_releasomats_folder_then_waits():
     assert await nd().scan(poll=0) == "folder"
     assert status.call_count == 4 and start.call_count == 1
     params = start.calls.last.request.url.params
-    assert params.get_list("target") == ["1:Releasomat"] and params["fullScan"] == "false"
+    assert params.get_list("target") == ["1:releasomat"] and params["fullScan"] == "false"
 
 
 @respx.mock

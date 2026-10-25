@@ -61,7 +61,7 @@ services:
         target: /config
         bind: { create_host_path: false }
       - type: bind
-        source: ./dev/library/Releasomat
+        source: ./dev/library/releasomat
         target: /music
         bind: { create_host_path: false }
       - type: bind

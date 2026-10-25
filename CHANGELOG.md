@@ -10,6 +10,9 @@ Each version's section becomes the text of its GitHub Release page.
   without their week or day, e.g. "Weekly Exploration for rob": they always show the newest one.
   Navidrome playlists that still carry an old date in their name get the new name with the next
   refresh; a name you gave a playlist in Navidrome yourself stays.
+- Releasomat's folder inside the library is now called `releasomat` by default (lowercase, was
+  `Releasomat`), also in the Unraid template's example. If yours is still called `Releasomat`,
+  rename it (and the container's music folder path) or enter `Releasomat` in Settings → Navidrome.
 
 ### Added
 - Follow playlists from ListenBrainz (including "Created for you": Weekly Exploration, Weekly Jams,

@@ -64,8 +64,8 @@ the rules live in one place. It works only on the database, never on files.
 
 | Call | Body | Answers |
 |---|---|---|
-| `GET /info` | – | 200 `{"api":1,"app":"releasomat","version":"0.1.0","folder":"Releasomat","files":37}` (folder = `NAVIDROME_SUBFOLDER`) |
-| `GET /files` (`?path=` optional) | – | 200 `{"api":1,"folder":"Releasomat","files":[F…]}`; with `?path=` and no match: 404 `unknown_file` |
+| `GET /info` | – | 200 `{"api":1,"app":"releasomat","version":"0.1.0","folder":"releasomat","files":37}` (folder = `NAVIDROME_SUBFOLDER`) |
+| `GET /files` (`?path=` optional) | – | 200 `{"api":1,"folder":"releasomat","files":[F…]}`; with `?path=` and no match: 404 `unknown_file` |
 | `POST /adopt` | `{"api":1,"path":"…"}` | 200 `{"result":"adopted"\|"already_adopted","file_id":12,"path":"…","artist":"…","title":"…"}`; 404 `unknown_file`; 409 `not_adoptable`; 422 `bad_path` |
 | `POST /adopt/cancel` (new, §6) | same | 200 `taken_back` / `already_back`; 409 `file_not_there` |
 | `POST /discarded` | same | 200 `disliked` / `already_disliked`; 404 `unknown_file`; 409 `not_adopted` |
@@ -75,8 +75,8 @@ the rules live in one place. It works only on the database, never on files.
   rows with `downloaded_by_releasomat` and a `path` (files that are still Releasomat's); `playlists`
   only those that still contain the track (one joined query).
 - **Paths** (`lifecycle.find_by_path(session, raw, subfolder)`): refuses `..`, NUL and empty
-  (`BadPath`, 422); Unicode NFC; candidates = as given, without a leading `Releasomat/`, and for
-  absolute paths the part after each `/Releasomat/`; compared with NFC'd `path` and `former_path`.
+  (`BadPath`, 422); Unicode NFC; candidates = as given, without a leading `releasomat/`, and for
+  absolute paths the part after each `/releasomat/`; compared with NFC'd `path` and `former_path`.
   Two rows match: 409 `ambiguous`; none: 404. Never guesses; answers give the stored path back.
 - **Idempotency**: `adopt` on `adopted` (or `in_library` with `adopted_at`) answers
   `already_adopted`; on `disliked` with reason `vanished` (a late notice) it becomes adopted; on an
@@ -168,7 +168,7 @@ while), permissions (same PUID/PGID for both containers), the key isn't a login 
 must respect `KEPT_AWAY`.
 
 Contract changes proposed for ADR 0009: paths inside the area with `/` in NFC (also accepting
-`Releasomat/…` and `/music/Releasomat/…`); `X-Api-Key` header, 403 when off, 401 when wrong;
+`releasomat/…` and `/music/releasomat/…`); `X-Api-Key` header, 403 when off, 401 when wrong;
 `"api": 1`; one file per call, idempotent; adopt answers 200 before Tagwerk moves anything, 404 for
 files Releasomat didn't download; `POST /api/integration/adopt/cancel` when Tagwerk's move fails;
 `discarded` only for files the owner throws away (duplicates/better copies are not reported);
@@ -180,7 +180,7 @@ track waits in Tagwerk's inbox, and the same PUID/PGID for both containers.
 1. **Track states**: models, migration 0004, `app/lifecycle.py`, `KEPT_AWAY`, `save_file` guard,
    counts.
 2. **Files that leave the folder**: `song_info`, `find_elsewhere`, `files_that_left`, relinking,
-   brake, messages (verify by deleting/moving files in `dev/library/Releasomat`).
+   brake, messages (verify by deleting/moving files in `dev/library/releasomat`).
 3. **Integration API**: setting, Unraid field, routes, error handler, `/docs`, ADR 0009 wording,
    architecture.md, CHANGELOG.
 4. **Badges, Undo, Settings**: tracks table, playlist list, Undo, Generate, status box, screenshots.

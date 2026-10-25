@@ -97,7 +97,7 @@ class Navidrome:
         password: str,
         *,
         http: httpx.AsyncClient | None = None,
-        subfolder: str = "Releasomat",
+        subfolder: str = "releasomat",
     ):
         self.url = url.strip().rstrip("/")
         self.user = user
