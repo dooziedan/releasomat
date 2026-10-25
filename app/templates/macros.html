@@ -18,6 +18,15 @@
   <span class="badge track-{{ status }}">{{ track_labels.get(status, status) }}</span>
 {%- endmacro %}
 
+{# Undo for a "Don't like" track: the next refresh downloads it again. htmx swaps the tracks
+   table; without JavaScript the form reloads the page. #}
+{% macro undo_dislike(playlist_id, t) -%}
+  {%- set action = "/playlists/" ~ playlist_id ~ "/tracks/" ~ t.track_id ~ "/undo-dislike" -%}
+  <form class="undo-dislike" method="post" action="{{ action }}" hx-post="{{ action }}" hx-target="#tracks">
+    <button type="submit" class="outline secondary" title="Releasomat downloads it again with the next refresh">Undo<span class="visually-hidden"> Don't like for {{ t.title }}</span></button>
+  </form>
+{%- endmacro %}
+
 {# A run's error report: the plain message, the details on demand and a Copy report button
    (app/static/report.js copies the hidden text; the same text is at /api/runs/<id>/report). #}
 {% macro error_report(run, playlist_title=None, show_message=True) -%}

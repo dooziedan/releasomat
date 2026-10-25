@@ -80,11 +80,14 @@ app/
   matching.py         normalising and scoring "is this the same track?"
   tagging.py          writes tags and cover art with mutagen
   files.py            the only place that creates, moves or deletes music files (ADR 0003)
+  lifecycle.py        what happens to a file after the download: adopted by Tagwerk, "Don't
+                      like", left the folder, found in the library (ADR 0009; database only)
   pipeline.py         one refresh, steps 1–6 above
   scheduler.py        per-playlist schedules (APScheduler), rebuilt from the DB (ADR 0005)
   worker.py           queue of refreshes and downloads, concurrency limits
   events.py           in-process event bus → Server-Sent Events for live progress
   routes/             pages (HTML, htmx partials) and JSON API, same routes as /docs
+    integration.py    the optional integration API for Tagwerk (ADR 0009), off without a key
   templates/          Jinja2 (base layout, pages, partials/)
   static/             vendored htmx (+ SSE extension), Pico CSS, theme.css (colour tokens), icons
 tests/                pytest; never go online (saved answers in tests/fixtures/online/)
@@ -97,13 +100,60 @@ unraid/releasomat.xml Unraid template
 | Table | Holds |
 |---|---|
 | `playlist` | source type, `kind` (a fixed playlist or a ListenBrainz series) + URL/ID, title, cover, `enabled` (pauses the schedule; Refresh now still works), `schedule` (cron string or empty), Navidrome mode, Navidrome playlist ID, last/next refresh, last status |
-| `track` | one real-world track: artist, title, album, duration, ISRC, MusicBrainz recording ID, cover URL, `match_key` (normalised artist + title, for finding the same track again). Shared between playlists |
+| `track` | one real-world track: artist, title, album, duration, ISRC, MusicBrainz recording ID, cover URL, BPM and key (when the source knows them), `match_key` (normalised artist + title, for finding the same track again). Shared between playlists |
 | `playlist_track` | which tracks a playlist has, position, `added_at`, `removed_at` |
-| `track_file` | where the track lives: Navidrome song ID, file path under `MUSIC_DIR` (empty if the song was already in the library), `downloaded_by_releasomat`, downloader, format/bitrate, status (`pending`, `searching`, `downloading`, `done`, `in_library`, `failed`, `skipped`), error, `details` (JSON: candidates tried and why they failed), attempts |
+| `track_file` | where the track lives: Navidrome song ID, file path under `MUSIC_DIR` (empty if the song was already in the library), `downloaded_by_releasomat`, downloader, format/bitrate, status (`pending`, `searching`, `downloading`, `done`, `in_library`, `failed`, `skipped`, `adopted`, `disliked`), error, `details` (JSON: candidates tried and why they failed), attempts; for files that left the folder (ADR 0009, `app/lifecycle.py`): `former_path`, `adopted_at`, `disliked_at`, `disliked_reason` |
 | `run` | one refresh: playlist, trigger (`schedule`/`manual`), start/end, status (incl. `skipped` when a scheduled refresh came due while one was running, `stopped` when the owner
 pressed Stop), `message`, counts, log lines, `report` (JSON error report) |
 | `navidrome_snapshot` | the Navidrome IDs of snapshot playlists Releasomat created, per playlist (only these may ever be deleted, and only with `SNAPSHOT_AUTO_DELETE` on) |
 | `setting` | key/value user settings (connections, defaults) |
+
+## Files after the download (ADR 0009)
+
+Releasomat's folder is a *discovery area*: its playlists work right away, and the owner's curated
+library stays separate. Files leave the folder only by the owner's action (ADR 0003). Every change
+of a file's state goes through `app/lifecycle.py` (database only, except the owner's delete); the
+refresh, the integration API and the UI all call it.
+
+| State (`track_file.status`) | Meaning | Downloaded again? |
+|---|---|---|
+| `done` | downloaded, in Releasomat's folder | – |
+| `in_library` | linked to a song elsewhere in the library (also an adopted or moved file, once Navidrome lists it there) | no |
+| `adopted` ("Adopted by Tagwerk") | Tagwerk took the file into its inbox; linked once it is in the library | never |
+| `disliked` ("Don't like") | the owner deleted it (in Releasomat, with Tagwerk's Delete, or threw the adopted file away in Tagwerk's inbox), or its file left the folder and isn't anywhere else in the library | never, until **Undo** on the playlist page |
+
+The status says where the song is now (the badge); `adopted_at`, `disliked_at`, `disliked_reason`
+(`vanished`, `deleted`, `discarded`, `owner`) and `former_path` remember what happened, so a "Don't
+like" track can also be `in_library` when the song is elsewhere in the library.
+
+**Without Tagwerk** (the default) all of this works through Navidrome alone: each refresh checks
+the files it downloaded. A file that has left the folder without an adoption notice is looked for
+in Navidrome *outside* Releasomat's folder (MusicBrainz ID, ISRC, name and length; the real path
+decides): found means linked there ("moved into your library"), not found means "Don't like"
+(lifted by itself if the song turns up later). **Safety brake**: when the folder looks unmounted
+(missing, empty, or every expected file of a playlist gone at once, at least 5), nothing is marked
+and the run warns.
+
+## Integration API for Tagwerk (optional, ADR 0009)
+
+**Releasomat never depends on Tagwerk.** The integration API under `/api/integration/` is off until
+the owner sets `INTEGRATION_API_KEY` (Settings → Tagwerk; every call answers 403
+`integration_off`). Releasomat never calls Tagwerk; only Tagwerk calls Releasomat, so nothing in a
+refresh waits for it.
+
+- Key in `Authorization: Bearer <key>` (constant-time compare, checked before the body; missing or
+  wrong: 401). Never logged, never echoed, scrubbed from error reports.
+- `GET info` (app, version, `integration_api: 1`, the folder name), `GET files` (the files in the
+  area now, with what was wanted and which playlists contain them).
+- `POST adopt`, `returned`, `discarded`, `restored`, `delete`: `{"files": [{"path", "size",
+  "id"}]}`, one answer per file (`ok` or a plain `reason`), idempotent. Paths inside the area in
+  NFC (`Releasomat/…` and `/music/Releasomat/…` accepted; `..` refused).
+- Only `delete` touches a file, through Releasomat's own owner's delete
+  (`lifecycle.delete_and_dislike` → `files.delete_by_owner`); every other call changes only the
+  database.
+- Errors: `{"integration_api": 1, "error": "<code>", "message": "…"}`. Shapes in `/docs`.
+- The Settings page shows whether it is on, the address and folder to enter in Tagwerk, and
+  Tagwerk's last call (kept in memory since the start).
 
 ## Error reports
 
@@ -164,7 +214,8 @@ folder as Navidrome sees it, e.g. `Releasomat`), `SLSKD_URL`, `SLSKD_API_KEY`, `
 `MATCH_THRESHOLD`, `PATH_TEMPLATE` (default `{artist}/{artist} - {title}.{ext}`),
 `SNAPSHOT_AUTO_DELETE` (default off), `DOWNLOAD_SOURCES` (global order of download sources, default
 `slskd,youtube`; ADR 0008), `SLSKD_FORMATS` (default `flac,aiff,wav,mp3`), `SLSKD_MIN_BITRATE`
-(default 320).
+(default 320), `INTEGRATION_API_KEY` (optional, empty by default: the Tagwerk integration is off;
+at least 16 characters).
 
 Secrets are never logged and never sent back to the browser in full.
 
@@ -172,16 +223,19 @@ Secrets are never logged and never sent back to the browser in full.
 
 Server-rendered pages with htmx (ADR 0001). Port **8430**.
 
-- **Playlists** (`/`): cover, name, source, tracks in library / downloaded / missing / failed, schedule,
-  next refresh, last status, **Refresh now**.
+- **Playlists** (`/`): cover, name, source, tracks in library / downloaded / missing / failed (plus
+  adopted / Don't like when there are some), schedule, next refresh, last status, **Refresh now**.
 - **Add playlist** (`/playlists/new`): paste a URL (source is detected), or pick from the ListenBrainz
   account (own playlists and "Created for you").
-- **Playlist** (`/playlists/{id}`): tracks with status; settings (above).
+- **Playlist** (`/playlists/{id}`): tracks with status ("Adopted by Tagwerk" and "Don't like"
+  badges, where each song comes from, **Undo** for Don't like: `DELETE /api/tracks/{id}/dislike`);
+  settings (above).
 - **Activity** (`/activity`): runs and live download progress (Server-Sent Events).
 - **Stop** (playlist page, Activity; `POST /api/playlists/{id}/stop`, `POST /api/runs/{id}/stop`):
   ends a running refresh now (the YouTube worker process group is ended, a Soulseek search or
   transfer cancelled) or drops a queued one. Saved tracks stay; the Navidrome playlist is not
   changed. Once the playlist is being saved in Navidrome it is too late to stop.
-- **Settings** (`/settings`): connections with a **Test** button, defaults. A short setup wizard on
-  first start until Navidrome is connected.
+- **Settings** (`/settings`): connections with a **Test** button, defaults, and the optional group
+  "Tagwerk" (key with **Generate**, saved only with "Save settings"; a status box). A short setup
+  wizard on first start until Navidrome is connected (planned; it never asks for the Tagwerk key).
 - `/docs` (API), `/health`.

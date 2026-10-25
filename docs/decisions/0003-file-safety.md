@@ -1,5 +1,5 @@
 # 0003: Releasomat only touches its own files and never deletes on its own
-Date: 2026-10-21, changed 2026-10-22 · Status: Accepted
+Date: 2026-10-21, changed 2026-10-22, note 2026-10-25 · Status: Accepted
 
 ## Context
 Releasomat writes into a folder that Navidrome (and Tagwerk) also read. Playlists like ListenBrainz's
@@ -22,6 +22,11 @@ waiting time. The owner decided against that on 2026-10-22: **tracks are only de
   confirmation, and only for files Releasomat downloaded (`track_file.downloaded_by_releasomat`).
   If a playlist still contains the track, the confirmation says which.
 - Songs that were already in Navidrome are linked, never downloaded again, moved or deleted.
+- **Files leave Releasomat's folder only by the owner's action**, in Releasomat or in another
+  program such as Tagwerk (adopt, delete; ADR 0009). Releasomat notices it through Navidrome on the
+  next refresh: a file found elsewhere in the library is linked there, one found nowhere is marked
+  "Don't like" and never downloaded again (unless the folder looks unmounted: then nothing is
+  marked). Tagwerk's delete goes through Releasomat's own owner's delete, with the same checks.
 
 ## Consequences
 - The download folder only grows until the owner cleans it up; the UI shows its size and which files

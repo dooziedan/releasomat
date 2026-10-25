@@ -1,5 +1,5 @@
 """Settings: connections to Navidrome, slskd, ListenBrainz and Tidal, the download sources and
-download defaults.
+download defaults, and the optional key for Tagwerk.
 
 Fields set by an env var are shown read-only ("set by the container"). Secrets are never sent
 back to the browser: their fields stay empty, and leaving them empty keeps the saved value.
@@ -8,9 +8,14 @@ back to the browser: their fields stay empty, and leaving them empty keeps the s
 buttons. The buttons ask the server for the list in its new order (htmx, nothing is saved yet);
 "Save settings" saves it with everything else. Without JavaScript a ▲/▼ button sends the whole
 form, which saves it in the new order.
+
+The group "Tagwerk" is optional (ADR 0009). Its Generate button puts a new random key into the
+field (htmx) so the owner can copy it into Tagwerk; like everything else it is only saved with
+"Save settings", and from then on shown masked.
 """
 
 import logging
+import secrets
 from dataclasses import dataclass
 
 from fastapi import APIRouter, HTTPException, Request
@@ -24,6 +29,7 @@ from app.db import SessionDep
 from app.downloaders import slskd
 from app.downloaders.base import DownloaderError
 from app.navidrome import Navidrome, PingResult
+from app.routes import integration
 from app.templating import templates
 
 log = logging.getLogger(__name__)
@@ -127,6 +133,8 @@ def _page(request, session, config, errors=None, submitted=None, status_code=200
             "page": "settings",
             "groups": groups,
             "group_ids": {name: key for key, name in user_settings.GROUPS.items()},
+            "group_notes": user_settings.GROUP_NOTES,
+            "integration": integration.overview(request, session),
             "lists": lists,
             "errors": errors,
             "submitted": submitted,
@@ -321,3 +329,16 @@ async def slskd_test_partial(request: Request, session: SessionDep):
 
     result = await check_slskd(value("SLSKD_URL"), value("SLSKD_API_KEY"))
     return templates.TemplateResponse(request, "partials/test_result.html", {"result": result})
+
+
+@router.post("/partials/integration-key", response_class=HTMLResponse, include_in_schema=False)
+def integration_key_partial(request: Request):
+    """Generate: a new random key in the field, to copy into Tagwerk. Nothing is saved here;
+    "Save settings" saves it."""
+    if user_settings.is_locked(integration.KEY):
+        raise HTTPException(409, "The key is set by the container and can't be changed here")
+    response = templates.TemplateResponse(
+        request, "partials/integration_key.html", {"key": secrets.token_urlsafe(32)}
+    )
+    response.headers["Cache-Control"] = "no-store"  # a new key: never kept in a cache
+    return response

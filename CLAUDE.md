@@ -7,6 +7,8 @@ Navidrome.
 Python + FastAPI, deployed as one Docker container on Unraid next to Navidrome. Modelled on Explo
 (github.com/LumePart/Explo), but a fresh codebase.
 The owner is learning to code: explain changes in plain language and keep the code easy to read.
+The owner writes in German: answer in German. Code, docs, commits and PRs stay in English.
+The latest handoff notes are in `dev/handoff-*.md` (git-ignored): read the newest one first.
 
 ## Commands
 - Setup: `python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'`
@@ -23,6 +25,9 @@ The owner is learning to code: explain changes in plain language and keep the co
 - **Files: Releasomat only touches its own files** ([ADR 0003](docs/decisions/0003-file-safety.md)). Only `app/files.py` creates, moves or deletes music files, only inside `MUSIC_DIR` (and moving its own finished downloads out of `SLSKD_DOWNLOADS_DIR`). Never overwrite. **Releasomat never deletes music files on its own** (no refresh, schedule, playlist change or setting does): only the owner deletes, by pressing a delete button for a file Releasomat downloaded, after a confirmation. Songs already in Navidrome are linked, never touched.
 - Develop against the dev Navidrome and `dev/` folders, never the owner's real library or Navidrome.
 - **Soulseek ([ADR 0008](docs/decisions/0008-download-sources-and-soulseek.md)): develop against the fake slskd (`scripts/fake_slskd.py`).** Don't set up a real slskd (dev service, image, account) without the owner's explicit permission. The owner's own slskd (address/API key in the dev app's Settings, never printed) may be used only for announced tests: **at most 5 searches and 3 downloads per test**, tell the owner before each one.
+- **No origin note in music files** (owner's decision, ADR 0009): Releasomat writes normal tags only (title, artist, album, cover, MusicBrainz ID, ISRC); where a file came from stays in the database.
+- **Releasomat never depends on Tagwerk** (owner's decision, ADR 0009): the integration API (`app/routes/integration.py`) is optional and off without a key (`INTEGRATION_API_KEY`); Releasomat works in full without it, never calls Tagwerk, and the UI never nags about a missing key.
+- **The integration API touches files only for `delete`** (the owner's delete started in Tagwerk, through `lifecycle.delete_and_dislike` → `files.delete_by_owner`). Every other call only changes the database (`app/lifecycle.py`).
 - **When a source or step fails, the run keeps an error report** (ADR 0006, architecture.md "Error reports"): plain-language what/where plus technical details, never secrets. A failed read changes nothing in Navidrome.
 - Unraid compatibility ([ADR 0002](docs/decisions/0002-unraid-deployment.md)): PUID/PGID/UMASK (defaults 99/100/022), container paths `/config`, `/music`, `/slskd` (optional), port 8430. Reach Navidrome/slskd via host IP or Docker network, never `localhost`. Never `chown` mapped folders in bulk.
 - **Everything must run inside the Docker image**: Python, ffmpeg, yt-dlp, ytmusicapi. No host tools at runtime. yt-dlp and ytmusicapi are used as Python libraries, not through their command line (downloads may run in a separate worker process so yt-dlp updates take effect; see roadmap Phase 1).
@@ -36,7 +41,8 @@ The owner is learning to code: explain changes in plain language and keep the co
 - Explo (MIT) is a reference for approaches, not a code source ([ADR 0004](docs/decisions/0004-license.md)). If anything is adapted, credit it in `NOTICE`.
 - Every user-visible change: update `CHANGELOG.md` (Unreleased). New design decisions: add an ADR in `docs/decisions/`.
 - **Local preview first:** run every change locally (http://localhost:8430 against the dev Navidrome) and wait for the owner's OK before committing and pushing.
-- Work on feature branches with PRs; commit or push only when asked. Releases are git tags `vX.Y.Z`: CI publishes the image and creates the GitHub Release page from the version's `CHANGELOG.md` section, so write changelog entries for readers of that page.
+- Work on feature branches with PRs; commit or push only when asked. **The owner merges PRs** (Claude Code refuses `gh pr merge` by Claude): open the PR, check CI with the ccd_pr tools, then ask. Every push to `main` publishes `ghcr.io/dooziedan/releasomat:edge`, which the owner runs on Unraid.
+- The repo is public: commits use the repo-local GitHub noreply e-mail (`git config user.email`), never the owner's private address. Releases are git tags `vX.Y.Z`: CI publishes the image and creates the GitHub Release page from the version's `CHANGELOG.md` section, so write changelog entries for readers of that page.
 - **Never put Claude session links (claude.ai/code/session…) or other private URLs/IDs in commits, PR descriptions or files.** Attribution is only `Co-Authored-By: Claude …` in commits and the "Generated with Claude Code" line in PRs.
 
 ## Layout

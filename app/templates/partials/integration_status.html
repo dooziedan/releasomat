@@ -1,0 +1,14 @@
+{# Settings → Tagwerk: whether the integration is on, and what to enter in Tagwerk. #}
+{% set i = integration %}
+<dl class="integration-status" aria-label="Tagwerk integration">
+  <dt>Integration</dt>
+  <dd>{% if i.on %}<span class="badge ok">on</span>{% if i.locked %} <small>key set by the container</small>{% endif %}
+      {% elif i.set %}Off: the key is shorter than 16 characters or contains spaces.
+      {% else %}Off{% endif %}</dd>
+  <dt>Address for Tagwerk</dt>
+  <dd><code>{{ i.address }}</code>{% if i.local %}<small>From Tagwerk's container use your server's IP address instead of localhost.</small>{% endif %}</dd>
+  <dt>Folder for Tagwerk</dt>
+  <dd><code>{{ i.folder }}</code><small>Releasomat's folder in the library (see Navidrome above).</small></dd>
+  <dt>Last call from Tagwerk</dt>
+  <dd>{% if i.last_call %}{{ i.last_call.at | localtime }} <small>({{ i.last_call.call }})</small>{% else %}None since Releasomat started{% endif %}</dd>
+</dl>

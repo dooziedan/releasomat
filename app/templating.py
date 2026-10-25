@@ -33,6 +33,15 @@ TRACK_LABELS = {
     "pending": "Missing",
     "searching": "Searching…",
     "downloading": "Downloading…",
+    "adopted": "Adopted by Tagwerk",
+    "disliked": "Don't like",
+}
+# Why a track is "Don't like" (track_file.disliked_reason), for the tracks table.
+DISLIKE_REASONS = {
+    "deleted": "You deleted its file",
+    "discarded": "You threw it away in Tagwerk",
+    "vanished": "Its file left Releasomat's folder",
+    "owner": "You marked it Don't like",
 }
 MATCHED_BY = {
     "mbid": "same MusicBrainz ID",
@@ -84,6 +93,7 @@ templates.env.globals.update(
     status_labels=STATUS_LABELS,
     describe_schedule=describe,
     track_labels=TRACK_LABELS,
+    dislike_reasons=DISLIKE_REASONS,
     matched_by=MATCHED_BY,
     report_text=as_text,
 )

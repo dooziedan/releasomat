@@ -15,7 +15,7 @@ from app import __version__, events, files, pipeline, reports
 from app import settings as user_settings
 from app.config import get_config
 from app.db import get_engine, migrate
-from app.routes import activity, playlists, settings, system
+from app.routes import activity, integration, playlists, settings, system
 from app.scheduler import PlaylistScheduler
 from app.worker import Worker
 
@@ -45,6 +45,9 @@ async def lifespan(app: FastAPI):
     engine = get_engine(config.database_url)
     pipeline.mark_interrupted(engine)
     files.clear_staging(config.config_dir)  # half-finished downloads of an interrupted run
+    leftovers = files.clear_part_files(config.music_dir)  # half-copied ones in MUSIC_DIR
+    if leftovers:
+        log.info("Removed %d half-copied download(s) from the music folder", leftovers)
     events.bus.reopen()
 
     with Session(engine) as session:
@@ -55,6 +58,7 @@ async def lifespan(app: FastAPI):
     scheduler.start()
     app.state.worker = worker
     app.state.scheduler = scheduler
+    app.state.integration_last_call = None  # Tagwerk's latest call (Settings → Tagwerk)
     events.close_streams_on_exit()
     found = reports.versions()
     log.info(
@@ -73,10 +77,24 @@ async def lifespan(app: FastAPI):
         await worker.stop()
 
 
+# The sections of /docs, in this order.
+TAGS = [
+    {"name": "system"},
+    {"name": "playlists"},
+    {"name": "activity"},
+    {"name": "settings"},
+    {
+        "name": "integration",
+        "description": "Optional, for Tagwerk. Off until a key is set in Settings → Tagwerk. "
+        "Send it as `Authorization: Bearer …`.",
+    },
+]
+
 app = FastAPI(
     title="Releasomat",
     version=__version__,
     summary="Turns playlists from streaming services into playlists in Navidrome.",
+    openapi_tags=TAGS,
     lifespan=lifespan,
 )
 app.mount("/static", StaticFiles(directory=Path(__file__).parent / "static"), name="static")
@@ -84,3 +102,6 @@ app.include_router(system.router)
 app.include_router(playlists.router)
 app.include_router(activity.router)
 app.include_router(settings.router)
+# Optional (ADR 0009): off until the owner sets a key; Releasomat never calls Tagwerk itself.
+app.include_router(integration.router)
+integration.add_error_handlers(app)  # only change the answers under /api/integration/

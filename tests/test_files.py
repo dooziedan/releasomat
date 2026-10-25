@@ -1,15 +1,19 @@
 """app/files.py: Releasomat only touches its own files (ADR 0003). Every rule, every way out."""
 
+import os
 from datetime import UTC, datetime
+from itertools import islice
 from pathlib import Path
 
 import pytest
 from sqlmodel import Session
 
+from app import files
 from app.files import (
     DeleteRefused,
     UnsafePath,
     clean_part,
+    clear_part_files,
     clear_staging,
     delete_by_owner,
     discard_staged,
@@ -157,6 +161,126 @@ def test_saving_never_overwrites(music, tmp_path):
     )
 
 
+def _staged(tmp_path, name="d.mp3", content=b"new download") -> tuple[Path, Path]:
+    staging = tmp_path / "staging"
+    staging.mkdir(exist_ok=True)
+    (staging / name).write_bytes(content)
+    return staging, staging / name
+
+
+def visible(folder: Path) -> list[str]:
+    """Every file and folder below ``folder``, hidden ones included."""
+    return sorted(p.relative_to(folder).as_posix() for p in folder.rglob("*"))
+
+
+def test_a_download_appears_in_one_step(music, tmp_path, monkeypatch):
+    """ADR 0009: the final name is reserved first, the file is copied under a hidden name next
+    to it, and renamed when complete; Navidrome and Tagwerk never see half a file."""
+    staging, download = _staged(tmp_path)
+    seen = {}
+    copy = files.shutil.copyfileobj
+
+    def copy_and_look(inp, out):
+        copy(inp, out)
+        seen["during"] = visible(music)
+        seen["reserved"] = (music / "Artist" / "Artist - Song.mp3").stat().st_size
+
+    monkeypatch.setattr(files.shutil, "copyfileobj", copy_and_look)
+    saved = save_download(download, staging, music, "Artist/Artist - Song.mp3")
+    assert seen["during"] == [
+        "Artist",
+        "Artist/.Artist - Song.mp3.releasomat-part",  # hidden while it is copied
+        "Artist/Artist - Song.mp3",  # the reserved name: still empty
+    ]
+    assert seen["reserved"] == 0
+    assert visible(music) == ["Artist", "Artist/Artist - Song.mp3"]  # no hidden file left
+    assert saved.read_bytes() == b"new download" and not download.exists()
+
+
+@pytest.mark.parametrize("problem", ["copy", "size"])
+def test_a_failed_save_leaves_nothing_behind(music, tmp_path, monkeypatch, problem):
+    (music / "Artist").mkdir()
+    (music / "Artist" / "Artist - Song.mp3").write_bytes(b"the owner's copy")
+    staging, download = _staged(tmp_path)
+    copy = files.shutil.copyfileobj
+
+    def broken(inp, out):
+        if problem == "copy":
+            out.write(b"half")
+            raise OSError("No space left on device")
+        copy(inp, out)
+        out.write(b"one byte too many")
+
+    monkeypatch.setattr(files.shutil, "copyfileobj", broken)
+    with pytest.raises(OSError, match="No space" if problem == "copy" else "Copied"):
+        save_download(download, staging, music, "Artist/Artist - Song.mp3")
+    # Only our hidden file and our empty reservation ("… (2).mp3") are gone again.
+    assert visible(music) == ["Artist", "Artist/Artist - Song.mp3"]
+    assert (music / "Artist" / "Artist - Song.mp3").read_bytes() == b"the owner's copy"
+    assert download.read_bytes() == b"new download"  # the download is still there
+
+
+def test_names_where_files_used_to_be_are_not_reused(music, tmp_path):
+    """A path Tagwerk may still name (a file that left the folder) never means a new file."""
+    staging, download = _staged(tmp_path)
+    saved = save_download(
+        download, staging, music, "A/A - Song.mp3", taken=["A/A - Song.mp3", "A/A - Song (2).mp3"]
+    )
+    assert saved == music.resolve() / "A" / "A - Song (3).mp3"
+
+
+def test_hidden_names_stay_within_the_file_name_limit(music, tmp_path):
+    staging, download = _staged(tmp_path)
+    name = "Ö" * 120 + ".flac"  # 245 bytes: fits, but not with the hidden name's additions
+    saved = save_download(download, staging, music, f"A/{name}")
+    assert saved.name == name
+    parts = list(islice(files._part_names(saved), 3))
+    assert all(len(p.name.encode()) <= 255 and files.is_part_name(p.name) for p in parts)
+    assert parts[1].name.endswith(".2.releasomat-part")
+
+
+def test_leftover_hidden_files_are_removed_and_nothing_else(music, outside, tmp_path):
+    folder = music / "Artist"
+    folder.mkdir()
+    keep = [
+        "Artist - Song.mp3",
+        ".hidden.mp3",
+        "Song.mp3.releasomat-part",  # not hidden: not one of ours
+        ".releasomat-part",
+        "Song.releasomat-part.mp3",
+    ]
+    for name in keep:
+        (folder / name).write_bytes(b"x")
+    (folder / ".Artist - Song.mp3.releasomat-part").write_bytes(b"half")
+    (music / ".Other.flac.2.releasomat-part").write_bytes(b"half")
+    (folder / ".Dir.releasomat-part").mkdir()  # a folder: never removed
+    (outside / ".Theirs.mp3.releasomat-part").write_bytes(b"not ours")
+    (music / "sneaky").symlink_to(outside, target_is_directory=True)
+    (folder / ".link.releasomat-part").symlink_to(outside / "precious.flac")
+
+    assert clear_part_files(music) == 2
+    assert sorted(os.listdir(folder)) == sorted(
+        [*keep, ".Dir.releasomat-part", ".link.releasomat-part"]
+    )
+    assert (outside / ".Theirs.mp3.releasomat-part").exists()
+    assert (outside / "precious.flac").exists()
+    assert clear_part_files(tmp_path / "not-mounted") == 0
+
+
+def test_leftovers_are_removed_at_startup(config):
+    from fastapi.testclient import TestClient
+
+    from app.main import app
+
+    leftover = config.music_dir / "A" / ".A - Song.mp3.releasomat-part"
+    leftover.parent.mkdir()
+    leftover.write_bytes(b"half")
+    (config.music_dir / "A" / "A - Song.mp3").write_bytes(b"music")
+    with TestClient(app):
+        pass
+    assert visible(config.music_dir) == ["A", "A/A - Song.mp3"]
+
+
 def test_a_symlink_in_the_way_is_never_written_through(music, outside, tmp_path):
     (music / "Song.mp3").symlink_to(outside / "would-be-created.mp3")
     staging = tmp_path / "staging"
@@ -280,11 +404,14 @@ def test_owner_delete_never_leaves_the_folder_or_follows_links(engine, music, ou
 
 def test_nothing_but_the_owner_delete_function_deletes_music():
     """ADR 0003: no refresh, schedule, playlist change or setting deletes music. The only
-    deleting function is ``delete_by_owner``, and nothing in the app calls it (yet: the delete
-    button arrives in phase 4)."""
+    deleting function is ``delete_by_owner``, and only ``lifecycle.delete_and_dislike`` (the
+    owner's delete, started in Tagwerk or later with Releasomat's own delete button) calls it."""
     app = Path(__file__).resolve().parent.parent / "app"
     for path in app.rglob("*.py"):
-        if path.name != "files.py":
+        if path.name == "lifecycle.py":
+            calls = path.read_text().count("files.delete_by_owner(")
+            assert calls == 1, "only delete_and_dislike calls it"
+        elif path.name != "files.py":
             assert "delete_by_owner" not in path.read_text(), path.relative_to(app)
 
 

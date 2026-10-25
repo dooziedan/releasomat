@@ -1,0 +1,63 @@
+{
+ "bookmarkPosition": 0,
+ "imageAbsent": true,
+ "id": "3NE1D7gcxlZTFbYCuYWFKT",
+ "libraryId": 1,
+ "libraryPath": "/music",
+ "libraryName": "Music Library",
+ "folderId": "4Wi0U20EyViz0J1087dUAl",
+ "path": "ReleasomatTest/Bicep/Bicep - Glue.flac",
+ "title": "Glue",
+ "album": "Bicep",
+ "artistId": "3wHcjy05up1AauaNLHJ8Kl",
+ "artist": "Bicep",
+ "albumArtistId": "3wHcjy05up1AauaNLHJ8Kl",
+ "albumArtist": "Bicep",
+ "albumId": "4BmH3O3yXcOkUoPAH2Lgps",
+ "hasCoverArt": false,
+ "trackNumber": 0,
+ "discNumber": 0,
+ "year": 0,
+ "originalYear": 0,
+ "releaseYear": 0,
+ "size": 3507634,
+ "suffix": "flac",
+ "duration": 269,
+ "bitRate": 104,
+ "sampleRate": 44100,
+ "bitDepth": 16,
+ "channels": 1,
+ "codec": "",
+ "genre": "",
+ "orderTitle": "glue",
+ "orderAlbumName": "bicep",
+ "orderArtistName": "bicep",
+ "orderAlbumArtistName": "bicep",
+ "compilation": false,
+ "lyrics": "[]",
+ "explicitStatus": "",
+ "rgAlbumGain": null,
+ "rgAlbumPeak": null,
+ "rgTrackGain": null,
+ "rgTrackPeak": null,
+ "participants": {
+  "albumartist": [
+   {
+    "id": "3wHcjy05up1AauaNLHJ8Kl",
+    "name": "Bicep",
+    "missing": false
+   }
+  ],
+  "artist": [
+   {
+    "id": "3wHcjy05up1AauaNLHJ8Kl",
+    "name": "Bicep",
+    "missing": false
+   }
+  ]
+ },
+ "missing": true,
+ "birthTime": "2026-10-23T15:31:11.929742244Z",
+ "createdAt": "2026-10-23T15:31:15.197761735Z",
+ "updatedAt": "2026-10-25T10:50:00.628355858Z"
+}

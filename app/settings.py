@@ -15,6 +15,9 @@ pages and the API only show ``mask(value)``.
 A "list" setting (``DOWNLOAD_SOURCES``, ``SLSKD_FORMATS``) is a comma-separated list of names in
 order, e.g. ``slskd,youtube``. ``none`` means that every entry is switched off (an empty value
 means "back to the default", like for every other setting).
+
+The group "Tagwerk" is optional: Releasomat works in full without it (ADR 0009). Its key only
+switches on the integration API that Tagwerk calls.
 """
 
 import os
@@ -42,6 +45,9 @@ class Definition:
     maximum: int | None = None
     choices: tuple[str, ...] = ()  # for kind "list": the allowed names, in their default order
     allow_none: bool = False  # for kind "list": may every entry be switched off?
+    min_length: int | None = None  # for kinds "text" and "secret": at least this many characters
+    # A key another program sends in an HTTP header: letters, digits and punctuation, no spaces.
+    header_safe: bool = False
 
     @property
     def secret(self) -> bool:
@@ -56,6 +62,12 @@ GROUPS = {
     "tidal": "Tidal",
     "downloads": "Downloads and matching",
     "playlists": "Playlists in Navidrome",
+    "tagwerk": "Tagwerk",
+}
+# A line under a group's heading.
+GROUP_NOTES = {
+    "tagwerk": "Optional. Only needed if you use Tagwerk to manage your library: it lets Tagwerk "
+    "adopt Releasomat's downloads into your library. Releasomat works the same without it.",
 }
 
 DEFINITIONS = [
@@ -128,6 +140,13 @@ DEFINITIONS = [
         help="Off: old snapshot playlists stay in Navidrome until you delete them. On: Releasomat "
         "keeps the newest N per playlist (set on each playlist) and deletes older ones it "
         "created. Music files are never deleted.",
+    ),
+    Definition(
+        "INTEGRATION_API_KEY", "Integration key", "tagwerk", "secret",
+        help="Empty (the default): the integration is off. With a key, Tagwerk may call "
+        "Releasomat's integration API; enter the same key in Tagwerk. At least 16 characters; "
+        "Generate makes a good one.",
+        min_length=16, header_safe=True,
     ),
 ]  # fmt: skip
 
@@ -269,6 +288,10 @@ def clean(definition: Definition, value: str) -> str:
         return value.rstrip("/")
     if definition.kind == "list":
         return _check_list(definition, value)
+    if definition.min_length and len(value) < definition.min_length:
+        raise InvalidSetting(f"At least {definition.min_length} characters")
+    if definition.header_safe and not all(33 <= ord(c) <= 126 for c in value):
+        raise InvalidSetting("Only letters, digits and punctuation, no spaces")
     return value
 
 

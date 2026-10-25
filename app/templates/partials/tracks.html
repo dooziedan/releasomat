@@ -1,4 +1,4 @@
-{% from "macros.html" import track_badge %}
+{% from "macros.html" import track_badge, undo_dislike %}
 {# The tracks table of a playlist page: reloaded live while a refresh changes the tracks. #}
 <article>
   <header><h2>Tracks</h2></header>
@@ -12,13 +12,24 @@
           <td>{{ t.position }}</td>
           <td>{{ t.title }}<small>{{ t.artist }}{% if t.album %} · {{ t.album }}{% endif %}</small></td>
           <td class="nowrap">{{ t.duration | clock }}</td>
-          <td class="nowrap">{{ track_badge(t.status) }}</td>
+          <td class="track-status">{{ track_badge(t.status) }}{% if t.disliked_at and t.status != "disliked" %}{{ track_badge("disliked") }}{% endif %}</td>
           <td class="track-source">
             {% if t.status == "in_library" %}
-              Your library{% if t.matched_by %}<small>{{ matched_by.get(t.matched_by, t.matched_by) }}</small>{% endif %}
+              Your library
+              {% if t.adopted_at %}<small>adopted with Tagwerk</small>
+              {% elif t.moved %}<small>you moved it there from Releasomat's folder</small>
+              {% elif t.matched_by %}<small>{{ matched_by.get(t.matched_by, t.matched_by) }}</small>{% endif %}
+              {% if t.disliked_at %}{% set why = dislike_reasons.get(t.disliked_reason, "Marked") %}
+              <small>Don't like: {{ why[:1] | lower }}{{ why[1:] }}. Linked from your library, never downloaded.</small>{{ undo_dislike(playlist.id, t) }}{% endif %}
             {% elif t.status == "done" %}
               {{ "YouTube" if t.downloader == "youtube" else (t.downloader or "") }}{% if t.format %} · {{ t.format }}{% if t.bitrate %} {{ t.bitrate }} kbit/s{% endif %}{% endif %}
               {% if t.origin %}<small><a href="{{ t.origin }}" rel="noreferrer" target="_blank">source</a>{% if not t.navidrome_song_id %} · not in Navidrome yet{% endif %}</small>{% endif %}
+            {% elif t.status == "adopted" %}
+              Tagwerk<small>Adopted {{ t.adopted_at | localtime }}. Linked once it is in your library; never downloaded again.</small>
+            {% elif t.status == "disliked" %}
+              {{ dislike_reasons.get(t.disliked_reason, "Don't like") }}
+              <small>Never downloaded again{% if t.disliked_reason == "vanished" %}; linked if the song turns up in your library{% else %}; linked if the song is in your library{% endif %}.</small>
+              {{ undo_dislike(playlist.id, t) }}
             {% endif %}
             {% if t.error and t.status != "done" %}
             <details class="track-error">

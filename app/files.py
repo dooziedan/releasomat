@@ -9,7 +9,8 @@ through this module and follows three rules:
    symlink that leads elsewhere. See ``inside()``.
 2. **Never overwrite.** If a file name is taken, the new file gets " (2)", " (3)", … before its
    extension. The check and the creation are one step (``open(…, "xb")``), so even two downloads
-   finishing at the same moment can't overwrite each other.
+   finishing at the same moment can't overwrite each other. A new file in MUSIC_DIR appears in
+   one step: it is copied under a hidden name and renamed when complete (``save_download``).
 3. **Never delete on its own.** No refresh, schedule, playlist change or setting deletes music.
    Only the owner does, with a delete button for one file (``delete_by_owner()``, phase 4), and
    only for a file Releasomat downloaded itself. Songs that were already in Navidrome are linked,
@@ -23,7 +24,8 @@ import os
 import shutil
 import string
 import tempfile
-from collections.abc import Iterator
+import unicodedata
+from collections.abc import Callable, Collection, Iterator
 from dataclasses import dataclass, field
 from itertools import count
 from pathlib import Path
@@ -133,13 +135,29 @@ def free_name(path: Path) -> Path:
     return next(p for p in numbered(path) if not p.exists() and not p.is_symlink())
 
 
-def save_download(source: Path, source_root: Path, music_dir: Path, relative: str) -> Path:
+def save_download(
+    source: Path,
+    source_root: Path,
+    music_dir: Path,
+    relative: str,
+    *,
+    taken: Collection[str] = (),
+) -> Path:
     """Move a finished download into MUSIC_DIR and return where it ended up.
 
     ``source`` must be a plain file inside ``source_root`` (the download's staging folder, or
     SLSKD_DOWNLOADS_DIR for a Soulseek download Releasomat started). The target is
-    ``music_dir/relative``; if that name is taken, a numbered one. Existing files are never
-    overwritten. The source is removed only after the copy is complete.
+    ``music_dir/relative``; if that name is taken, a numbered one. ``taken`` lists more names
+    (relative to MUSIC_DIR) that count as taken although no file has them now: where files
+    that left the folder used to be, so Tagwerk's notices about them never mean a new file.
+    Existing files are never overwritten. The source is removed only after the copy is
+    complete.
+
+    The file **appears in one step** (ADR 0009), so Navidrome and Tagwerk never see half of it:
+    the final name is reserved first (an empty file), the download is copied into a hidden file
+    next to it (``.<name>.releasomat-part``), its size is checked, and then it is renamed onto
+    the reserved name. If anything fails, only the hidden file and the empty reservation are
+    removed.
     """
     src = inside(source_root, source)
     if src.is_symlink() or not src.is_file():
@@ -147,9 +165,116 @@ def save_download(source: Path, source_root: Path, music_dir: Path, relative: st
     target = inside(music_dir, relative)
     target.parent.mkdir(parents=True, exist_ok=True)
     inside(music_dir, target.parent)  # still inside after creating the folders
-    saved = _copy_without_overwriting(src, target)
+    base = Path(music_dir).resolve()
+    skip = {unicodedata.normalize("NFC", name) for name in taken}
+    saved = _place_without_overwriting(src, target, lambda p: _relative_nfc(p, base) in skip)
     src.unlink()
     return saved
+
+
+# Hidden files a download is copied into before it gets its real name (``save_download``).
+# Nothing else ever has this ending, so leftovers (after a crash) can be removed safely.
+PART_SUFFIX = ".releasomat-part"
+NAME_LIMIT = 255  # bytes per file name on the usual file systems
+
+
+def is_part_name(name: str) -> bool:
+    """True for the names of save_download's hidden files: ``.<name>.releasomat-part``."""
+    return name.startswith(".") and name.endswith(PART_SUFFIX) and len(name) > len(PART_SUFFIX) + 1
+
+
+def _part_names(target: Path) -> Iterator[Path]:
+    """Hidden names next to ``target`` to copy into: ``.<name>.releasomat-part``, then
+    ``.<name>.2.releasomat-part``, … (shortened to stay within the file name limit)."""
+    for n in count(1):
+        extra = PART_SUFFIX if n == 1 else f".{n}{PART_SUFFIX}"
+        name = target.name
+        while len(f".{name}{extra}".encode()) > NAME_LIMIT:
+            name = name[:-1]
+        yield target.with_name(f".{name}{extra}")
+
+
+def _relative_nfc(path: Path, base: Path) -> str:
+    return unicodedata.normalize("NFC", path.relative_to(base).as_posix())
+
+
+def _place_without_overwriting(
+    src: Path, target: Path, also_taken: Callable[[Path], bool] = lambda p: False
+) -> Path:
+    """Copy ``src`` to ``target`` (or a numbered name) through a hidden file; see
+    ``save_download``. Returns the final path."""
+    for candidate in numbered(target):
+        if also_taken(candidate):
+            continue
+        try:
+            # "x": reserve the name, fail if anything already has it (also a symlink).
+            reservation = os.open(candidate, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o666)
+        except FileExistsError:
+            continue
+        reserved = os.fstat(reservation)
+        os.close(reservation)
+        part: Path | None = None
+        try:
+            for part_name in _part_names(candidate):
+                try:
+                    out = open(part_name, "xb")  # noqa: SIM115 (closed below)
+                except FileExistsError:
+                    continue
+                part = part_name
+                break
+            assert part is not None
+            with out, open(src, "rb") as inp:
+                shutil.copyfileobj(inp, out)
+                out.flush()
+                os.fsync(out.fileno())
+            expected, written = src.stat().st_size, part.stat().st_size
+            if written != expected:
+                raise OSError(f"Copied {written} of {expected} bytes of {src.name}.")
+            now = os.lstat(candidate)
+            if (now.st_dev, now.st_ino, now.st_size) != (reserved.st_dev, reserved.st_ino, 0):
+                raise FileExistsError(f"Something else took {candidate.name} meanwhile.")
+            os.replace(part, candidate)  # the complete file appears under its name at once
+        except BaseException:
+            if part is not None:
+                part.unlink(missing_ok=True)  # only our own hidden file
+            _remove_reservation(candidate, reserved)
+            raise
+        return candidate
+    raise AssertionError("unreachable")
+
+
+def _remove_reservation(path: Path, reserved: os.stat_result) -> None:
+    """Remove the empty file ``_place_without_overwriting`` reserved, but only if it is still
+    that same empty file."""
+    try:
+        now = os.lstat(path)
+    except FileNotFoundError:
+        return
+    if (now.st_dev, now.st_ino, now.st_size) == (reserved.st_dev, reserved.st_ino, 0):
+        path.unlink(missing_ok=True)
+
+
+def clear_part_files(music_dir: Path) -> int:
+    """Remove hidden ``.<name>.releasomat-part`` files that a crash left inside MUSIC_DIR (at
+    startup). Only plain files with exactly that kind of name: they are half-copied downloads,
+    never music. Symlinked folders are not followed. Returns how many were removed."""
+    try:
+        base = Path(music_dir).resolve(strict=True)
+    except OSError:
+        return 0
+    if not base.is_dir():
+        return 0
+    removed = 0
+    for folder, _dirs, names in os.walk(base):  # doesn't follow symlinked folders
+        for name in names:
+            if not is_part_name(name):
+                continue
+            path = Path(folder) / name
+            if path.is_symlink() or not path.is_file() or not path.resolve().is_relative_to(base):
+                continue
+            path.unlink()
+            removed += 1
+    return removed
 
 
 def _copy_without_overwriting(src: Path, target: Path) -> Path:

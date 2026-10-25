@@ -23,7 +23,7 @@
             </div>
           </td>
           <td class="counts">
-            {% if c.total %}{{ c.total }}<small>{{ c.in_library }} in library · {{ c.downloaded }} downloaded · {{ c.missing }} missing · {{ c.failed }} failed</small>
+            {% if c.total %}{{ c.total }}<small>{{ c.in_library }} in library · {{ c.downloaded }} downloaded · {{ c.missing }} missing · {{ c.failed }} failed{% if c.adopted %} · {{ c.adopted }} adopted{% endif %}{% if c.disliked %} · {{ c.disliked }} Don't like{% endif %}</small>
             {% else %}<span class="muted">–</span>{% endif %}
           </td>
           <td>{% if p.enabled %}{{ describe_schedule(p.schedule) }}{% else %}<span class="muted">Paused</span>{% endif %}</td>

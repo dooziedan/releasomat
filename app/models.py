@@ -45,6 +45,10 @@ class RunStatus(StrEnum):
 
 
 class FileStatus(StrEnum):
+    """Where a track's song is now (the badge on the playlist page). What happened to it before
+    is kept in ``TrackFile``'s time stamps (``adopted_at``, ``disliked_at``), so an adopted or
+    disliked track can also be ``in_library`` once its song is found in the library."""
+
     PENDING = "pending"
     SEARCHING = "searching"
     DOWNLOADING = "downloading"
@@ -52,6 +56,20 @@ class FileStatus(StrEnum):
     IN_LIBRARY = "in_library"  # already in Navidrome: linked, never touched
     FAILED = "failed"
     SKIPPED = "skipped"
+    # Tagwerk took the file (ADR 0009): never downloaded again; linked once it is in the library.
+    ADOPTED = "adopted"
+    # "Don't like": the owner deleted it (or it left Releasomat's folder and isn't anywhere else
+    # in the library). Never downloaded again; linked if the song is elsewhere in the library.
+    DISLIKED = "disliked"
+
+
+class DislikeReason(StrEnum):
+    """Why a track is marked "Don't like" (``TrackFile.disliked_reason``)."""
+
+    VANISHED = "vanished"  # its file left Releasomat's folder and wasn't found anywhere else
+    DELETED = "deleted"  # the owner deleted the file (in Releasomat, or with Tagwerk's Delete)
+    DISCARDED = "discarded"  # the owner threw the adopted file away in Tagwerk's inbox
+    OWNER = "owner"  # the owner pressed "Don't like"
 
 
 class Playlist(SQLModel, table=True):
@@ -97,6 +115,9 @@ class Track(SQLModel, table=True):
     # "main artist|title", normalised (app/matching.py ``track_key``): finds the same track again
     # when a service gives neither an ISRC nor an MBID.
     match_key: str | None = Field(default=None, index=True)
+    # From the playlist's source when it knows them (Beatport, Tidal), for Tagwerk (ADR 0009).
+    bpm: float | None = None
+    key: str | None = None  # musical key as the source writes it, e.g. "Gb Minor"
     created_at: datetime = Field(default_factory=utcnow)
 
 
@@ -119,6 +140,9 @@ class TrackFile(SQLModel, table=True):
     navidrome_song_id: str | None = Field(default=None, index=True)
     # Relative to MUSIC_DIR. Empty when the song was already in the library (never touched).
     path: str | None = None
+    # Where the file was in MUSIC_DIR before it left (adopted by Tagwerk, deleted by the owner,
+    # moved away). Tagwerk's notices may still name a file by this path (app/lifecycle.py).
+    former_path: str | None = Field(default=None, index=True)
     # Only files with this set may ever be deleted (ADR 0003).
     downloaded_by_releasomat: bool = False
     downloader: str | None = None  # "youtube", "slskd"
@@ -131,6 +155,12 @@ class TrackFile(SQLModel, table=True):
     # ("matched_by": "mbid", "isrc", "name"), where a download came from ("origin"), and what was
     # tried and why it failed ("tried": [{"downloader", "candidate", "reason"}, …]).
     details: dict | None = Field(default=None, sa_column=Column(JSON))
+    # What happened to the file (app/lifecycle.py, ADR 0009). These stay when the status
+    # changes, e.g. an adopted track whose library copy is linked is "in_library" with
+    # ``adopted_at`` still set.
+    adopted_at: datetime | None = None  # Tagwerk adopted the file
+    disliked_at: datetime | None = None  # marked "Don't like"
+    disliked_reason: str | None = None  # a DislikeReason
     created_at: datetime = Field(default_factory=utcnow)
     updated_at: datetime = Field(default_factory=utcnow)
 

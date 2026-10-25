@@ -1,5 +1,5 @@
-"""The only place that talks to Navidrome, through the Subsonic API it implements (plus one call
-of Navidrome's own API, see ``songs_by_path``).
+"""The only place that talks to Navidrome, through the Subsonic API it implements (plus two calls
+of Navidrome's own API, see ``songs_by_path`` and ``song_info``).
 
 Logging in: Subsonic clients never send the password itself. Each request carries a random
 "salt" and ``md5(password + salt)`` as token (``u``, ``t``, ``s`` parameters), so a captured
@@ -10,6 +10,9 @@ address at INFO level; ``app/main.py`` turns its logger down to WARNING for that
 What Releasomat does here (docs/architecture.md, "Navidrome details"):
 
 - ``search`` songs (an MBID as query matches exactly), ``music_folders``;
+- ``find_in_library``: the song that is a wanted track; ``find_elsewhere``: the same, but only
+  outside Releasomat's folder, checked with ``song_info`` (Navidrome's own API: real path and
+  whether the file is missing), for files that left the folder (ADR 0009);
 - ``scan``: wait until no scan runs, start one for Releasomat's folder only, wait until it is done
   (Navidrome ignores a scan request while another scan runs);
 - ``find_download``: the Navidrome song of a file Releasomat just saved: by MBID, else by its path
@@ -23,7 +26,9 @@ import hashlib
 import logging
 import secrets
 import time
+from collections.abc import Collection
 from dataclasses import dataclass
+from urllib.parse import quote
 
 import httpx
 from sqlmodel import Session
@@ -37,6 +42,7 @@ API_VERSION = "1.16.1"  # the Subsonic API version Navidrome implements
 CLIENT_NAME = "releasomat"
 SCAN_TIMEOUT = 600  # seconds to wait for a scan
 SCAN_POLL = 1.0  # seconds between two "are you done?" questions
+ELSEWHERE_TRIES = 3  # matches find_elsewhere checks before it gives up
 
 # Subsonic error codes worth explaining in plain words.
 ERRORS = {
@@ -222,25 +228,101 @@ class Navidrome:
         return list((body.get("searchResult3") or {}).get("song") or [])
 
     async def find_in_library(
-        self, track: matching.Wanted, threshold: int
+        self, track: matching.Wanted, threshold: int, skip_ids: Collection[str] = ()
     ) -> matching.SongMatch | None:
         """The song in Navidrome that is this track, or None: by MusicBrainz ID, then by name
-        (comparing ISRCs, names and lengths, see ``matching.match_song``)."""
+        (comparing ISRCs, names and lengths, see ``matching.match_song``).
+
+        ``skip_ids`` are songs that were files in Releasomat's folder which have left it: until
+        its next scan Navidrome still lists them. Such a song is only the answer when Navidrome's
+        own API says it is now elsewhere in the library (Navidrome keeps a song's ID when it
+        notices a file was moved)."""
+        skip = set(skip_ids)
         if track.mbid:
-            found = matching.match_song(track, await self.search(track.mbid, 5), threshold)
+            songs = {s["id"]: s for s in await self.search(track.mbid, 5) if s.get("id")}
+            found = await self._pick(track, songs, threshold, check_all=False, skip_ids=skip)
             if found:
                 return found
-        songs: dict[str, dict] = {}
-        song_only = matching.title_parts(track.title).song
-        for query in dict.fromkeys([matching.search_text(track.artist, track.title), song_only]):
-            if not query:
-                continue
+        songs = {}
+        for query in self._name_queries(track):
             for song in await self.search(query, 50):
-                songs.setdefault(song["id"], song)
-            found = matching.match_song(track, list(songs.values()), threshold)
+                if song.get("id"):
+                    songs.setdefault(song["id"], song)
+            found = await self._pick(track, songs, threshold, check_all=False, skip_ids=skip)
             if found:
                 return found
         return None
+
+    @staticmethod
+    def _name_queries(track: matching.Wanted) -> list[str]:
+        """What to search for by name: main artist and song, then the song alone."""
+        song_only = matching.title_parts(track.title).song
+        queries = [matching.search_text(track.artist, track.title), song_only]
+        return [q for q in dict.fromkeys(queries) if q]
+
+    async def find_elsewhere(
+        self, track: matching.Wanted, threshold: int, skip_ids: Collection[str] = ()
+    ) -> matching.SongMatch | None:
+        """The song in the library **outside Releasomat's folder** that is this track, or None
+        (ADR 0009: a file that left the folder, an adopted or a "Don't like" track).
+
+        Like ``find_in_library``, but every match is checked with ``song_info`` (Navidrome's
+        own API): songs whose real path is in Releasomat's folder (``<subfolder>/…``) and songs
+        Navidrome marks missing are passed over, up to ``ELSEWHERE_TRIES`` matches. If
+        Navidrome's own API doesn't work, only ``skip_ids`` (the old songs of files that left
+        the folder) are passed over."""
+        songs: dict[str, dict] = {}
+        if track.mbid:
+            for song in await self.search(track.mbid, 5):
+                if song.get("id"):
+                    songs.setdefault(song["id"], song)
+        for query in self._name_queries(track):
+            for song in await self.search(query, 50):
+                if song.get("id"):
+                    songs.setdefault(song["id"], song)
+        return await self._pick(track, songs, threshold, check_all=True, skip_ids=set(skip_ids))
+
+    async def _pick(
+        self,
+        track: matching.Wanted,
+        songs: dict[str, dict],
+        threshold: int,
+        *,
+        check_all: bool,
+        skip_ids: set[str],
+    ) -> matching.SongMatch | None:
+        """The best match among ``songs`` whose real place is fine: every match when
+        ``check_all``, else only those in ``skip_ids`` are checked with ``song_info`` (outside
+        Releasomat's folder and not missing). Up to ``ELSEWHERE_TRIES`` checked matches."""
+        passed_over: set[str] = set()
+        for _ in range(ELSEWHERE_TRIES):
+            candidates = [s for i, s in songs.items() if i not in passed_over]
+            found = matching.match_song(track, candidates, threshold)
+            if found is None:
+                return None
+            song_id = found.song["id"]
+            if not check_all and song_id not in skip_ids:
+                return found
+            try:
+                info = await self.song_info(song_id)
+            except NavidromeError as exc:
+                log.info("Can't check where song %s is (%s)", song_id, exc)
+                if song_id not in skip_ids:
+                    return found
+                passed_over.add(song_id)
+                continue
+            if self.outside_area(info):
+                return found
+            passed_over.add(song_id)
+        return None
+
+    def outside_area(self, info: dict | None) -> bool:
+        """Whether a song (``song_info``) is a file in the library outside Releasomat's folder
+        that Navidrome hasn't marked missing."""
+        if not info or info.get("missing"):
+            return False
+        path = info.get("path") or ""
+        return not (self.subfolder and path.startswith(f"{self.subfolder}/"))
 
     # --- Scans --------------------------------------------------------------------------------
 
@@ -340,6 +422,38 @@ class Navidrome:
                 "Navidrome's song list answered unexpectedly.", call="api/song"
             ) from None
         return songs if isinstance(songs, list) else []
+
+    async def song_info(self, song_id: str) -> dict | None:
+        """One song as Navidrome's own API knows it (``GET /api/song/<id>``): its real ``path``
+        (relative to its library, e.g. ``"Demo/Queen/…/01 Song.mp3"``), ``libraryPath`` and
+        ``missing`` (the file is gone since the last scan). None when Navidrome doesn't know
+        the ID. The Subsonic API can't tell this: its ``path`` is made up from the tags."""
+        token = await self._login_native()
+        response = await self._send(
+            "GET",
+            f"{self.url}/api/song/{quote(song_id, safe='')}",
+            "api/song/{id}",
+            headers={"X-ND-Authorization": f"Bearer {token}"},
+        )
+        if response.status_code == 404:
+            return None
+        if response.status_code != 200:
+            raise NavidromeError(
+                f"Navidrome's song details answered with HTTP {response.status_code}.",
+                call="api/song/{id}",
+                http_status=response.status_code,
+            )
+        try:
+            song = response.json()
+        except ValueError:
+            raise NavidromeError(
+                "Navidrome's song details answered unexpectedly.", call="api/song/{id}"
+            ) from None
+        if not isinstance(song, dict):
+            raise NavidromeError(
+                "Navidrome's song details answered unexpectedly.", call="api/song/{id}"
+            )
+        return song
 
     async def find_download(
         self, track: matching.Wanted, relative_path: str, threshold: int
