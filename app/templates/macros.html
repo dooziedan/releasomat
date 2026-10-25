@@ -18,11 +18,18 @@
   <span class="badge track-{{ status }}">{{ track_labels.get(status, status) }}</span>
 {%- endmacro %}
 
-{# Undo for a "Don't like" track: the next refresh downloads it again. htmx swaps the tracks
-   table; without JavaScript the form reloads the page. #}
-{% macro undo_dislike(playlist_id, t) -%}
-  {%- set action = "/playlists/" ~ playlist_id ~ "/tracks/" ~ t.track_id ~ "/undo-dislike" -%}
-  <form class="undo-dislike" method="post" action="{{ action }}" hx-post="{{ action }}" hx-target="#tracks">
+{# Undo for a "Don't like" track: the next refresh downloads it again. htmx swaps the table it
+   is in (a playlist's tracks, or without ``playlist_id`` the "Don't like" page's list); without
+   JavaScript the form reloads the page. #}
+{% macro undo_dislike(t, playlist_id=None) -%}
+  {%- if playlist_id -%}
+    {%- set action = "/playlists/" ~ playlist_id ~ "/tracks/" ~ t.track_id ~ "/undo-dislike" -%}
+    {%- set target = "#tracks" -%}
+  {%- else -%}
+    {%- set action = "/dont-like/" ~ t.track_id ~ "/undo" -%}
+    {%- set target = "#dont-like" -%}
+  {%- endif -%}
+  <form class="undo-dislike" method="post" action="{{ action }}" hx-post="{{ action }}" hx-target="{{ target }}">
     <button type="submit" class="outline secondary" title="Releasomat downloads it again with the next refresh">Undo<span class="visually-hidden"> Don't like for {{ t.title }}</span></button>
   </form>
 {%- endmacro %}

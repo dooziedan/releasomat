@@ -20,7 +20,7 @@
               {% elif t.moved %}<small>you moved it there from Releasomat's folder</small>
               {% elif t.matched_by %}<small>{{ matched_by.get(t.matched_by, t.matched_by) }}</small>{% endif %}
               {% if t.disliked_at %}{% set why = dislike_reasons.get(t.disliked_reason, "Marked") %}
-              <small>Don't like: {{ why[:1] | lower }}{{ why[1:] }}. Linked from your library, never downloaded.</small>{{ undo_dislike(playlist.id, t) }}{% endif %}
+              <small>Don't like: {{ why[:1] | lower }}{{ why[1:] }}. Linked from your library, never downloaded.</small>{{ undo_dislike(t, playlist.id) }}{% endif %}
             {% elif t.status == "done" %}
               {{ downloader_labels.get(t.downloader, t.downloader or "") }}{% if t.format %} · {{ t.format }}{% if t.bitrate %} {{ t.bitrate }} kbit/s{% endif %}{% endif %}
               {% if t.origin %}<small><a href="{{ t.origin }}" rel="noreferrer" target="_blank">source</a>{% if not t.navidrome_song_id %} · not in Navidrome yet{% endif %}</small>{% endif %}
@@ -31,7 +31,7 @@
             {% elif t.status == "disliked" %}
               {{ dislike_reasons.get(t.disliked_reason, "Don't like") }}
               <small>Never downloaded again{% if t.disliked_reason == "vanished" %}; linked if the song turns up in your library{% else %}; linked if the song is in your library{% endif %}.</small>
-              {{ undo_dislike(playlist.id, t) }}
+              {{ undo_dislike(t, playlist.id) }}
             {% endif %}
             {# Why a track is missing or failed. Only for those states: a reason from an earlier
                try doesn't belong next to "Downloading…" or "Downloaded". #}

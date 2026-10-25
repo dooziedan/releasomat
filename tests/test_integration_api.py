@@ -1,11 +1,13 @@
 """The integration API for Tagwerk (ADR 0009, app/routes/integration.py): optional and off
 without a key, the key checked first and never echoed or logged, the answers' shapes, the path
 spellings Tagwerk may send, every call idempotent, and no call touching a file except ``delete``.
-Also the Settings group "Tagwerk" (optional, Generate, masking) and Undo for "Don't like"."""
+Also the Settings group "Tagwerk" (optional, Generate, masking), Undo for "Don't like" and the
+"Don't like" page."""
 
 import logging
 import re
 import unicodedata
+from datetime import timedelta
 from html import unescape
 from pathlib import Path
 
@@ -673,6 +675,91 @@ def test_badges_and_counts(client, db, config):
 
 def test_the_playlist_list_says_nothing_about_tagwerk_without_it(client, db, config):
     download(db, config.music_dir)
-    rows = unescape(client.get("/").text)
+    rows = unescape(client.get("/partials/playlists").text)  # the list, without the menu
     assert "1 downloaded · 0 missing · 0 failed</small>" in rows
     assert "adopted" not in rows and "Don't like" not in rows
+
+
+# --- The "Don't like" page ----------------------------------------------------------------------
+
+
+def test_the_dont_like_page_lists_them_from_every_playlist(client, db, config):
+    music = config.music_dir
+    now = utcnow()
+    thrown = download(db, music, None, title="Thrown", status="disliked", former_path="T/T.opus",
+                      disliked_at=now - timedelta(days=2), disliked_reason="discarded")  # fmt: skip
+    linked = download(db, music, None, title="Linked", playlist="Club", status="in_library",
+                      navidrome_song_id="lib1", disliked_at=now - timedelta(days=1),
+                      disliked_reason="deleted", former_path="L/L.opus")  # fmt: skip
+    gone = download(db, music, None, title="Gone", status="disliked", former_path="G/G.opus",
+                    disliked_at=now, disliked_reason="vanished")  # fmt: skip
+    download(db, music, GLUE, title="Glue")  # downloaded: not listed
+    download(db, music, None, title="Adopted", status="adopted", former_path="A/A.opus",
+             adopted_at=now)  # fmt: skip
+    mix, club = (
+        db.exec(select(Playlist).where(Playlist.title == t)).one() for t in ("My Mix", "Club")
+    )
+    db.add(PlaylistTrack(playlist_id=mix.id, track_id=linked.track_id, position=2))
+    left = db.exec(select(PlaylistTrack).where(PlaylistTrack.track_id == gone.track_id)).one()
+    left.removed_at = now  # the track left its only playlist
+    db.add(left)
+    db.commit()
+
+    listed = client.get("/api/tracks/disliked").json()
+    assert [t["title"] for t in listed] == ["Gone", "Linked", "Thrown"]  # newest first
+    assert [t["track_id"] for t in listed] == [gone.track_id, linked.track_id, thrown.track_id]
+    by_title = {t["title"]: t for t in listed}
+    assert by_title["Linked"]["playlists"] == [
+        {"id": club.id, "title": "Club"},
+        {"id": mix.id, "title": "My Mix"},
+    ]
+    assert by_title["Gone"]["playlists"] == []
+    assert (by_title["Linked"]["status"], by_title["Linked"]["disliked_reason"]) == (
+        "in_library",
+        "deleted",
+    )
+
+    page = unescape(client.get("/dont-like").text)
+    assert '<a href="/dont-like" aria-current="page">Don\'t like</a>' in page
+    for text in ("You threw it away in Tagwerk", "You deleted its file",
+                 "Its file left Releasomat's folder", "Linked from your library, never downloaded.",
+                 "Linked if the song turns up in your library.", "In no playlist now",
+                 f'<a href="/playlists/{club.id}">Club</a>'):  # fmt: skip
+        assert text in page, text
+    assert page.count("Undo<span") == 3
+    assert f'hx-post="/dont-like/{gone.track_id}/undo"' in page
+    assert "Glue" not in page and "Adopted" not in page
+
+
+def test_undo_on_the_dont_like_page(client, db, config):
+    music = config.music_dir
+    gone = download(db, music, None, title="Gone", status="disliked", former_path="G/G.opus",
+                    disliked_at=utcnow(), disliked_reason="vanished")  # fmt: skip
+    linked = download(db, music, None, title="Linked", status="in_library",
+                      navidrome_song_id="lib1", disliked_at=utcnow(), disliked_reason="deleted",
+                      former_path="L/L.opus")  # fmt: skip
+
+    htmx = {"HX-Request": "true"}
+    response = client.post(f"/dont-like/{gone.track_id}/undo", headers=htmx)
+    assert response.status_code == 200 and "<nav" not in response.text  # just the list
+    text = unescape(response.text)
+    assert "“Gone” is a normal track again." in text and "The next refresh downloads it." in text
+    assert "Linked" in text and f"/dont-like/{gone.track_id}/undo" not in text
+    assert row(db, gone.id).status == "pending"
+
+    text = unescape(client.post(f"/dont-like/{linked.track_id}/undo", headers=htmx).text)
+    assert "It stays linked from your library." in text and "No Don't like tracks" in text
+    assert row(db, linked.id).status == "in_library" and row(db, linked.id).disliked_at is None
+
+    # Without JavaScript: back to the page. An unknown track: 404.
+    response = client.post(f"/dont-like/{gone.track_id}/undo", follow_redirects=False)
+    assert response.status_code == 303 and response.headers["location"] == "/dont-like"
+    assert client.post("/dont-like/9999/undo").status_code == 404
+
+
+def test_the_dont_like_page_without_any(client, db, config):
+    download(db, config.music_dir)
+    page = unescape(client.get("/dont-like").text)
+    assert "No Don't like tracks" in page and "<table" not in page
+    assert client.get("/api/tracks/disliked").json() == []
+    assert "No Don't like tracks" in unescape(client.get("/partials/dont-like").text)

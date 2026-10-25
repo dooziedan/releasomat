@@ -22,8 +22,9 @@ body > main {
   background: var(--rm-surface);
   border-bottom: 1px solid var(--rm-border);
 }
-.topbar nav {
-  flex-wrap: wrap;
+.topbar nav,
+.topbar nav ul {
+  flex-wrap: wrap; /* the menu takes two lines on a phone instead of running off the screen */
 }
 .brand {
   font-weight: 700;
@@ -90,6 +91,9 @@ article > header h3 {
 }
 .table-wrap {
   overflow-x: auto;
+  /* Keeps the hidden screen-reader labels (.visually-hidden) inside the scrolling box, so a
+     wide table doesn't make the whole page scroll sideways on a phone. */
+  position: relative;
 }
 table {
   margin-bottom: 0;

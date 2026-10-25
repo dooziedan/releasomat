@@ -50,6 +50,8 @@ Each version's section becomes the text of its GitHub Release page.
 - "Don't like" on the playlist page: tracks you deleted are marked with a badge, say why, and have
   an **Undo** button (the next refresh downloads them again). The playlist list shows how many
   tracks are adopted or "Don't like", when there are any.
+- A **Don't like** page in the menu lists the "Don't like" tracks of all playlists in one place:
+  why and since when, which playlists they are in, and **Undo** for each one.
 - Optional: working together with Tagwerk, if you use it to manage your library. Releasomat works
   in full without it; nothing changes until you set a key in **Settings → Tagwerk** (a
   **Generate** button makes one). With a key, Tagwerk can list Releasomat's downloads, adopt them

@@ -449,7 +449,7 @@ def running(pid: int) -> bool:
     """Whether a process still runs (one that has ended but isn't cleaned up yet doesn't)."""
     try:
         stat = Path(f"/proc/{pid}/stat").read_text()
-    except FileNotFoundError:
+    except (FileNotFoundError, ProcessLookupError):  # the second: it ended between open and read
         return False
     return stat.rsplit(")", 1)[1].split()[0] not in ("Z", "X")
 
