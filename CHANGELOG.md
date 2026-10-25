@@ -42,6 +42,15 @@ Each version's section becomes the text of its GitHub Release page.
   or every file of a playlist gone at once), nothing is marked and the run says so.
 - New downloads appear in Releasomat's folder in one step (copied under a hidden name and renamed
   when complete), so Navidrome never sees half a file.
+- "Don't like" on the playlist page: tracks you deleted are marked with a badge, say why, and have
+  an **Undo** button (the next refresh downloads them again). The playlist list shows how many
+  tracks are adopted or "Don't like", when there are any.
+- Optional: working together with Tagwerk, if you use it to manage your library. Releasomat works
+  in full without it; nothing changes until you set a key in **Settings → Tagwerk** (a
+  **Generate** button makes one). With a key, Tagwerk can list Releasomat's downloads, adopt them
+  into your library (Releasomat then never downloads them again and links the library copy once
+  Tagwerk has imported it) and delete ones you don't like. The key is sent as
+  `Authorization: Bearer …`; the calls are documented at `/docs`.
 - Stop button for a running refresh (playlist page and Activity): the current download ends right
   away, tracks already downloaded stay, and the Navidrome playlist is left as it is.
 - Docker image for Unraid with an Unraid template.

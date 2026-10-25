@@ -1,5 +1,5 @@
-"""Playlists: the list, adding one (with source detection), a playlist's page and settings, and
-Refresh now.
+"""Playlists: the list, adding one (with source detection), a playlist's page and settings,
+Refresh now, and Undo for a "Don't like" track.
 
 The JSON API under ``/api/playlists`` is documented at /docs; the pages and htmx partials below it
 use the same functions from ``app/playlists.py``.
@@ -14,7 +14,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from pydantic import BaseModel, ConfigDict
 from sqlmodel import Session, select
 
-from app import playlists
+from app import lifecycle, playlists
 from app import settings as user_settings
 from app.config import get_config
 from app.db import SessionDep
@@ -27,6 +27,7 @@ from app.models import (
     TrackFile,
     Trigger,
 )
+from app.pipeline import file_of
 from app.scheduler import PRESETS, WEEKDAYS, InvalidSchedule, Schedule, next_run
 from app.sources import SOURCES
 from app.sources.base import PlaylistRef, UnsupportedLink, detect_source
@@ -129,9 +130,23 @@ def _tracks(session: Session, playlist_id: int) -> list[dict]:
                 "origin": details.get("origin"),
                 "tried": details.get("tried") or [],
                 "added_at": entry.added_at,
+                # What happened to a downloaded file (ADR 0009, app/lifecycle.py).
+                "former_path": file.former_path if file else None,
+                "moved": bool(details.get("moved")),
+                "adopted_at": file.adopted_at if file else None,
+                "disliked_at": file.disliked_at if file else None,
+                "disliked_reason": file.disliked_reason if file else None,
             }
         )
     return rows
+
+
+def _undo_dislike(session: Session, track_id: int) -> tuple[TrackFile, lifecycle.Result]:
+    """Undo "Don't like" for a track (404 if Releasomat has no file row for it)."""
+    file = file_of(session, track_id)
+    if file is None:
+        raise HTTPException(404, "No such track, or nothing to undo")
+    return file, lifecycle.undo_dislike(session, file)
 
 
 # --- JSON API -------------------------------------------------------------------------------
@@ -261,6 +276,22 @@ def playlist_tracks(playlist_id: int, session: SessionDep) -> list[dict]:
     """The playlist's tracks in order, with the status of each one's file."""
     _get(session, playlist_id)
     return _tracks(session, playlist_id)
+
+
+class UndoResult(BaseModel):
+    track_id: int
+    changed: bool  # False when the track wasn't "Don't like" (nothing to undo)
+    status: str  # the track's state now: "pending" (missing: downloaded by the next refresh)
+
+
+@router.delete("/api/tracks/{track_id}/dislike", tags=["playlists"])
+def undo_dislike(track_id: int, session: SessionDep) -> UndoResult:
+    """Undo "Don't like": the track is a normal missing track again, and the next refresh
+    downloads it (a song linked from the library stays linked). 404 for an unknown track."""
+    file, result = _undo_dislike(session, track_id)
+    if not result.ok:
+        raise HTTPException(409, result.reason)
+    return UndoResult(track_id=track_id, changed=result.changed, status=file.status)
 
 
 @router.get("/api/sources/detect", tags=["playlists"])
@@ -522,6 +553,25 @@ async def stop_form(playlist_id: int, request: Request, session: SessionDep):
         )
     back = request.headers.get("referer") or f"/playlists/{playlist_id}"
     return RedirectResponse(back, status_code=303)
+
+
+@router.post(
+    "/playlists/{playlist_id}/tracks/{track_id}/undo-dislike",
+    response_class=HTMLResponse,
+    include_in_schema=False,
+)
+def undo_dislike_form(playlist_id: int, track_id: int, request: Request, session: SessionDep):
+    """Undo next to a "Don't like" track: htmx gets the tracks table back; without htmx, the
+    playlist page."""
+    playlist = _get(session, playlist_id)
+    _undo_dislike(session, track_id)
+    if request.headers.get("HX-Request"):
+        return templates.TemplateResponse(
+            request,
+            "partials/tracks.html",
+            {"playlist": playlist, "tracks": _tracks(session, playlist_id)},
+        )
+    return RedirectResponse(f"/playlists/{playlist_id}#tracks", status_code=303)
 
 
 @router.post("/playlists/{playlist_id}/delete", include_in_schema=False)

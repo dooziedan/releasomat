@@ -16,7 +16,15 @@ The contract in ADR 0009 now follows Tagwerk's requests where they differ from t
 - owner's decisions of 2026-10-25: a `delete` call (Tagwerk's Delete button → `files.delete_by_owner`
   + Don't like, the only call that touches a file); **no origin note in files** (drop the
   "Downloaded by Releasomat from …" comment in `pipeline.keep()`; the origin stays in the database);
-  Give back later.
+  Give back later; **the integration is optional**: Releasomat works in full without Tagwerk (no key
+  = off, nothing waits for or calls Tagwerk, the UI doesn't nag).
+- errors are `{"integration_api": 1, "error", "message"}` (also for a body that doesn't fit, after
+  the key check); answers per file carry `asked`, `ok`, `changed`, `reason`, `id`, `path`,
+  `status`. The exact shapes are in ADR 0009 and `/docs`; where this plan's text below differs,
+  the ADR wins.
+
+Status: stage 1 (states, files that leave the folder, one-step downloads) and stage 2 (integration
+API, Settings → Tagwerk, badges, Undo) are built (2026-10-25).
 
 ## In short
 Releasomat gets two new file states. **adopted** means Tagwerk has taken the file. **disliked**

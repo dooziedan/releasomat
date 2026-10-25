@@ -25,6 +25,10 @@ Inspired by [Explo](https://github.com/LumePart/Explo). Runs as one Docker conta
 - **Schedules per playlist**, **Refresh now** and **Stop**, live progress, and an error report with a
   **Copy report** button whenever a service, a download or Navidrome fails.
 - **Never deletes music on its own.** Releasomat writes only into its own folder inside your library.
+  A song whose file you delete is marked "Don't like" and not downloaded again (with an Undo); a
+  file you move into your library is linked there.
+- **Optional: Tagwerk.** If you manage your library with Tagwerk, a key in Settings → Tagwerk lets
+  it adopt Releasomat's downloads into your library. Releasomat works in full without it.
 
 ## Install on Unraid
 

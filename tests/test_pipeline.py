@@ -337,6 +337,7 @@ async def test_a_refresh_links_downloads_and_builds_the_playlist(world, config):
     )
     assert eple.navidrome_song_id == "dl1" and eple.format == "opus"
     assert eple.details["origin"] == "https://music.youtube.com/watch?v=abc123"
+    assert eple.details["downloaded_at"].startswith(f"{eple.created_at:%Y-%m-%d}")  # for Tagwerk
 
     statuses = [e.data["status"] for e in seen if e.type == f"track-{world.playlist_id}"]
     assert "downloading" in statuses and "done" in statuses and "in_library" in statuses
@@ -596,6 +597,7 @@ async def test_songs_gone_from_navidrome_are_looked_for_again(world):
 # --- Files that leave Releasomat's folder (ADR 0009) ------------------------------------------
 
 EPLE_FILE = "Röyksopp/Röyksopp - Eple.opus"
+STROBE_FILE = "deadmau5/deadmau5 - Strobe (Extended Mix).opus"
 TWO_DOWNLOADS = PlaylistSnapshot("My Mix", [QUEEN, EPLE, STROBE])  # Eple and Strobe to download
 
 
@@ -860,6 +862,44 @@ async def test_an_adopt_notice_during_a_refresh_wins(world, config, engine):
     run = await world.refresh()
     assert world.files()["Eple"].status == "adopted" and "marked Don't like" not in run.message
     assert "1 adopted (waiting for your library)" in run.message
+
+
+async def test_everything_works_without_tagwerk(world, config, engine):
+    """The integration is optional (ADR 0009, owner's decision of 2026-10-25). With no key, the
+    default, a refresh downloads, links and builds the playlist, and files that leave the folder
+    are sorted out through Navidrome alone: moved into the library means linked there, deleted
+    means Don't like. Nothing waits for Tagwerk or calls it."""
+    with Session(engine) as session:
+        assert settings.get(session, "INTEGRATION_API_KEY") == ""  # off
+    world.source.answers = [TWO_DOWNLOADS]
+    run = await world.refresh()
+    assert run.status == "done" and playlist_songs(world) == ["bo", "dl1", "dl2"]
+    (config.music_dir / "Other").mkdir()
+    (config.music_dir / "Other/Other - Song.opus").write_bytes(b"another playlist's file")
+
+    (config.music_dir / EPLE_FILE).unlink()  # the owner moved it into the library by hand
+    world.navidrome.add_song("lib-eple", "Demo/Röyksopp/Eple.opus", title="Eple",
+                             artist="Röyksopp")  # fmt: skip
+    (config.music_dir / STROBE_FILE).unlink()  # and deleted this one
+    run = await world.refresh()
+
+    assert run.status == "done"
+    assert "1 moved into your library." in run.message
+    assert "1 marked Don't like (its file was deleted from Releasomat's folder)." in run.message
+    files = world.files()
+    assert files["Eple"].status == "in_library" and files["Eple"].adopted_at is None
+    assert files["Strobe (Extended Mix)"].status == "disliked"
+    assert playlist_songs(world) == ["bo", "lib-eple"]
+    run = await world.refresh()
+    assert world.youtube.calls == ["Eple", "Strobe (Extended Mix)"]  # never downloaded again
+
+
+def test_a_refresh_never_needs_the_integration():
+    """Only Tagwerk calls Releasomat; no part of a refresh knows about the integration API."""
+    app = Path(__file__).resolve().parent.parent / "app"
+    for name in ("pipeline.py", "worker.py", "scheduler.py", "navidrome.py", "lifecycle.py"):
+        text = (app / name).read_text()
+        assert "INTEGRATION_API_KEY" not in text and "app.routes" not in text, name
 
 
 async def test_adopted_rows_are_left_alone_by_downloads(world, engine):

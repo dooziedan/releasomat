@@ -825,7 +825,8 @@ class Refresh:
                 format=result.format,
                 bitrate=result.bitrate,
                 error=None,
-                details={"origin": result.origin},
+                # Where it came from stays here, never in the file (ADR 0009).
+                details={"origin": result.origin, "downloaded_at": utcnow().isoformat()},
                 attempt=True,
             )
             self.track_event(state)

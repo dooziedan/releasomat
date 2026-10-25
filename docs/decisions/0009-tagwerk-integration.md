@@ -26,6 +26,13 @@ And (2026-10-25):
   own. Normal tags stay (title, artist, album, cover, MusicBrainz ID, ISRC): Navidrome needs them to
   show the song, and Releasomat needs the IDs to find the song again after an adoption.
 - **Give back** (an adopted file back from Tagwerk's inbox into the area) comes later.
+- **The integration is optional.** Releasomat must work in full without Tagwerk, and Tagwerk
+  without Releasomat; nobody is forced to run both. In Releasomat: with no `INTEGRATION_API_KEY`
+  (the default) everything works as before (refreshes, downloads, playlists, files that leave the
+  folder, found through Navidrome alone); nothing waits for, retries towards or calls Tagwerk
+  (only Tagwerk calls Releasomat); the Settings group "Tagwerk" says it is optional and nothing
+  warns about a missing key; a setup wizard never asks for it; "Adopted by Tagwerk" only shows for
+  files Tagwerk actually adopted.
 
 ## Contract between the two apps
 
@@ -53,25 +60,36 @@ And (2026-10-25):
 
 ### The integration API (Releasomat, version 1)
 - Under `/api/integration/`, key in `Authorization: Bearer <INTEGRATION_API_KEY>`, never in a URL.
-  No key set in Releasomat: the integration is off (403); a missing or wrong key: 401. Keys are
-  never logged or echoed.
+  No key set in Releasomat (or one shorter than 16 characters): the integration is off (403
+  `integration_off`); a missing or wrong key: 401 `wrong_key`. The key is checked before the body,
+  so a call without it never gets 422. Keys are never logged or echoed.
+- Errors share one shape: `{"integration_api": 1, "error": "<code>", "message": "<plain words>"}`
+  (also `bad_request` with 422 for a body that doesn't fit, `not_found`, `method_not_allowed`).
 - `info` answers `{"app": "releasomat", "version": "…", "integration_api": 1, "folder": "…"}`.
   `integration_api` only goes up for changes an older partner can't handle; unknown fields are
   ignored by both apps.
 - Files are named by their **path inside the area** (`/`, Unicode NFC, e.g.
   `Röyksopp/Röyksopp - Eple.opus`; `Releasomat/…` and `/music/Releasomat/…` are accepted too) plus
   their **size**; answers carry Releasomat's file `id`, used in later notices.
-- `GET files`: the files in the area now, each with `id`, `path`, `size`, `downloaded_at`,
-  `downloader`, `wanted` (artist, title, duration, ISRC, MusicBrainz ID, and BPM, key, genre, label
-  when the playlist source has them) and `playlists` (id, name, link).
-- `POST adopt`, `returned` (`"why": "move_failed" | "given_back"`), `discarded`, `restored`,
-  `delete`: each
-  takes `{"files": [...]}` and answers per file (`ok` or a plain-language `reason`). Repeating a call
-  that already went through answers `ok` again.
+- `GET files`: the files in the area now (downloaded by Releasomat, still its own, on disk), each
+  with `id`, `path`, `size`, `downloaded_at`, `downloader`, `format`, `bitrate`, `wanted` (artist,
+  title, album, duration, ISRC, MusicBrainz ID, and BPM and key when the playlist source has them;
+  genre and label once a source stores them) and `playlists` (`id`, `name`, `url` of the playlist's
+  page).
+- `POST adopt`, `returned`, `discarded`, `restored`, `delete`: each takes
+  `{"files": [{"path": "…", "size": 123, "id": 12}, …]}` (`size` and `id` optional; `returned`
+  also `"why": "move_failed" | "given_back"` next to `files`) and answers
+  `{"integration_api": 1, "files": [...]}` with one entry per file, in the order sent: `asked` (the
+  path as sent), `ok`, `changed` (false when it already was so), `reason` (plain words, when not
+  ok), Releasomat's `id`, the stored `path` and the file's `status` now. Repeating a call that
+  already went through answers `ok` again. `adopt` and `delete` refuse a file whose size differs
+  from the one sent; `delete` refuses a file sent without its size (deleting can't be undone).
 - After `adopt` said yes, Releasomat leaves that path alone; the file disappearing is expected.
 - `delete` is the owner's delete, started on Tagwerk's Releasomat page: Releasomat deletes the file
   with its own owner-delete (`files.delete_by_owner`, ADR 0003: only files it downloaded, only in its
-  folder) and marks the track "Don't like". It is the only call that touches a file.
+  folder) and marks the track "Don't like". It is the only call that touches a file. A file that is
+  already gone and "Don't like" answers `ok`; a file that should be there but isn't changes
+  nothing (the folder may be unmounted).
 - **Downloads appear in one step**: Releasomat writes a new file under a hidden name in the target
   folder and renames it when complete (the final name reserved first, never overwriting), so
   neither Tagwerk nor Navidrome sees half a file.

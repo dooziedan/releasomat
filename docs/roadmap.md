@@ -45,19 +45,26 @@ Owner's decisions in ADR 0008.
   now test fixtures (`tests/fixtures/online/slskd_real_*`)
 - ⬜ Real end-to-end test where Releasomat and slskd share the download folder (Unraid)
 
-## Phase 4: Lifecycle ⬜
-Download folder overview: size, files no playlist uses any more, a delete button per file (only by
-the owner, with confirmation, ADR 0003); snapshot mode with "keep last N";
-retry of failed tracks; offering a better copy of a YouTube download (the owner decides, the old file
-is only removed when they confirm).
+## Phase 4: Lifecycle 🚧
+- 🚧 Files after the download and the **optional** Tagwerk integration (ADR 0009; Releasomat works
+  in full without it): states "adopted" and "Don't like", files that leave the folder (moved →
+  linked, deleted → Don't like, safety brake for an unmounted folder), downloads that appear in one
+  step, the integration API (`/api/integration/…`, off without a key), Settings → Tagwerk, badges
+  and Undo on the playlist page. Tagwerk's side follows
+  separately (Tagwerk ADR 0044); "Give back" later.
+- ⬜ Download folder overview: size, files no playlist uses any more, a delete button per file (only
+  by the owner, with confirmation, ADR 0003; marks the track "Don't like"); snapshot mode with
+  "keep last N"; retry of failed tracks; offering a better copy of a YouTube download (the owner
+  decides, the old file is only removed when they confirm).
 
 ## Phase 5: First release ⬜
-Setup wizard, optional login for the UI, notifications, README with screenshots, v0.1.0 on Unraid.
+Setup wizard (it never asks for the optional Tagwerk key), optional login for the UI, notifications, README with screenshots, v0.1.0 on Unraid.
 The Unraid template points to `:edge` (every push to main) until then; switch it to `:latest`
 with the first release.
 
 ## Ideas, not planned yet
-- Hand downloads to Tagwerk's import inbox instead of (or in addition to) Releasomat's own folder.
+- Hand downloads to Tagwerk's import inbox instead of (or in addition to) Releasomat's own folder
+  (for now the owner adopts them by click in Tagwerk, ADR 0009).
 - Beatport / Traxsource charts as sources.
 
 ## Not in scope

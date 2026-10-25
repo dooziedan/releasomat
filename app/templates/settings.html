@@ -14,6 +14,7 @@
   {% for group, views in groups.items() %}{% set group_id = group_ids[group] %}
   <article id="{{ group_id }}">
     <header><h2>{{ group }}</h2></header>
+    {% if group_notes.get(group_id) %}<p class="muted group-note">{{ group_notes[group_id] }}</p>{% endif %}
     {% for s in views %}
     {% set invalid = errors.get(s.key) %}
     {% if s.kind == "list" %}
@@ -27,9 +28,11 @@
       <label class="switch-row"><input type="checkbox" role="switch" id="{{ s.key }}" name="{{ s.key }}" value="true"
              {% if (submitted.get(s.key, s.value) | lower) == "true" %}checked{% endif %} {% if s.locked %}disabled{% endif %}></label>
     {% elif s.kind == "secret" %}
+      <div id="field-{{ s.key }}">
       <input type="password" id="{{ s.key }}" name="{{ s.key }}" value="" autocomplete="new-password"
              placeholder="{% if s.is_set %}Saved: {{ s.value }} (leave empty to keep it){% else %}Not set{% endif %}"
              {% if s.locked %}disabled{% endif %} {% if invalid %}aria-invalid="true"{% endif %}>
+      </div>
       {% if s.is_set and not s.locked and s.source == "saved" %}
       <label class="muted"><input type="checkbox" name="clear_{{ s.key }}"> Remove the saved {{ s.label | lower }}</label>
       {% endif %}
@@ -41,11 +44,16 @@
     {% if invalid %}<small class="field-error">{{ invalid }}</small>{% endif %}
     {% endif %}
     {% if s.help %}<small class="muted{% if s.kind == 'list' %} list-help{% endif %}">{{ s.help }}{% if s.locked %} Env var: <code>{{ s.key }}</code>.{% endif %}</small>{% endif %}
+    {% if s.key == "INTEGRATION_API_KEY" and not s.locked %}
+    {# Puts a new key into the field above (htmx); saved only with "Save settings". #}
+    <button type="button" class="secondary" hx-post="/partials/integration-key" hx-target="#field-INTEGRATION_API_KEY" hx-indicator="this">Generate a key</button>
+    {% endif %}
     {% if s.key == "SLSKD_API_KEY" %}
     <button type="button" class="secondary" hx-post="/partials/slskd-test" hx-include="#settings-form" hx-target="#slskd-test" hx-indicator="this">Test connection</button>
     <div id="slskd-test" aria-live="polite"></div>
     {% endif %}
     {% endfor %}
+    {% if group_id == "tagwerk" %}{% include "partials/integration_status.html" %}{% endif %}
     {% if group_id == "navidrome" %}
     <button type="button" class="secondary" hx-post="/partials/navidrome-test" hx-include="#settings-form" hx-target="#navidrome-test" hx-indicator="this">Test connection</button>
     <div id="navidrome-test" aria-live="polite"></div>
