@@ -504,10 +504,15 @@ class Navidrome:
             "createPlaylist", {"playlistId": playlist_id, "songId": song_ids}, post=True
         )
 
-    async def update_playlist(self, playlist_id: str, *, comment: str | None = None) -> None:
+    async def update_playlist(
+        self, playlist_id: str, *, comment: str | None = None, name: str | None = None
+    ) -> None:
+        """Change a playlist's description and/or name (its songs stay)."""
         params = {"playlistId": playlist_id}
         if comment is not None:
             params["comment"] = comment
+        if name is not None:
+            params["name"] = name
         await self._call("updatePlaylist", params, post=True)
 
     async def delete_playlist(self, playlist_id: str) -> None:

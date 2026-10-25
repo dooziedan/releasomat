@@ -137,9 +137,12 @@ class FakeNavidrome:
         self._call("replace_playlist")
         self.playlists[playlist_id]["songs"] = [i for i in song_ids if i in self.library]
 
-    async def update_playlist(self, playlist_id, *, comment=None):
+    async def update_playlist(self, playlist_id, *, comment=None, name=None):
         self._call("update_playlist")
-        self.playlists[playlist_id]["comment"] = comment
+        if comment is not None:
+            self.playlists[playlist_id]["comment"] = comment
+        if name is not None:
+            self.playlists[playlist_id]["name"] = name
 
     async def delete_playlist(self, playlist_id):
         self._call("delete_playlist")
@@ -351,6 +354,26 @@ async def test_refreshing_again_keeps_the_id_and_downloads_nothing_twice(world):
     new_calls = world.navidrome.calls[calls:]
     assert new_calls == ["get_playlist", "replace_playlist", "get_playlist"]  # no search, no scan
     assert len(world.navidrome.playlists) == 1 and first.id != second.id
+
+
+async def test_an_old_dated_name_is_renamed_once_other_names_stay(world):
+    """Update mode used to keep ListenBrainz's first name ("…, week of 2026-10-12 Mon") forever,
+    while the songs changed every week. A name like that becomes the undated one; a name the owner
+    gave the playlist in Navidrome stays."""
+    world.source.answers = [PlaylistSnapshot("Weekly Exploration for rob", [QUEEN, EPLE, HALO])]
+    await world.refresh()
+    navidrome_id = world.playlist().navidrome_playlist_id
+    playlists = world.navidrome.playlists
+    playlists[navidrome_id]["name"] = "Weekly Exploration for rob, week of 2026-10-12 Mon"
+
+    run = await world.refresh()
+    assert playlists[navidrome_id]["name"] == "Weekly Exploration for rob"
+    assert "Renamed to “Weekly Exploration for rob”." in run.message
+    assert world.playlist().navidrome_playlist_id == navidrome_id  # the same playlist
+
+    playlists[navidrome_id]["name"] = "My DnB discoveries"  # renamed by the owner
+    run = await world.refresh()
+    assert playlists[navidrome_id]["name"] == "My DnB discoveries" and "Renamed" not in run.message
 
 
 async def test_a_failed_read_changes_nothing_in_navidrome(world):

@@ -598,18 +598,21 @@ class SlskdDownloader(Downloader):
         """Run one search and return slskd's responses (one per peer)."""
         search_id = str(uuid.uuid4())
         async with _search_lock():
-            response = await api.call(
-                "POST", "/searches", json={"id": search_id, "searchText": text}
-            )
-            if response.status_code == 409:
-                raise DownloaderError(
-                    "slskd isn't logged in to Soulseek right now, so it can't search.",
-                    http_status=409,
-                    excerpt=_excerpt(response),
-                )
-            if response.status_code not in (200, 201):
-                raise api.unexpected(response, "starting a search")
+            # The clean-up below also covers a stop that comes while slskd is still answering
+            # the start: the search may exist there already. Tidying up a search that was never
+            # made only gets a 404, which ``quietly`` ignores.
             try:
+                response = await api.call(
+                    "POST", "/searches", json={"id": search_id, "searchText": text}
+                )
+                if response.status_code == 409:
+                    raise DownloaderError(
+                        "slskd isn't logged in to Soulseek right now, so it can't search.",
+                        http_status=409,
+                        excerpt=_excerpt(response),
+                    )
+                if response.status_code not in (200, 201):
+                    raise api.unexpected(response, "starting a search")
                 await self._wait_for_search(api, search_id)
                 response = await api.call("GET", f"/searches/{search_id}/responses")
                 if response.status_code != 200:

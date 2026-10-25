@@ -283,6 +283,32 @@ async def test_a_transfer_that_takes_too_long_is_given_up(fake, make_downloader,
     assert result.tried[0]["reason"] == "the transfer took longer than 0 seconds"
 
 
+async def test_a_stop_while_slskd_answers_the_search_start_still_ends_the_search(
+    fake, make_downloader, staging
+):
+    """slskd has made the search, but its answer to the start hasn't arrived when Stop comes:
+    the search must not keep running in slskd (it did before; CI's slower machine caught it)."""
+    inner = httpx.ASGITransport(app=fake.app)
+    answer_held = asyncio.Event()
+
+    class SlowStartAnswer(httpx.AsyncBaseTransport):
+        async def handle_async_request(self, request):
+            response = await inner.handle_async_request(request)
+            if request.method == "POST" and request.url.path.endswith("/searches"):
+                answer_held.set()
+                await asyncio.Event().wait()  # the answer never arrives before the stop
+            return response
+
+    downloader = make_downloader(fake, transport=SlowStartAnswer())
+    task = asyncio.create_task(downloader.download(GET_LUCKY, staging))
+    await asyncio.wait_for(answer_held.wait(), 5)
+    (search,) = fake.searches.values()
+    task.cancel()
+    with pytest.raises(asyncio.CancelledError):
+        await task
+    assert search.state() == "Completed, Cancelled" and fake.searches == {}
+
+
 async def test_a_stopped_download_stops_the_search_in_slskd(make_fake, make_downloader, staging):
     """The Stop button cancels the download: slskd's search is stopped and deleted at once."""
     fake = make_fake(speed=1)  # the slow search takes 30 s
