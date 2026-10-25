@@ -459,11 +459,38 @@ async def test_failed_downloads_are_in_the_report(world):
     eple = world.files()["Eple"]
     assert (eple.status, eple.attempts) == ("failed", 1)
     assert eple.error.startswith("Soulseek (slskd): No file in the wanted formats")
+    # One reason per source, for the playlist page.
+    assert eple.details["reasons"] == [
+        "Soulseek (slskd): No file in the wanted formats on Soulseek.",
+        "YouTube: Nothing on YouTube looks like this track.",
+    ]
     # The Navidrome playlist still gets the two songs that are there.
     assert world.navidrome.playlists[world.playlist().navidrome_playlist_id]["songs"] == [
         "bo",
         "hb",
     ]
+
+
+async def test_a_new_try_forgets_why_the_last_one_failed(world):
+    """While a track that failed before downloads again, the old reason is gone: the playlist
+    page must not show it next to "Downloading…"."""
+    world.youtube.fail = ("Eple",)
+    await world.refresh(downloaders=[FakeSoulseek(fail=("Eple",)), world.youtube])
+    assert world.files()["Eple"].status == "failed"
+    seen = []
+
+    class Watching(FakeSoulseek):
+        async def download(self, track, staging_dir):
+            row = world.files()[track.title]
+            details = row.details or {}
+            seen.append((row.status, row.downloader, row.error, details["tried"],
+                         details["reasons"]))  # fmt: skip
+            return await super().download(track, staging_dir)
+
+    await world.refresh(downloaders=[Watching()])
+    assert seen == [("downloading", "slskd", None, [], [])]
+    eple = world.files()["Eple"]
+    assert (eple.status, eple.error, eple.details["reasons"]) == ("done", None, [])
 
 
 async def test_the_global_order_decides_which_source_is_tried_first(world):
@@ -986,7 +1013,8 @@ def test_runs_cut_off_by_a_restart_end_as_failed(engine):
         run = session.exec(select(Run)).one()
         assert run.status == "failed" and "Interrupted" in run.message
         assert session.get(Playlist, playlist_id).last_status == "failed"
-        assert session.exec(select(TrackFile)).one().status == "pending"
+        file = session.exec(select(TrackFile)).one()
+        assert (file.status, file.error) == ("pending", pipeline.INTERRUPTED_TRACK)
 
 
 async def test_a_playlist_never_refreshes_twice_at_once(engine):

@@ -129,6 +129,7 @@ def _tracks(session: Session, playlist_id: int) -> list[dict]:
                 "matched_by": details.get("matched_by"),
                 "origin": details.get("origin"),
                 "tried": details.get("tried") or [],
+                "reasons": details.get("reasons") or [],  # the error, one per download source
                 "added_at": entry.added_at,
                 # What happened to a downloaded file (ADR 0009, app/lifecycle.py).
                 "former_path": file.former_path if file else None,

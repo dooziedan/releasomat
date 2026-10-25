@@ -1,7 +1,10 @@
 """Adding playlists, the playlist page's settings, and the same through the JSON API."""
 
+from html import unescape
+
 from sqlmodel import Session
 
+from app import pipeline
 from app.config import get_config
 from app.db import get_engine
 from app.models import Playlist, PlaylistTrack, Track, TrackFile
@@ -223,6 +226,40 @@ def test_remove_a_playlist(client, config):
     playlist_id = client.post("/api/playlists", json={"url": DEEZER}).json()["id"]
     assert client.delete(f"/api/playlists/{playlist_id}").status_code == 204
     assert downloaded.exists()
+
+
+def test_why_shows_only_for_missing_and_failed_tracks(client, config):
+    """A reason belongs to "Failed" and "Missing". A track downloading again shows what is being
+    tried, never why an earlier try failed."""
+    playlist_id = client.post("/api/playlists", json={"url": DEEZER}).json()["id"]
+    soulseek = "Soulseek (slskd): Nobody shares this track."
+    youtube = "YouTube: Nothing on YouTube looks like this track."
+    rows = {
+        "Again": {"status": "downloading", "downloader": "slskd", "error": "An old reason."},
+        "Failed": {
+            "status": "failed",
+            "error": f"{soulseek} / {youtube}",
+            "details": {"reasons": [soulseek, youtube]},
+        },
+        "Stopped": {"status": "pending", "error": pipeline.CUT_OFF},
+        "Saved": {"status": "done", "downloader": "slskd", "format": "flac", "path": "A/S.flac"},
+    }
+    with Session(get_engine(config.database_url)) as session:
+        for position, (title, values) in enumerate(rows.items(), start=1):
+            track = Track(artist="Artist", title=title)
+            session.add(track)
+            session.commit()
+            entry = PlaylistTrack(playlist_id=playlist_id, track_id=track.id, position=position)
+            session.add(entry)
+            session.add(TrackFile(track_id=track.id, **values))
+        session.commit()
+
+    page = unescape(client.get(f"/playlists/{playlist_id}").text)
+    assert page.count("Why?</summary>") == 2  # Failed and Stopped
+    assert "Trying Soulseek…" in page and "An old reason." not in page
+    assert f"<p>{soulseek}</p><p>{youtube}</p>" in page  # one line per download source
+    assert pipeline.CUT_OFF in page
+    assert "Soulseek · flac" in page
 
 
 def test_refresh_now_button(client):

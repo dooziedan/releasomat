@@ -43,6 +43,8 @@ DISLIKE_REASONS = {
     "vanished": "Its file left Releasomat's folder",
     "owner": "You marked it Don't like",
 }
+# A download source's name in the tracks table (track_file.downloader).
+DOWNLOADER_LABELS = {"slskd": "Soulseek", "youtube": "YouTube"}
 MATCHED_BY = {
     "mbid": "same MusicBrainz ID",
     "isrc": "same ISRC",
@@ -94,6 +96,7 @@ templates.env.globals.update(
     describe_schedule=describe,
     track_labels=TRACK_LABELS,
     dislike_reasons=DISLIKE_REASONS,
+    downloader_labels=DOWNLOADER_LABELS,
     matched_by=MATCHED_BY,
     report_text=as_text,
 )

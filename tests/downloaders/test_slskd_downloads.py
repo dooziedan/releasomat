@@ -68,8 +68,9 @@ async def test_nobody_has_it(fake, make_downloader, staging):
     with pytest.raises(DownloaderError) as caught:
         await make_downloader(fake).download(scenario("noresults"), staging)
     assert str(caught.value) == (
-        "Nobody on Soulseek shares this track (searched for “releasomat test noresults” and "
-        "“*eleasomat test noresults”)."
+        "Nobody shares this track. Searched for “releasomat test noresults” and "
+        "“*eleasomat test noresults” (the * also finds artists that Soulseek's search filters "
+        "out)."
     )
     assert fake.search_texts == ["releasomat test noresults", "*eleasomat test noresults"]
     assert caught.value.details["queries"] == fake.search_texts

@@ -22,8 +22,10 @@
               {% if t.disliked_at %}{% set why = dislike_reasons.get(t.disliked_reason, "Marked") %}
               <small>Don't like: {{ why[:1] | lower }}{{ why[1:] }}. Linked from your library, never downloaded.</small>{{ undo_dislike(playlist.id, t) }}{% endif %}
             {% elif t.status == "done" %}
-              {{ "YouTube" if t.downloader == "youtube" else (t.downloader or "") }}{% if t.format %} · {{ t.format }}{% if t.bitrate %} {{ t.bitrate }} kbit/s{% endif %}{% endif %}
+              {{ downloader_labels.get(t.downloader, t.downloader or "") }}{% if t.format %} · {{ t.format }}{% if t.bitrate %} {{ t.bitrate }} kbit/s{% endif %}{% endif %}
               {% if t.origin %}<small><a href="{{ t.origin }}" rel="noreferrer" target="_blank">source</a>{% if not t.navidrome_song_id %} · not in Navidrome yet{% endif %}</small>{% endif %}
+            {% elif t.status == "downloading" and t.downloader %}
+              Trying {{ downloader_labels.get(t.downloader, t.downloader) }}…
             {% elif t.status == "adopted" %}
               Tagwerk<small>Adopted {{ t.adopted_at | localtime }}. Linked once it is in your library; never downloaded again.</small>
             {% elif t.status == "disliked" %}
@@ -31,13 +33,15 @@
               <small>Never downloaded again{% if t.disliked_reason == "vanished" %}; linked if the song turns up in your library{% else %}; linked if the song is in your library{% endif %}.</small>
               {{ undo_dislike(playlist.id, t) }}
             {% endif %}
-            {% if t.error and t.status != "done" %}
+            {# Why a track is missing or failed. Only for those states: a reason from an earlier
+               try doesn't belong next to "Downloading…" or "Downloaded". #}
+            {% if t.error and t.status in ("failed", "skipped", "pending") %}
             <details class="track-error">
               <summary title="{{ t.error }}">Why?</summary>
-              <p>{{ t.error }}</p>
+              {% for reason in t.reasons or [t.error] %}<p>{{ reason }}</p>{% endfor %}
               {% if t.tried %}<ul>{% for a in t.tried %}<li><small>{{ a.candidate or a.downloader }}: {{ a.reason }}</small></li>{% endfor %}</ul>{% endif %}
             </details>
-            {% elif t.error %}<small>{{ t.error }}</small>{% endif %}
+            {% elif t.error and t.status == "done" %}<small>{{ t.error }}</small>{% endif %}
           </td>
         </tr>
         {% endfor %}
