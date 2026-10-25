@@ -1,5 +1,5 @@
 """Playlists: the list, adding one (with source detection), a playlist's page and settings,
-Refresh now, and Undo for a "Don't like" track.
+Refresh now, and the "Don't like" tracks (all of them on one page, and Undo).
 
 The JSON API under ``/api/playlists`` is documented at /docs; the pages and htmx partials below it
 use the same functions from ``app/playlists.py``.
@@ -12,13 +12,14 @@ from datetime import datetime
 from fastapi import APIRouter, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
 from pydantic import BaseModel, ConfigDict
-from sqlmodel import Session, select
+from sqlmodel import Session, or_, select
 
 from app import lifecycle, playlists
 from app import settings as user_settings
 from app.config import get_config
 from app.db import SessionDep
 from app.models import (
+    FileStatus,
     NavidromeMode,
     Playlist,
     PlaylistTrack,
@@ -140,6 +141,47 @@ def _tracks(session: Session, playlist_id: int) -> list[dict]:
             }
         )
     return rows
+
+
+def _disliked(session: Session) -> list[dict]:
+    """Every "Don't like" track, newest first, with the playlists that contain it now. The same
+    tracks as the "Don't like" badges on the playlist pages, also those linked from the library."""
+    found = session.exec(
+        select(TrackFile, Track)
+        .join(Track, Track.id == TrackFile.track_id)
+        .where(or_(TrackFile.disliked_at.is_not(None), TrackFile.status == FileStatus.DISLIKED))
+        .order_by(TrackFile.disliked_at.desc(), Track.artist, Track.title)
+    ).all()
+    lists: dict[int, list[dict]] = {}
+    if found:
+        entries = session.exec(
+            select(PlaylistTrack.track_id, Playlist.id, Playlist.title)
+            .join(Playlist, Playlist.id == PlaylistTrack.playlist_id)
+            .where(
+                PlaylistTrack.track_id.in_([track.id for _, track in found]),
+                PlaylistTrack.removed_at.is_(None),
+            )
+            .order_by(Playlist.title)
+        ).all()
+        for track_id, playlist_id, title in entries:
+            mine = lists.setdefault(track_id, [])
+            if all(p["id"] != playlist_id for p in mine):  # a track can be in a playlist twice
+                mine.append({"id": playlist_id, "title": title})
+    return [
+        {
+            "track_id": track.id,
+            "artist": track.artist,
+            "title": track.title,
+            "album": track.album,
+            "duration": track.duration,
+            "status": file.status,  # "in_library": linked from the library anyway
+            "disliked_at": file.disliked_at,
+            "disliked_reason": file.disliked_reason,
+            "former_path": file.former_path,
+            "playlists": lists.get(track.id, []),
+        }
+        for file, track in found
+    ]
 
 
 def _undo_dislike(session: Session, track_id: int) -> tuple[TrackFile, lifecycle.Result]:
@@ -293,6 +335,14 @@ def undo_dislike(track_id: int, session: SessionDep) -> UndoResult:
     if not result.ok:
         raise HTTPException(409, result.reason)
     return UndoResult(track_id=track_id, changed=result.changed, status=file.status)
+
+
+@router.get("/api/tracks/disliked", tags=["playlists"])
+def disliked_tracks(session: SessionDep) -> list[dict]:
+    """Every "Don't like" track, newest first: why, since when, and the playlists that contain
+    it now. Releasomat never downloads them again (one that is in the library anyway has
+    ``status`` "in_library": it stays linked). Undo: ``DELETE /api/tracks/{track_id}/dislike``."""
+    return _disliked(session)
 
 
 @router.get("/api/sources/detect", tags=["playlists"])
@@ -573,6 +623,38 @@ def undo_dislike_form(playlist_id: int, track_id: int, request: Request, session
             {"playlist": playlist, "tracks": _tracks(session, playlist_id)},
         )
     return RedirectResponse(f"/playlists/{playlist_id}#tracks", status_code=303)
+
+
+@router.get("/dont-like", response_class=HTMLResponse, include_in_schema=False)
+def dont_like_page(request: Request, session: SessionDep):
+    """All "Don't like" tracks of all playlists on one page."""
+    return templates.TemplateResponse(
+        request, "dont_like.html", {"tracks": _disliked(session), "page": "dont-like"}
+    )
+
+
+@router.get("/partials/dont-like", response_class=HTMLResponse, include_in_schema=False)
+def dont_like_partial(request: Request, session: SessionDep):
+    """The list again, reloaded by the page when a refresh ends (it may have marked tracks)."""
+    return templates.TemplateResponse(
+        request, "partials/dont_like_rows.html", {"tracks": _disliked(session)}
+    )
+
+
+@router.post("/dont-like/{track_id}/undo", response_class=HTMLResponse, include_in_schema=False)
+def undo_dislike_list_form(track_id: int, request: Request, session: SessionDep):
+    """Undo on the "Don't like" page: htmx gets the list back, with a note on what happens to
+    the track now; without htmx, the page."""
+    file, result = _undo_dislike(session, track_id)
+    if request.headers.get("HX-Request"):
+        track = session.get(Track, track_id)
+        undone = {"title": track.title, "status": file.status} if result.ok else None
+        return templates.TemplateResponse(
+            request,
+            "partials/dont_like_rows.html",
+            {"tracks": _disliked(session), "undone": undone},
+        )
+    return RedirectResponse("/dont-like", status_code=303)
 
 
 @router.post("/playlists/{playlist_id}/delete", include_in_schema=False)

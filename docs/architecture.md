@@ -231,6 +231,9 @@ Server-rendered pages with htmx (ADR 0001). Port **8430**.
   badges, where each song comes from, **Undo** for Don't like: `DELETE /api/tracks/{id}/dislike`);
   settings (above).
 - **Activity** (`/activity`): runs and live download progress (Server-Sent Events).
+- **Don't like** (`/dont-like`): the "Don't like" tracks of all playlists, newest first, with why,
+  since when, the playlists they are in now and **Undo** (`GET /api/tracks/disliked`). Tracks
+  linked from the library anyway are listed too.
 - **Stop** (playlist page, Activity; `POST /api/playlists/{id}/stop`, `POST /api/runs/{id}/stop`):
   ends a running refresh now (the YouTube worker process group is ended, a Soulseek search or
   transfer cancelled) or drops a queued one. Saved tracks stay; the Navidrome playlist is not

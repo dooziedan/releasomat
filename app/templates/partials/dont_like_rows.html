@@ -1,0 +1,39 @@
+{% from "macros.html" import undo_dislike %}
+{# The "Don't like" page's list: reloaded live, and swapped by Undo (with ``undone``). #}
+{% if undone %}
+<p class="notice">“{{ undone.title }}” is a normal track again.
+  {% if undone.status == "in_library" %}It stays linked from your library.{% else %}The next refresh downloads it.{% endif %}</p>
+{% endif %}
+{% if tracks %}
+<article>
+  <div class="table-wrap">
+    <table class="tracks">
+      <thead><tr><th scope="col">Track</th><th scope="col">Why</th><th scope="col">Since</th><th scope="col">Playlists</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead>
+      <tbody>
+        {% for t in tracks %}
+        <tr>
+          <td>{{ t.title }}<small>{{ t.artist }}{% if t.album %} · {{ t.album }}{% endif %}</small></td>
+          <td class="track-source">
+            {{ dislike_reasons.get(t.disliked_reason, "Don't like") }}
+            {% if t.status == "in_library" %}<small>Linked from your library, never downloaded.</small>
+            {% elif t.disliked_reason == "vanished" %}<small>Linked if the song turns up in your library.</small>
+            {% else %}<small>Linked if the song is in your library.</small>{% endif %}
+          </td>
+          <td class="nowrap">{{ t.disliked_at | localtime("%d %b %Y") or "–" }}</td>
+          <td>
+            {% for p in t.playlists %}<a href="/playlists/{{ p.id }}">{{ p.title }}</a>{% if not loop.last %}<br>{% endif %}
+            {% else %}<span class="muted">In no playlist now</span>{% endfor %}
+          </td>
+          <td>{{ undo_dislike(t) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</article>
+{% else %}
+<article class="empty">
+  <strong>No Don't like tracks</strong>
+  When you delete a song Releasomat downloaded, it shows up here and is never downloaded again.
+</article>
+{% endif %}

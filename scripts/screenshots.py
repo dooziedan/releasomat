@@ -43,6 +43,7 @@ PAGES = {
     "playlists": "/",
     "playlist-new": "/playlists/new",
     "activity": "/activity",
+    "dont-like": "/dont-like",
     "settings": "/settings",
 }
 

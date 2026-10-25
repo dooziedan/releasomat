@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Don't like{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Don't like</h1>
+    <p class="muted">Tracks of all playlists that Releasomat never downloads again. One that is in your library anyway is still linked.</p>
+  </div>
+</div>
+{# Reloaded live when a refresh ends: it may have marked tracks (Server-Sent Events). #}
+<div hx-ext="sse" sse-connect="/api/events">
+  <div id="dont-like" hx-get="/partials/dont-like" hx-trigger="sse:run delay:500ms">
+    {% include "partials/dont_like_rows.html" %}
+  </div>
+</div>
+{% endblock %}
