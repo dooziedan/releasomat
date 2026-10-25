@@ -211,7 +211,7 @@ async def test_stop_during_a_download_keeps_what_was_saved(world, config):
     eple, strobe = files["Eple"], files["Strobe (Extended Mix)"]
     assert (eple.status, eple.downloaded_by_releasomat) == ("done", True)
     assert eple.path == "Röyksopp/Röyksopp - Eple.opus"
-    assert (strobe.status, strobe.path) == ("pending", None)
+    assert (strobe.status, strobe.path, strobe.error) == ("pending", None, pipeline.CUT_OFF)
     assert "Glue" not in files
     # Navidrome: no scan, and the playlist was neither created nor changed.
     assert world.navidrome.calls == ["find_in_library"] * 4

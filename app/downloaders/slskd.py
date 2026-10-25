@@ -579,9 +579,12 @@ class SlskdDownloader(Downloader):
 
     def _nothing_usable(self, choice: Choice, queries: list[str]) -> DownloaderError:
         searched = " and ".join(f"“{q}”" for q in queries)
+        if any(q.startswith("*") or " *" in q for q in queries):
+            searched += " (the * also finds artists that Soulseek's search filters out)"
         if not choice.rejected:
+            # The pipeline puts "Soulseek (slskd): " in front.
             return DownloaderError(
-                f"Nobody on Soulseek shares this track (searched for {searched}).",
+                f"Nobody shares this track. Searched for {searched}.",
                 queries=queries,
             )
         count = len(choice.rejected)

@@ -182,7 +182,7 @@ word ("Releasomat Test – stall", "Releasomat Test – wrongfile", …):
 | Scenario | What the fake does | What Releasomat should do |
 |---|---|---|
 | `normal` | FLAC 16 bit, MP3 320, MP3 128, a busy 24-bit peer, a live version, an M4A, a locked file | take the FLAC |
-| `noresults` | nobody answers | search again more simply, then give up: "Nobody on Soulseek shares this track" |
+| `noresults` | nobody answers | search again more simply, then give up: "Nobody shares this track" |
 | `lowquality` | only MP3 128, MP3 VBR ~190, M4A | give up, listing each file and why ("128 kbit/s, at least 320 wanted") |
 | `offline` | the best peer is offline (404) | take the next peer |
 | `rejected` | the best peer rejects the download | take the next peer |

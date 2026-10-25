@@ -73,6 +73,8 @@ KEPT_AWAY = lifecycle.KEPT_AWAY  # adopted and "Don't like": never downloaded
 # once, and at least this many, the folder is more likely unmounted than emptied by the owner.
 BRAKE_MINIMUM = 5
 UNMOUNTED = "Releasomat's folder looks unmounted; nothing was marked Don't like."
+# Why a track is missing again when its download was cut off (shown on the playlist page).
+CUT_OFF = "The refresh was stopped before this download finished. The next refresh tries again."
 
 
 async def fetch_cover(url: str | None) -> bytes | None:
@@ -738,7 +740,9 @@ class Refresh:
         message = f"No download source is available: {names} {verb} connected."
         for state in todo:
             state.status, state.message = FileStatus.SKIPPED.value, message
-            self.save_file(state, status=state.status, error=message, details={"tried": []})
+            self.save_file(
+                state, status=state.status, error=message, details={"tried": [], "reasons": []}
+            )
             self.track_event(state)
         self.log(
             f"{message} {count(len(todo), 'track')} {'stays' if len(todo) == 1 else 'stay'} "
@@ -763,7 +767,7 @@ class Refresh:
             ended.set()
             if state.status == FileStatus.DOWNLOADING:  # cut off by Stop: missing again
                 state.status = FileStatus.PENDING.value
-                self.save_file(state, status=state.status)
+                self.save_file(state, status=state.status, error=CUT_OFF)
 
     async def try_sources(self, state: TrackState) -> None:
         track = state.track
@@ -781,7 +785,14 @@ class Refresh:
         for downloader in self.sources:
             name = downloader.name
             state.status = FileStatus.DOWNLOADING.value
-            self.save_file(state, status=state.status, downloader=name)
+            # A new try: why an earlier one failed doesn't apply any more.
+            self.save_file(
+                state,
+                status=state.status,
+                downloader=name,
+                error=None,
+                details={"tried": [], "reasons": []},
+            )
             self.track_event(state)
             staging = files.new_staging_dir(self.services.config.config_dir)
             try:
@@ -795,7 +806,7 @@ class Refresh:
                 # as missing again, as if this download had never started.
                 self.cut_off.append(f"{track.artist} – {track.title} ({downloader.label})")
                 state.status = FileStatus.PENDING.value
-                self.save_file(state, status=state.status)
+                self.save_file(state, status=state.status, error=CUT_OFF)
                 raise
             except DownloaderNotReady as exc:
                 not_ready.append(f"{downloader.label}: {exc}")
@@ -831,17 +842,18 @@ class Refresh:
             )
             self.track_event(state)
             return
+        reasons = problems + not_ready  # one per download source, in the order tried
         if problems:
             state.status = FileStatus.FAILED.value
-            state.message = " / ".join(problems + not_ready)
+            state.message = " / ".join(reasons)
         else:
             state.status = FileStatus.SKIPPED.value
-            state.message = " / ".join(not_ready) or "No downloader could be used."
+            state.message = " / ".join(reasons) or "No downloader could be used."
         self.save_file(
             state,
             status=state.status,
             error=state.message,
-            details={"tried": state.tried},
+            details={"tried": state.tried, "reasons": reasons},
             attempt=bool(problems),
         )
         self.track_event(state)
@@ -1193,12 +1205,15 @@ def upsert_track(session: Session, source: SourceTrack) -> Track:
 
 
 INTERRUPTED_MESSAGE = "Interrupted: Releasomat stopped during this refresh."
+INTERRUPTED_TRACK = (
+    "Releasomat stopped while this track was downloading. The next refresh tries again."
+)
 
 
 def mark_interrupted(engine: Engine) -> int:
     """At startup: runs still marked "running" were cut off when Releasomat stopped. They end
     as failed, so nothing looks busy forever. Tracks stuck at "downloading" go back to
-    "pending". Returns how many runs there were."""
+    "pending", saying why. Returns how many runs there were."""
     with Session(engine) as session:
         runs = session.exec(select(Run).where(Run.status == RunStatus.RUNNING.value)).all()
         for run in runs:
@@ -1215,7 +1230,7 @@ def mark_interrupted(engine: Engine) -> int:
             )
         ).all()
         for file in stuck:
-            file.status = FileStatus.PENDING.value
+            file.status, file.error = FileStatus.PENDING.value, INTERRUPTED_TRACK
         session.commit()
         return len(runs)
 
