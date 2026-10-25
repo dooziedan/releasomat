@@ -101,9 +101,10 @@ def update(session: Session, playlist: Playlist, changes: dict) -> Playlist:
 
 
 def track_counts(session: Session, playlist_id: int) -> dict[str, int]:
-    """Tracks now in the playlist: in the library, downloaded, failed, missing (the rest:
-    not found, not downloaded yet, or skipped). Downloaded means the file is there, even if
-    Navidrome hasn't listed it yet."""
+    """Tracks now in the playlist: in the library, downloaded, failed, adopted (Tagwerk has the
+    file, waiting for the library copy), "Don't like", missing (the rest: not found, not
+    downloaded yet, or skipped). Downloaded means the file is there, even if Navidrome hasn't
+    listed it yet. Adopted and "Don't like" tracks are not missing: they are never downloaded."""
     rows = session.exec(
         select(PlaylistTrack.track_id, TrackFile.status)
         .join(TrackFile, TrackFile.track_id == PlaylistTrack.track_id, isouter=True)
@@ -118,9 +119,10 @@ def track_counts(session: Session, playlist_id: int) -> dict[str, int]:
         "in_library": values.count(FileStatus.IN_LIBRARY),
         "downloaded": values.count(FileStatus.DONE),
         "failed": values.count(FileStatus.FAILED),
+        "adopted": values.count(FileStatus.ADOPTED),
+        "disliked": values.count(FileStatus.DISLIKED),
     }
-    counts["missing"] = counts["total"] - counts["in_library"] - counts["downloaded"]
-    counts["missing"] -= counts["failed"]
+    counts["missing"] = counts["total"] - sum(v for k, v in counts.items() if k != "total")
     return counts
 
 

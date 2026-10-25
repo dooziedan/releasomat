@@ -5,8 +5,9 @@ still in the staging folder (before ``app/files.py`` moves them into MUSIC_DIR).
 the library are never touched.
 
 Tags written: title, artist, album, ISRC, the MusicBrainz recording ID (Navidrome reads it as
-``musicbrainz_trackid`` and can then find the song by that ID), a comment saying where the file
-came from, and the cover. Tag names differ per format (the same ones MusicBrainz Picard uses):
+``musicbrainz_trackid`` and can then find the song by that ID) and the cover. Nothing about where
+the file came from: that stays in Releasomat's database (ADR 0009, no note of its own in files).
+Tag names differ per format (the same ones MusicBrainz Picard uses):
 
 - Opus / Ogg / FLAC: MUSICBRAINZ_TRACKID, ISRC, METADATA_BLOCK_PICTURE
 - M4A: ----:com.apple.iTunes:MusicBrainz Track Id, ----:com.apple.iTunes:ISRC, covr
@@ -21,7 +22,7 @@ from pathlib import Path
 import mutagen
 from mutagen.aiff import AIFF
 from mutagen.flac import FLAC, Picture
-from mutagen.id3 import APIC, COMM, ID3, TALB, TIT2, TPE1, TSRC, UFID
+from mutagen.id3 import APIC, ID3, TALB, TIT2, TPE1, TSRC, UFID
 from mutagen.mp4 import MP4, MP4Cover, MP4FreeForm
 from mutagen.oggopus import OggOpus
 from mutagen.oggvorbis import OggVorbis
@@ -41,7 +42,6 @@ class Tags:
     album: str | None = None
     isrc: str | None = None
     mbid: str | None = None  # MusicBrainz recording ID
-    comment: str | None = None
 
 
 @dataclass(frozen=True)
@@ -114,7 +114,6 @@ def _vorbis(path: Path, suffix: str, tags: Tags, cover: bytes | None, mime: str 
         "ALBUM": tags.album,
         "ISRC": tags.isrc,
         "MUSICBRAINZ_TRACKID": tags.mbid,
-        "COMMENT": tags.comment,
     }
     for key, value in values.items():
         if value:
@@ -138,7 +137,6 @@ def _mp4(path: Path, tags: Tags, cover: bytes | None, mime: str | None) -> None:
     if audio.tags is None:
         audio.add_tags()
     simple = {"\xa9nam": tags.title, "\xa9ART": tags.artist, "\xa9alb": tags.album}
-    simple["\xa9cmt"] = tags.comment
     for key, value in simple.items():
         if value:
             audio.tags[key] = [value]
@@ -180,8 +178,6 @@ def _add_id3_frames(id3: ID3, tags: Tags, cover: bytes | None, mime: str | None)
         id3.add(TSRC(encoding=3, text=tags.isrc))
     if tags.mbid:
         id3.add(UFID(owner=MUSICBRAINZ_OWNER, data=tags.mbid.encode("ascii", "ignore")))
-    if tags.comment:
-        id3.add(COMM(encoding=3, lang="eng", desc="", text=tags.comment))
     if cover and mime:
         id3.add(APIC(encoding=3, mime=mime, type=3, desc="Cover", data=cover))
 

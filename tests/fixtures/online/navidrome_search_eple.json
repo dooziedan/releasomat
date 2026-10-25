@@ -1,0 +1,63 @@
+{
+ "subsonic-response": {
+  "status": "ok",
+  "version": "1.16.1",
+  "type": "navidrome",
+  "serverVersion": "0.64.2 (10114574)",
+  "openSubsonic": true,
+  "searchResult3": {
+   "song": [
+    {
+     "id": "4JOFXagAW7gWM5pUcGBPjl",
+     "parent": "6B4SBHSKL1E4B0FXT8CHAR",
+     "isDir": false,
+     "title": "Eple",
+     "album": "Melody A.M.",
+     "artist": "Röyksopp",
+     "size": 2882823,
+     "contentType": "audio/flac",
+     "suffix": "flac",
+     "duration": 221,
+     "bitRate": 104,
+     "path": "Röyksopp/Melody A.M./Eple.flac",
+     "created": "2026-10-25T10:49:13.923759897Z",
+     "albumId": "6B4SBHSKL1E4B0FXT8CHAR",
+     "artistId": "3kY1IrkuE1oF9pc693nE3L",
+     "type": "music",
+     "bpm": 0,
+     "comment": "",
+     "sortName": "eple",
+     "mediaType": "song",
+     "musicBrainzId": "",
+     "isrc": [],
+     "genres": [],
+     "replayGain": {},
+     "channelCount": 1,
+     "samplingRate": 44100,
+     "bitDepth": 16,
+     "moods": [],
+     "artists": [
+      {
+       "id": "3kY1IrkuE1oF9pc693nE3L",
+       "name": "Röyksopp"
+      }
+     ],
+     "displayArtist": "Röyksopp",
+     "albumArtists": [
+      {
+       "id": "3kY1IrkuE1oF9pc693nE3L",
+       "name": "Röyksopp"
+      }
+     ],
+     "displayAlbumArtist": "Röyksopp",
+     "contributors": [],
+     "displayComposer": "",
+     "explicitStatus": "",
+     "groupings": [],
+     "works": [],
+     "movements": []
+    }
+   ]
+  }
+ }
+}

@@ -30,6 +30,12 @@ Each version's section becomes the text of its GitHub Release page.
   and minimum bitrate, checks its length and tries the next person when a download is refused,
   stalls or turns out to be the wrong song.
 - AIFF and WAV downloads get tags and cover art too.
+- Files that leave Releasomat's folder: a song whose file you delete is marked "Don't like" and
+  never downloaded again (it is still linked if the song is elsewhere in your library); a file you
+  move into your library is linked there. If Releasomat's folder looks unmounted (missing, empty,
+  or every file of a playlist gone at once), nothing is marked and the run says so.
+- New downloads appear in Releasomat's folder in one step (copied under a hidden name and renamed
+  when complete), so Navidrome never sees half a file.
 - Stop button for a running refresh (playlist page and Activity): the current download ends right
   away, tracks already downloaded stay, and the Navidrome playlist is left as it is.
 - Docker image for Unraid with an Unraid template.

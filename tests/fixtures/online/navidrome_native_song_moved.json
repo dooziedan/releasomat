@@ -1,0 +1,63 @@
+{
+ "bookmarkPosition": 0,
+ "imageAbsent": true,
+ "id": "4JOFXagAW7gWM5pUcGBPjl",
+ "libraryId": 1,
+ "libraryPath": "/music",
+ "libraryName": "Music Library",
+ "folderId": "45Uc6cQWNR7jAV74XVsaeJ",
+ "path": "Demo/Röyksopp/Melody A.M./Röyksopp - Eple.flac",
+ "title": "Eple",
+ "album": "Melody A.M.",
+ "artistId": "3kY1IrkuE1oF9pc693nE3L",
+ "artist": "Röyksopp",
+ "albumArtistId": "3kY1IrkuE1oF9pc693nE3L",
+ "albumArtist": "Röyksopp",
+ "albumId": "6B4SBHSKL1E4B0FXT8CHAR",
+ "hasCoverArt": false,
+ "trackNumber": 0,
+ "discNumber": 0,
+ "year": 0,
+ "originalYear": 0,
+ "releaseYear": 0,
+ "size": 2882823,
+ "suffix": "flac",
+ "duration": 221,
+ "bitRate": 104,
+ "sampleRate": 44100,
+ "bitDepth": 16,
+ "channels": 1,
+ "codec": "",
+ "genre": "",
+ "orderTitle": "eple",
+ "orderAlbumName": "melody a.m.",
+ "orderArtistName": "royksopp",
+ "orderAlbumArtistName": "royksopp",
+ "compilation": false,
+ "lyrics": "[]",
+ "explicitStatus": "",
+ "rgAlbumGain": null,
+ "rgAlbumPeak": null,
+ "rgTrackGain": null,
+ "rgTrackPeak": null,
+ "participants": {
+  "albumartist": [
+   {
+    "id": "3kY1IrkuE1oF9pc693nE3L",
+    "name": "Röyksopp",
+    "missing": false
+   }
+  ],
+  "artist": [
+   {
+    "id": "3kY1IrkuE1oF9pc693nE3L",
+    "name": "Röyksopp",
+    "missing": false
+   }
+  ]
+ },
+ "missing": false,
+ "birthTime": "2026-10-25T10:49:11.269046816Z",
+ "createdAt": "2026-10-25T10:49:13.923759897Z",
+ "updatedAt": "2026-10-25T10:49:11.269109293Z"
+}

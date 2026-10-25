@@ -15,7 +15,6 @@ TAGS = Tags(
     album="Random Access Memories",
     isrc="USQX91300108",
     mbid=MBID,
-    comment="Downloaded by Releasomat from https://music.youtube.com/watch?v=x",
 )
 
 

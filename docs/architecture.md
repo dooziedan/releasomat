@@ -80,6 +80,8 @@ app/
   matching.py         normalising and scoring "is this the same track?"
   tagging.py          writes tags and cover art with mutagen
   files.py            the only place that creates, moves or deletes music files (ADR 0003)
+  lifecycle.py        what happens to a file after the download: adopted by Tagwerk, "Don't
+                      like", left the folder, found in the library (ADR 0009; database only)
   pipeline.py         one refresh, steps 1–6 above
   scheduler.py        per-playlist schedules (APScheduler), rebuilt from the DB (ADR 0005)
   worker.py           queue of refreshes and downloads, concurrency limits
@@ -97,9 +99,9 @@ unraid/releasomat.xml Unraid template
 | Table | Holds |
 |---|---|
 | `playlist` | source type, `kind` (a fixed playlist or a ListenBrainz series) + URL/ID, title, cover, `enabled` (pauses the schedule; Refresh now still works), `schedule` (cron string or empty), Navidrome mode, Navidrome playlist ID, last/next refresh, last status |
-| `track` | one real-world track: artist, title, album, duration, ISRC, MusicBrainz recording ID, cover URL, `match_key` (normalised artist + title, for finding the same track again). Shared between playlists |
+| `track` | one real-world track: artist, title, album, duration, ISRC, MusicBrainz recording ID, cover URL, BPM and key (when the source knows them), `match_key` (normalised artist + title, for finding the same track again). Shared between playlists |
 | `playlist_track` | which tracks a playlist has, position, `added_at`, `removed_at` |
-| `track_file` | where the track lives: Navidrome song ID, file path under `MUSIC_DIR` (empty if the song was already in the library), `downloaded_by_releasomat`, downloader, format/bitrate, status (`pending`, `searching`, `downloading`, `done`, `in_library`, `failed`, `skipped`), error, `details` (JSON: candidates tried and why they failed), attempts |
+| `track_file` | where the track lives: Navidrome song ID, file path under `MUSIC_DIR` (empty if the song was already in the library), `downloaded_by_releasomat`, downloader, format/bitrate, status (`pending`, `searching`, `downloading`, `done`, `in_library`, `failed`, `skipped`, `adopted`, `disliked`), error, `details` (JSON: candidates tried and why they failed), attempts; for files that left the folder (ADR 0009, `app/lifecycle.py`): `former_path`, `adopted_at`, `disliked_at`, `disliked_reason` |
 | `run` | one refresh: playlist, trigger (`schedule`/`manual`), start/end, status (incl. `skipped` when a scheduled refresh came due while one was running, `stopped` when the owner
 pressed Stop), `message`, counts, log lines, `report` (JSON error report) |
 | `navidrome_snapshot` | the Navidrome IDs of snapshot playlists Releasomat created, per playlist (only these may ever be deleted, and only with `SNAPSHOT_AUTO_DELETE` on) |

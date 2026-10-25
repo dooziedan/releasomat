@@ -330,3 +330,122 @@ async def test_errors_say_which_call_and_never_the_login():
     assert "sesame" not in text and "t=" not in text and "s=" not in text
     with pytest.raises(NavidromeError, match="Settings"):
         await Navidrome("", "", "").search("x")
+
+
+# --- Where a song really is (ADR 0009) --------------------------------------------------------
+# Recorded from the dev Navidrome 0.64.2 with Releasomat's folder named "ReleasomatTest": the
+# Eple download in that folder, the same song after the owner moved the file into Demo/ and
+# Navidrome scanned (it keeps the ID), and a deleted download Navidrome marks missing.
+
+EPLE_ID = "4JOFXagAW7gWM5pUcGBPjl"
+EPLE = Wanted("Röyksopp", "Eple", 221)
+
+
+def native(name: str, status: int = 200) -> httpx.Response:
+    return httpx.Response(status, json=json.loads((ANSWERS / name).read_text()))
+
+
+def area_nd() -> Navidrome:
+    return nd(subfolder="ReleasomatTest")
+
+
+def mock_native_login():
+    return respx.post(f"{URL}/auth/login").mock(return_value=answer("navidrome_native_login.json"))
+
+
+@respx.mock
+async def test_song_info_tells_the_real_path_and_whether_it_is_missing():
+    mock_native_login()
+    route = respx.get(f"{URL}/api/song/{EPLE_ID}").mock(
+        return_value=native("navidrome_native_song_area.json")
+    )
+    info = await area_nd().song_info(EPLE_ID)
+    assert (info["path"], info["missing"]) == (
+        "ReleasomatTest/Röyksopp/Röyksopp - Eple.flac",
+        False,
+    )
+    assert (
+        route.calls.last.request.headers["X-ND-Authorization"] == "Bearer FAKE.JWT.TOKEN-for-tests"
+    )
+    assert "sesame" not in str(route.calls.last.request.url)
+
+    respx.get(f"{URL}/api/song/gone").mock(
+        return_value=native("navidrome_native_song_not_found.json", 404)
+    )
+    assert await area_nd().song_info("gone") is None
+    respx.get(f"{URL}/api/song/a%2Fb").mock(return_value=httpx.Response(500))
+    with pytest.raises(NavidromeError, match="HTTP 500") as error:
+        await area_nd().song_info("a/b")  # an ID never adds to the address
+    assert error.value.details["call"] == "api/song/{id}"
+
+
+@respx.mock
+@pytest.mark.parametrize(
+    ("recorded", "found"),
+    [
+        ("navidrome_native_song_area.json", False),  # still in Releasomat's folder (stale)
+        ("navidrome_native_song_missing.json", False),  # deleted, Navidrome noticed
+        ("navidrome_native_song_moved.json", True),  # moved into the library: same ID
+    ],
+)
+async def test_find_elsewhere_checks_where_the_song_is(recorded, found):
+    respx.get(f"{URL}/rest/search3").mock(return_value=answer("navidrome_search_eple.json"))
+    mock_native_login()
+    info = respx.get(f"{URL}/api/song/{EPLE_ID}").mock(return_value=native(recorded))
+    result = await area_nd().find_elsewhere(EPLE, 85, skip_ids={EPLE_ID})
+    assert (result is not None) is found
+    if found:
+        assert result.song["id"] == EPLE_ID and result.method == "name"
+    assert info.call_count == 1
+
+
+@respx.mock
+async def test_find_elsewhere_takes_the_next_match_and_gives_up_after_three():
+    recorded = json.loads((ANSWERS / "navidrome_search_eple.json").read_text())
+    area_song = recorded["subsonic-response"]["searchResult3"]["song"][0]
+    copies = [area_song] + [{**area_song, "id": f"copy{n}", "duration": 222} for n in range(4)]
+    respx.get(f"{URL}/rest/search3").mock(return_value=search_answer(*copies))
+    mock_native_login()
+    area = json.loads((ANSWERS / "navidrome_native_song_area.json").read_text())
+    moved = json.loads((ANSWERS / "navidrome_native_song_moved.json").read_text())
+    checks = respx.get(url__regex=rf"{URL}/api/song/.+").mock(
+        side_effect=lambda request: httpx.Response(
+            200, json=moved if request.url.path.endswith("/copy0") else area
+        )
+    )
+    result = await area_nd().find_elsewhere(EPLE, 85)
+    assert result.song["id"] == "copy0"  # the copy in Releasomat's folder was passed over
+    assert checks.call_count == 2
+
+    checks.reset()
+    checks.mock(return_value=httpx.Response(200, json=area))  # every copy is in the folder
+    assert await area_nd().find_elsewhere(EPLE, 85) is None
+    assert checks.call_count == 3  # gives up after three matches
+
+
+@respx.mock
+async def test_find_elsewhere_without_navidromes_own_api(caplog):
+    """If Navidrome's own API doesn't answer, only the old songs of files that left the folder
+    (``skip_ids``) are passed over, and that is logged at INFO."""
+    caplog.set_level(logging.INFO, logger="app.navidrome")
+    respx.get(f"{URL}/rest/search3").mock(return_value=answer("navidrome_search_eple.json"))
+    respx.post(f"{URL}/auth/login").mock(return_value=httpx.Response(500))
+    assert (await area_nd().find_elsewhere(EPLE, 85)).song["id"] == EPLE_ID
+    assert await area_nd().find_elsewhere(EPLE, 85, skip_ids={EPLE_ID}) is None
+    assert any("Can't check where song" in r.getMessage() for r in caplog.records)
+    assert all(r.levelno == logging.INFO for r in caplog.records if r.name == "app.navidrome")
+
+
+@respx.mock
+async def test_find_in_library_checks_only_the_old_songs_of_files_that_left():
+    respx.get(f"{URL}/rest/search3").mock(return_value=answer("navidrome_search_eple.json"))
+    mock_native_login()
+    info = respx.get(f"{URL}/api/song/{EPLE_ID}").mock(
+        return_value=native("navidrome_native_song_area.json")
+    )
+    assert (await area_nd().find_in_library(EPLE, 85)).song["id"] == EPLE_ID  # unchecked
+    assert info.call_count == 0
+    assert await area_nd().find_in_library(EPLE, 85, skip_ids={EPLE_ID}) is None  # stale
+    info.mock(return_value=native("navidrome_native_song_moved.json"))
+    found = await area_nd().find_in_library(EPLE, 85, skip_ids={EPLE_ID})
+    assert found.song["id"] == EPLE_ID  # Navidrome noticed the move: it is the library copy

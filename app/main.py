@@ -45,6 +45,9 @@ async def lifespan(app: FastAPI):
     engine = get_engine(config.database_url)
     pipeline.mark_interrupted(engine)
     files.clear_staging(config.config_dir)  # half-finished downloads of an interrupted run
+    leftovers = files.clear_part_files(config.music_dir)  # half-copied ones in MUSIC_DIR
+    if leftovers:
+        log.info("Removed %d half-copied download(s) from the music folder", leftovers)
     events.bus.reopen()
 
     with Session(engine) as session:

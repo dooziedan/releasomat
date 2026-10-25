@@ -2,7 +2,10 @@
 
 1. **read** the playlist from its source; store its tracks and what changed since last time
 2. **match**: for every track without a song in Navidrome yet, search Navidrome; a song that is
-   already there is linked and never touched
+   already there is linked and never touched. Downloads whose file has left Releasomat's folder
+   are sorted out first (``files_that_left``); adopted and "Don't like" tracks are never
+   downloaded, only linked when the song is elsewhere in the library (ADR 0009,
+   ``app/lifecycle.py``)
 3. **download** the missing ones with the download sources in the global order (Settings →
    Download sources, ADR 0008), tag them and save them under MUSIC_DIR (``app/files.py``)
 4. **scan**: let Navidrome scan Releasomat's folder, then find the new songs
@@ -22,6 +25,7 @@ Navidrome playlist is left as it is.
 
 import asyncio
 import logging
+import os
 from collections.abc import Awaitable, Callable
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -29,7 +33,7 @@ from pathlib import Path
 from sqlalchemy import Engine
 from sqlmodel import Session, select
 
-from app import files, httpclient, matching, reports, tagging
+from app import files, httpclient, lifecycle, matching, reports, tagging
 from app import settings as user_settings
 from app.config import Config, get_config
 from app.db import get_engine
@@ -38,6 +42,7 @@ from app.downloaders.slskd import SlskdDownloader
 from app.downloaders.youtube import YouTubeDownloader
 from app.events import EventBus, bus
 from app.models import (
+    DislikeReason,
     FileStatus,
     NavidromeMode,
     NavidromeSnapshot,
@@ -63,6 +68,11 @@ COVER_LIMIT = 5_000_000  # bytes; bigger pictures are not embedded
 # refresh can't leave a "downloading" mark behind that other refreshes would wait for forever.
 DOWNLOADING_NOW: dict[int, asyncio.Event] = {}
 USABLE = (FileStatus.DONE.value, FileStatus.IN_LIBRARY.value)
+KEPT_AWAY = lifecycle.KEPT_AWAY  # adopted and "Don't like": never downloaded
+# The safety brake of ``files_that_left``: when every downloaded file of a playlist is gone at
+# once, and at least this many, the folder is more likely unmounted than emptied by the owner.
+BRAKE_MINIMUM = 5
+UNMOUNTED = "Releasomat's folder looks unmounted; nothing was marked Don't like."
 
 
 async def fetch_cover(url: str | None) -> bytes | None:
@@ -242,6 +252,10 @@ class TrackState:
     message: str | None = None
     tried: list[dict] = field(default_factory=list)
     new_download: bool = False
+    # The track's old song in Releasomat's folder after its file left: Navidrome lists it until
+    # its next scan, so it is only linked once Navidrome says it is elsewhere in the library.
+    skip_ids: set[str] = field(default_factory=set)
+    searched: bool = False  # already looked for outside Releasomat's folder in this refresh
 
 
 class Refresh:
@@ -271,6 +285,8 @@ class Refresh:
         self.to_download = 0  # missing tracks the download step works on
         self.handled = 0  # of those, how many are done (downloaded, failed or skipped)
         self.cut_off: list[str] = []  # downloads a stop ended halfway ("Artist – Title (YouTube)")
+        # What happened to files that left Releasomat's folder, for the run's message.
+        self.changes = {"adopted": 0, "moved": 0, "vanished": 0}
         with Session(engine) as session:
             playlist = session.get(Playlist, playlist_id)
             self.title = playlist.title
@@ -495,34 +511,47 @@ class Refresh:
         )
 
     async def match(self) -> None:
-        """Step 2: link tracks Releasomat already has; search Navidrome for the others."""
+        """Step 2: link tracks Releasomat already has; search Navidrome for the others.
+
+        Downloads whose file has left Releasomat's folder go to ``files_that_left`` first.
+        Adopted and "Don't like" tracks are only looked for outside Releasomat's folder
+        (``relink``) and never downloaded."""
         self.step = "match"
         known = linked = 0
         music_dir = self.services.config.music_dir
+        gone: list[TrackState] = []
+        expected = 0  # downloads of this playlist that should be in Releasomat's folder
         with Session(self.engine) as session:
             for state in self.states:
                 file = file_of(session, state.track.id)
                 if file is None:
                     continue
-                if file.downloaded_by_releasomat and file.path and not _exists(music_dir, file):
-                    # The owner deleted the file by hand: it counts as missing again.
-                    file.status, file.path, file.navidrome_song_id = "pending", None, None
-                    file.downloaded_by_releasomat = False
-                    file.error = "The downloaded file was gone; downloading it again."
-                    session.commit()
-                    continue
-                if file.status in USABLE and file.navidrome_song_id:
+                old_id = (file.details or {}).get("old_song_id")
+                state.skip_ids = {old_id} if old_id else set()
+                if file.status == FileStatus.DONE and file.downloaded_by_releasomat and file.path:
+                    expected += 1
+                    if not _exists(music_dir, file):
+                        state.status, state.path = file.status, file.path
+                        state.song_id = file.navidrome_song_id
+                        gone.append(state)
+                        continue
+                if file.status in KEPT_AWAY:
+                    state.status = file.status
+                elif file.status in USABLE and file.navidrome_song_id:
                     state.song_id, state.status = file.navidrome_song_id, file.status
                     state.path = file.path
                     known += 1
                 elif file.status == FileStatus.DONE and file.path:
                     state.status, state.path = FileStatus.DONE.value, file.path  # find after scan
+        if gone:
+            await self.files_that_left(gone, expected)
+        await self.relink([s for s in self.states if s.status in KEPT_AWAY and not s.searched])
         for state in self.states:
-            if state.song_id or state.path:
+            if state.song_id or state.path or state.status in KEPT_AWAY:
                 continue
             try:
                 found = await self.services.navidrome.find_in_library(
-                    state.track, self.services.threshold
+                    state.track, self.services.threshold, skip_ids=state.skip_ids
                 )
             except NavidromeError as exc:
                 raise self.failed("match", exc) from None
@@ -541,17 +570,129 @@ class Refresh:
                 error=None,
             )
             self.track_event(state)
-        missing = sum(1 for s in self.states if not s.song_id and not s.path)
+        missing = len(self.missing())
         next_step = f"Downloading {count(missing, 'track')}…" if missing else "Updating Navidrome…"
         self.log(
             f"Linked before: {known}. Found in Navidrome now: {linked}. Missing: {missing}.",
             progress=next_step,
         )
 
+    def missing(self) -> list[TrackState]:
+        """Tracks without a song in Navidrome or a file, that may be downloaded."""
+        return [
+            s for s in self.states if not s.song_id and not s.path and s.status not in KEPT_AWAY
+        ]
+
+    async def files_that_left(self, gone: list[TrackState], expected: int) -> None:
+        """Downloads whose file is no longer in Releasomat's folder, without an adoption notice
+        (ADR 0009). The owner moved it into the library: its copy there is linked. Not found
+        anywhere: "Don't like" (it was deleted), lifted by ``relink`` if the song turns up later.
+        Releasomat never downloads such a track again on its own.
+
+        **Safety brake**: when the folder looks unmounted (missing, without a single file, or
+        every expected file of this playlist gone at once, at least ``BRAKE_MINIMUM``), nothing
+        is decided and the run warns; the tracks stay as they were."""
+        music_dir = Path(self.services.config.music_dir)
+        all_gone = len(gone) == expected and len(gone) >= BRAKE_MINIMUM
+        if all_gone or not _has_files(music_dir):
+            self.warnings.append(UNMOUNTED)
+            self.log(f"{UNMOUNTED} ({count(len(gone), 'downloaded file')} not found.)")
+            return
+        navidrome, threshold = self.services.navidrome, self.services.threshold
+        moved = vanished = 0
+        for state in gone:
+            path, skip = state.path, state.skip_ids | ({state.song_id} - {None})
+            try:
+                found = await navidrome.find_elsewhere(state.track, threshold, skip_ids=skip)
+            except NavidromeError as exc:
+                raise self.failed("match", exc) from None
+            with Session(self.engine) as session:
+                file = file_of(session, state.track.id)
+                if found is not None:
+                    result = lifecycle.left_folder(
+                        session, file, path, found.song, matched_by=found.method, score=found.score
+                    )
+                else:
+                    result = lifecycle.left_folder(session, file, path)
+                self.take_row(state, file)
+            state.searched = True
+            if result.changed and found is not None:
+                moved += 1
+                self.log(f"{_name(state)}: moved into your library (linked there).")
+            elif result.changed:
+                vanished += 1
+                self.log(f"{_name(state)}: its file was deleted from Releasomat's folder.")
+            else:  # an adoption notice came first: it is looked for like any adopted track
+                state.searched = False
+            self.track_event(state)
+        self.changes["moved"] += moved
+        self.changes["vanished"] += vanished
+
+    async def relink(self, states: list[TrackState]) -> None:
+        """Adopted and "Don't like" tracks: their song is looked for outside Releasomat's folder
+        and linked when found (the Navidrome playlist then uses the library copy)."""
+        if not states:
+            return
+        navidrome, threshold = self.services.navidrome, self.services.threshold
+        adopted = moved = others = 0
+        for state in states:
+            try:
+                found = await navidrome.find_elsewhere(
+                    state.track, threshold, skip_ids=state.skip_ids
+                )
+            except NavidromeError as exc:
+                raise self.failed("match", exc) from None
+            state.searched = True
+            if found is None:
+                continue
+            with Session(self.engine) as session:
+                file = file_of(session, state.track.id)
+                guessed = file.disliked_reason == DislikeReason.VANISHED
+                was_adopted = file.status == FileStatus.ADOPTED
+                result = lifecycle.link_library_copy(
+                    session, file, found.song, matched_by=found.method, score=found.score
+                )
+                self.take_row(state, file)
+            if not result.changed:
+                continue
+            if guessed:
+                moved += 1
+            elif was_adopted:
+                adopted += 1
+            else:
+                others += 1
+            self.log(f"{_name(state)}: found in your library, linked.")
+            self.track_event(state)
+        self.changes["adopted"] += adopted
+        self.changes["moved"] += moved
+        if others:
+            self.log(f"Don't like, but in your library: {count(others, 'track')} linked.")
+
+    def take_row(self, state: TrackState, file: TrackFile) -> None:
+        """The refresh's view of a track after its row changed (``app/lifecycle.py``)."""
+        state.status = file.status
+        usable = file.status in USABLE
+        state.song_id = file.navidrome_song_id if usable else None
+        state.path = file.path if file.status == FileStatus.DONE else None
+
+    def notes(self) -> str:
+        """What happened to files that left Releasomat's folder, for the run's message."""
+        notes = []
+        if self.changes["adopted"]:
+            notes.append(f"{self.changes['adopted']} adopted into your library.")
+        if self.changes["moved"]:
+            notes.append(f"{self.changes['moved']} moved into your library.")
+        if vanished := self.changes["vanished"]:
+            files_were = "its file was" if vanished == 1 else "their files were"
+            notes.append(
+                f"{vanished} marked Don't like ({files_were} deleted from Releasomat's folder)."
+            )
+        return " ".join(notes)
+
     async def download(self) -> None:
         """Step 3: download the missing tracks, several at once (DOWNLOAD_CONCURRENCY)."""
         self.step = "download"
-        todo = [s for s in self.states if not s.song_id and not s.path]
+        todo = self.missing()
         if not todo:
             return
         if not self.services.downloaders:
@@ -718,10 +859,15 @@ class Refresh:
             state.status, state.path, state.song_id = FileStatus.DONE.value, path, song_id
             self.track_event(state)
             return True
+        if status in KEPT_AWAY:  # adopted or "Don't like" meanwhile: never downloaded
+            state.status = status
+            return True
         return False
 
     async def keep(self, track: Track, result, staging: Path) -> str:
-        """Tag a checked download and move it into MUSIC_DIR; returns its path there."""
+        """Tag a checked download and move it into MUSIC_DIR; returns its path there. The tags
+        are the normal ones; where the file came from stays in the database (``details``), never
+        in the file (ADR 0009). Paths where other tracks' files used to be are not reused."""
         cover = await self.services.cover(track.cover_url or result.cover_url)
         if cover is None and result.cover_url and track.cover_url:
             cover = await self.services.cover(result.cover_url)
@@ -731,7 +877,6 @@ class Refresh:
             album=track.album or result.album,
             isrc=track.isrc,
             mbid=track.mbid,
-            comment=f"Downloaded by Releasomat from {result.origin}" if result.origin else None,
         )
         tagging.write_tags(result.path, tags, cover)
         relative = files.render_template(
@@ -742,7 +887,13 @@ class Refresh:
             ext=result.format,
         )
         music_dir = self.services.config.music_dir
-        saved = files.save_download(result.path, staging, music_dir, relative)
+        with Session(self.engine) as session:
+            former = session.exec(
+                select(TrackFile.former_path).where(
+                    TrackFile.former_path.is_not(None), TrackFile.track_id != track.id
+                )
+            ).all()
+        saved = files.save_download(result.path, staging, music_dir, relative, taken=former)
         return saved.relative_to(Path(music_dir).resolve()).as_posix()
 
     async def scan_and_find(self) -> None:
@@ -789,11 +940,12 @@ class Refresh:
         if self.stop is not None:
             self.stop.too_late = True
         song_ids = [s.song_id for s in self.states if s.song_id]
-        summary = self.summary()
+        summary = " ".join(p for p in (self.summary(), self.notes()) if p)
+        problems = f" {' '.join(self.warnings)}" if self.warnings else ""
         if not song_ids:
             reason = "The playlist is empty" if not self.states else "None of its songs is"
             self.log(f"{reason} in Navidrome yet; the Navidrome playlist was left as it is.")
-            return f"{summary} Navidrome playlist not changed: no songs to put in it yet."
+            return f"{summary} Navidrome playlist not changed: no songs to put in it yet.{problems}"
         self.log("", progress="Updating the Navidrome playlist…")
         with Session(self.engine) as session:
             playlist = session.get(Playlist, self.playlist_id)
@@ -808,7 +960,6 @@ class Refresh:
         except NavidromeError as exc:
             raise self.failed("playlist", exc) from None
         self.log(what)
-        problems = f" {' '.join(self.warnings)}" if self.warnings else ""
         return f"{summary} {what}{problems}"
 
     async def save_update(self, song_ids: list[str], stored_id: str | None) -> tuple[str, str]:
@@ -896,18 +1047,25 @@ class Refresh:
         self.log(f"{len(gone)} linked song(s) no longer in Navidrome; they're looked for again.")
 
     def summary(self) -> str:
-        counted = {"in_library": 0, "done": 0, "failed": 0}
+        """ "12 tracks: 5 in your library, 4 downloaded, 1 adopted (waiting for your library),
+        1 Don't like, 1 missing, 0 failed." (adopted and Don't like only when there are some)"""
+        counted = {"in_library": 0, "done": 0, "failed": 0, "adopted": 0, "disliked": 0}
         for state in self.states:
             if state.status in counted:
                 counted[state.status] += 1
         new = sum(s.new_download for s in self.states)
         missing = len(self.states) - sum(counted.values())
-        downloaded = f"{counted['done']} downloaded" + (f" ({new} new)" if new else "")
+        parts = [
+            f"{counted['in_library']} in your library",
+            f"{counted['done']} downloaded" + (f" ({new} new)" if new else ""),
+        ]
+        if counted["adopted"]:
+            parts.append(f"{counted['adopted']} adopted (waiting for your library)")
+        if counted["disliked"]:
+            parts.append(f"{counted['disliked']} Don't like")
+        parts += [f"{missing} missing", f"{counted['failed']} failed"]
         tracks = "1 track" if len(self.states) == 1 else f"{len(self.states)} tracks"
-        return (
-            f"{tracks}: {counted['in_library']} in your library, {downloaded}, "
-            f"{missing} missing, {counted['failed']} failed."
-        )
+        return f"{tracks}: {', '.join(parts)}."
 
     # --- The track_file row of a track --------------------------------------------------------
 
@@ -920,16 +1078,22 @@ class Refresh:
         forget_song: bool = False,
         **values,
     ) -> None:
-        """Create or update the track's ``track_file`` row (one per track)."""
+        """Create or update the track's ``track_file`` row (one per track). An adopted or
+        "Don't like" row is left alone unless the caller sets its ``status``: those tracks are
+        never downloaded, so nothing of a download may land on them by accident. A linked song
+        that is gone from Navidrome (``forget_song``) leaves the track missing again, or
+        adopted / "Don't like" as before (``lifecycle.status_after_song_gone``)."""
         with Session(self.engine) as session:
             file = file_of(session, state.track.id)
             if file is None:
                 file = TrackFile(track_id=state.track.id)
                 session.add(file)
+            elif file.status in KEPT_AWAY and "status" not in values:
+                return
             for key, value in values.items():
                 setattr(file, key, value)
             if forget_song and file.status == FileStatus.IN_LIBRARY:
-                file.status = FileStatus.PENDING.value
+                file.status = lifecycle.status_after_song_gone(file)
             if details is not None:
                 file.details = {**(file.details or {}), **details}
             if attempt:
@@ -953,6 +1117,18 @@ def _exists(music_dir: Path, file: TrackFile) -> bool:
         return files.inside(music_dir, file.path).is_file()
     except files.UnsafePath:
         return False
+
+
+def _has_files(folder: Path) -> bool:
+    """Whether a folder exists and holds at least one file (somewhere inside). An unmounted
+    share looks like a missing or empty folder."""
+    if not folder.is_dir():
+        return False
+    return any(names for _root, _dirs, names in os.walk(folder))
+
+
+def _name(state: TrackState) -> str:
+    return f"{state.track.artist} – {state.track.title}"
 
 
 def file_of(session: Session, track_id: int) -> TrackFile | None:
@@ -994,6 +1170,8 @@ def upsert_track(session: Session, source: SourceTrack) -> Track:
     track.album = track.album or source.album
     track.duration = track.duration or source.duration
     track.cover_url = track.cover_url or source.cover_url
+    track.bpm = track.bpm or source.bpm or None
+    track.key = track.key or (source.key or "").strip() or None
     session.flush()
     return track
 
