@@ -43,7 +43,7 @@ fi
 
 # Folders whose contents --reset deletes (the folders themselves stay). A cookies.txt for
 # YouTube in the config folders is kept.
-folders=(dev/navidrome-data dev/config dev/config-docker dev/library/Releasomat)
+folders=(dev/navidrome-data dev/config dev/config-docker dev/library/releasomat)
 
 for folder in "${folders[@]}"; do
 	if [[ -L $folder ]] || [[ -e $folder && $(realpath "$folder") != "$dev"/* ]]; then

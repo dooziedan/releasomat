@@ -226,7 +226,7 @@ def test_info(api, monkeypatch):
         "app": "releasomat",
         "version": data["version"],
         "integration_api": 1,
-        "folder": "Releasomat",
+        "folder": "releasomat",
     }
     monkeypatch.setenv("NAVIDROME_SUBFOLDER", "Downloads")
     assert api.get("/api/integration/info", headers=AUTH).json()["folder"] == "Downloads"
@@ -253,7 +253,7 @@ def test_files_lists_the_files_in_the_area_now(api, db, config):
 
     data = api.get("/api/integration/files", headers=AUTH).json()
 
-    assert data["integration_api"] == 1 and data["folder"] == "Releasomat"
+    assert data["integration_api"] == 1 and data["folder"] == "releasomat"
     assert [f["id"] for f in data["files"]] == [glue.id, eple.id]  # by path
     first = data["files"][1]
     mix = db.exec(select(Playlist).where(Playlist.title == "My Mix")).one()
@@ -289,9 +289,9 @@ def test_files_lists_the_files_in_the_area_now(api, db, config):
 def test_path_spellings(api, db, config):
     file = download(db, config.music_dir)
     nfd = unicodedata.normalize("NFD", EPLE)
-    first = answer(api, "adopt", {"path": f"/music/Releasomat/{nfd}", "size": 100})
+    first = answer(api, "adopt", {"path": f"/music/releasomat/{nfd}", "size": 100})
     assert first == {
-        "asked": f"/music/Releasomat/{nfd}",
+        "asked": f"/music/releasomat/{nfd}",
         "ok": True,
         "changed": True,
         "reason": None,
@@ -299,7 +299,7 @@ def test_path_spellings(api, db, config):
         "path": EPLE,
         "status": "adopted",
     }
-    for spelling in (EPLE, nfd, f"Releasomat/{EPLE}", f"/mnt/user/music/Releasomat/{EPLE}"):
+    for spelling in (EPLE, nfd, f"releasomat/{EPLE}", f"/mnt/user/music/releasomat/{EPLE}"):
         again = answer(api, "adopt", {"path": spelling, "id": file.id})
         assert (again["ok"], again["changed"], again["id"]) == (True, False, file.id), spelling
 
@@ -474,7 +474,7 @@ def test_delete_refusals(api, db, config, tmp_path):
     assert outside.read_bytes() == b"not Releasomat's"
     assert (music / "Evil/Evil - Link.flac").is_symlink()
 
-    for unsafe in ("../precious.flac", "Evil/../../precious.flac", f"/music/Releasomat/../{EPLE}"):
+    for unsafe in ("../precious.flac", "Evil/../../precious.flac", f"/music/releasomat/../{EPLE}"):
         result = answer(api, "delete", unsafe)
         assert result["ok"] is False and result["id"] is None, unsafe
     assert outside.exists() and (music / EPLE).exists()
@@ -538,7 +538,7 @@ def test_the_tagwerk_group_is_optional_and_doesnt_nag(client):
     assert "warn" not in group and "failed" not in group and "missing" not in group
     assert "Generate a key" in group
     assert "None since Releasomat started" in group
-    assert "http://testserver" in group and "<code>Releasomat</code>" in group
+    assert "http://testserver" in group and "<code>releasomat</code>" in group
     # Nothing about Tagwerk elsewhere on the page.
     assert page.count("Tagwerk") == page.count("Tagwerk", page.index('<article id="tagwerk">'))
 

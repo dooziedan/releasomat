@@ -91,8 +91,8 @@ def area_paths(raw: str, subfolder: str) -> list[str]:
     """The paths inside Releasomat's folder (relative to it, ``/``, NFC) that ``raw`` may mean:
 
     - ``"Röyksopp/Röyksopp - Eple.opus"`` as given;
-    - ``"Releasomat/Röyksopp/…"``: also without the leading folder name (``subfolder``);
-    - ``"/music/Releasomat/Röyksopp/…"``: the part after the folder name (for each place it
+    - ``"releasomat/Röyksopp/…"``: also without the leading folder name (``subfolder``);
+    - ``"/music/releasomat/Röyksopp/…"``: the part after the folder name (for each place it
       appears). Other absolute paths mean nothing.
 
     Raises BadPath for an empty path, NUL, and ``..``, ``.`` or empty parts."""

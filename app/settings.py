@@ -83,7 +83,7 @@ DEFINITIONS = [
     ),
     Definition(
         "NAVIDROME_SUBFOLDER", "Releasomat's folder in Navidrome", "navidrome",
-        default="Releasomat",
+        default="releasomat",
         help="The name of Releasomat's music folder as Navidrome sees it inside its library.",
     ),
     Definition(

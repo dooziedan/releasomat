@@ -3,7 +3,7 @@ Date: 2026-10-24, decisions completed 2026-10-25 · Status: Accepted (owner's de
 
 ## Context
 Releasomat saves its downloads in its own folder inside the music library (ADR 0002), e.g.
-`/mnt/user/music/Releasomat`. Tagwerk, the owner's library manager, scans the whole library, so it
+`/mnt/user/music/releasomat`. Tagwerk, the owner's library manager, scans the whole library, so it
 sees those downloads as ordinary library tracks: it counts and checks them and may propose renames,
 moves or the trash. If a Releasomat file disappears that way, Releasomat's next refresh downloads it
 again. Tagwerk also has an import inbox for new music (Tagwerk ADR 0007) with identification,
@@ -38,7 +38,7 @@ And (2026-10-25):
 
 ### Names
 - **Releasomat area**: Releasomat's `MUSIC_DIR`, a folder inside the library. Tagwerk sees it as
-  `/music/<folder>`; the folder name is Releasomat's `NAVIDROME_SUBFOLDER` (default `Releasomat`).
+  `/music/<folder>`; the folder name is Releasomat's `NAVIDROME_SUBFOLDER` (default `releasomat`).
 - **Adopt**: the owner's click in Tagwerk that moves a Releasomat file into Tagwerk's inbox.
 
 ### Tagwerk (details: Tagwerk ADR 0044, proposed)
@@ -69,7 +69,7 @@ And (2026-10-25):
   `integration_api` only goes up for changes an older partner can't handle; unknown fields are
   ignored by both apps.
 - Files are named by their **path inside the area** (`/`, Unicode NFC, e.g.
-  `Röyksopp/Röyksopp - Eple.opus`; `Releasomat/…` and `/music/Releasomat/…` are accepted too) plus
+  `Röyksopp/Röyksopp - Eple.opus`; `releasomat/…` and `/music/releasomat/…` are accepted too) plus
   their **size**; answers carry Releasomat's file `id`, used in later notices.
 - `GET files`: the files in the area now (downloaded by Releasomat, still its own, on disk), each
   with `id`, `path`, `size`, `downloaded_at`, `downloader`, `format`, `bitrate`, `wanted` (artist,

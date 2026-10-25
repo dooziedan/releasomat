@@ -10,7 +10,7 @@ image, a template, folders mapped by the user.
 - Container paths:
   - `/config`: database, yt-dlp `cookies.txt`, cache. Everything Releasomat needs to survive an update.
   - `/music`: Releasomat's **own folder inside the Navidrome library** (for example
-    `/mnt/user/media/music/Releasomat`). Releasomat never sees the rest of the library on disk; it
+    `/mnt/user/media/music/releasomat`). Releasomat never sees the rest of the library on disk; it
     finds existing songs through Navidrome's API.
   - `/slskd` (optional): slskd's download folder, so finished Soulseek downloads can be moved into
     `/music`.
