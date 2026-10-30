@@ -324,6 +324,14 @@ class Navidrome:
         path = info.get("path") or ""
         return not (self.subfolder and path.startswith(f"{self.subfolder}/"))
 
+    async def song_elsewhere(self, song_id: str) -> dict | None:
+        """The song with this ID (``song_info``) if it is in the library outside Releasomat's
+        folder now, else None. Navidrome keeps a song's ID when its file turns up elsewhere
+        with the same title and album (ADR 0010): an adopted track's old song comes back that
+        way, with its plays and stars."""
+        info = await self.song_info(song_id)
+        return info if self.outside_area(info) else None
+
     # --- Scans --------------------------------------------------------------------------------
 
     async def scan_status(self) -> dict:

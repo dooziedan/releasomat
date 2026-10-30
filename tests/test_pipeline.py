@@ -55,11 +55,14 @@ class FakeSource:
         return answer
 
 
+MISSING = {"missing": True}
+
+
 class FakeNavidrome:
     """Navidrome in memory: a library, a scan that picks up Releasomat's files (reading their
     tags; marked ``in_area``, and ``missing`` once their file is gone), playlists that silently
-    drop unknown song IDs (like the real one). Like the real one, it keeps listing a deleted file
-    until the next scan."""
+    drop unknown song IDs and hide missing songs while keeping their place (like the real one).
+    Like the real one, it keeps listing a deleted file until the next scan."""
 
     configured = True
 
@@ -112,6 +115,15 @@ class FakeNavidrome:
                 }  # fmt: skip
         return "folder"
 
+    async def song_elsewhere(self, song_id):
+        self._call("song_elsewhere")
+        song = self.library.get(song_id)
+        return dict(song) if song and self.elsewhere(song) else None
+
+    def comes_back(self, song_id, path):
+        """Tagwerk imported an adopted file and Navidrome found it again: same song, new place."""
+        self.library[song_id].update(path=path, in_area=False, missing=False)
+
     async def find_download(self, track, relative_path, threshold):
         self._call("find_download")
         for song in self.library.values():
@@ -124,7 +136,8 @@ class FakeNavidrome:
         playlist = self.playlists.get(playlist_id)
         if playlist is None:
             return None
-        return {**playlist, "entry": [{"id": i} for i in playlist["songs"]]}
+        shown = [i for i in playlist["songs"] if not self.library.get(i, MISSING).get("missing")]
+        return {**playlist, "entry": [{"id": i} for i in shown]}
 
     async def create_playlist(self, name, song_ids):
         self._call("create_playlist")
@@ -636,7 +649,14 @@ def change(engine, title: str, action, *args):
 
 
 def playlist_songs(world) -> list[str]:
+    """The songs in the Navidrome playlist, hidden ones (missing files) included."""
     return world.navidrome.playlists[world.playlist().navidrome_playlist_id]["songs"]
+
+
+def shown_songs(world) -> list[str]:
+    """The songs Navidrome shows in the playlist: without missing files."""
+    playlist = world.navidrome.playlists[world.playlist().navidrome_playlist_id]
+    return [i for i in playlist["songs"] if not world.navidrome.library[i].get("missing")]
 
 
 async def test_a_file_deleted_by_hand_is_dont_like_and_not_downloaded_again(world, config):
@@ -791,11 +811,13 @@ async def test_adopted_tracks_are_never_downloaded_and_linked_once_imported(worl
         "total": 3, "in_library": 1, "downloaded": 1, "failed": 0, "adopted": 1, "disliked": 0,
         "missing": 0,
     }  # fmt: skip
-    assert playlist_songs(world) == ["bo", "dl2"]  # missing while it waits in the inbox
+    # Its old song keeps its place while it waits in the inbox (Navidrome hides it, ADR 0010).
+    assert playlist_songs(world) == ["bo", "dl1", "dl2"]
+    assert "(2 songs + 1 adopted song waiting for your library)." in run.message
 
     world.navidrome.add_song(
         "lib-eple", "Röyksopp/Melody A.M./02 Eple.flac", title="Eple", artist="Röyksopp"
-    )  # Tagwerk imported it; fmt: skip
+    )  # Tagwerk imported it with a new title or album: a new song for Navidrome; fmt: skip
     run = await world.refresh()
     assert "3 tracks: 2 in your library" in run.message
     assert "1 adopted into your library." in run.message
@@ -809,6 +831,73 @@ async def test_adopted_tracks_are_never_downloaded_and_linked_once_imported(worl
     assert world.files()["Eple"].status == "adopted"  # not missing: never downloaded again
     await world.refresh()
     assert world.youtube.calls == ["Eple", "Strobe (Extended Mix)"]
+
+
+async def test_an_adopted_song_keeps_its_place_and_comes_back_as_the_same_song(
+    world, config, engine
+):
+    """ADR 0010: while the adopted file waits in Tagwerk's inbox, its old song stays in the
+    Navidrome playlist, hidden by Navidrome. When Tagwerk's import keeps title and album,
+    Navidrome finds the file again under the same ID: it is back in its place at once, and
+    the next refresh links it as it is, without searching."""
+    world.source.answers = [TWO_DOWNLOADS]
+    await world.refresh()
+    assert change(engine, "Eple", lifecycle.adopt).changed
+    (config.music_dir / EPLE_FILE).unlink()
+    await world.navidrome.scan()  # Navidrome notices the file is away
+
+    run = await world.refresh()
+    assert run.status == "done" and world.files()["Eple"].status == "adopted"
+    assert playlist_songs(world) == ["bo", "dl1", "dl2"]
+    assert shown_songs(world) == ["bo", "dl2"]
+
+    world.navidrome.comes_back("dl1", "House/Röyksopp - Eple (Original Mix).opus")
+    assert shown_songs(world) == ["bo", "dl1", "dl2"]  # back in its place, before any refresh
+
+    world.navidrome.calls.clear()
+    run = await world.refresh()
+    eple = world.files()["Eple"]
+    assert (eple.status, eple.navidrome_song_id) == ("in_library", "dl1")
+    assert eple.details["matched_by"] == "same_song" and eple.adopted_at is not None
+    assert "1 adopted into your library." in run.message
+    assert "Navidrome playlist updated (3 songs)." in run.message
+    assert "Röyksopp – Eple: in your library now, the same song in Navidrome." in run.log
+    assert "find_elsewhere" not in world.navidrome.calls
+    assert shown_songs(world) == ["bo", "dl1", "dl2"]
+    assert world.youtube.calls == ["Eple", "Strobe (Extended Mix)"]
+
+
+async def test_an_adopted_song_is_found_by_name_without_navidromes_own_api(world, config, engine):
+    """Asking Navidrome about the old song is only a shortcut: when its own API fails, the
+    refresh still works and finds the song by name."""
+    world.source.answers = [SHORT]
+    await world.refresh()
+    change(engine, "Glue", lifecycle.adopt)
+    (config.music_dir / GLUE_FILE).unlink()
+    world.navidrome.comes_back("dl1", "Techno/Bicep - Glue.opus")
+    world.navidrome.fail["song_elsewhere"] = NavidromeError("HTTP 500")
+
+    run = await world.refresh()
+
+    assert run.status == "done"
+    glue = world.files()["Glue"]
+    assert (glue.status, glue.navidrome_song_id) == ("in_library", "dl1")
+    assert glue.details["matched_by"] == "name"
+
+
+async def test_a_thrown_away_song_doesnt_keep_its_place(world, config, engine):
+    """Only adopted songs wait in their place; one the owner threw away in Tagwerk's inbox is
+    Don't like and leaves the Navidrome playlist."""
+    world.source.answers = [TWO_DOWNLOADS]
+    await world.refresh()
+    change(engine, "Eple", lifecycle.adopt)
+    (config.music_dir / EPLE_FILE).unlink()
+    await world.refresh()
+    assert playlist_songs(world) == ["bo", "dl1", "dl2"]
+
+    assert change(engine, "Eple", lifecycle.discard).changed
+    await world.refresh()
+    assert playlist_songs(world) == ["bo", "dl2"]
 
 
 async def test_dont_like_is_not_downloaded_but_linked_from_the_library(world, config, engine):

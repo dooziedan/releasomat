@@ -258,6 +258,10 @@ class TrackState:
     # its next scan, so it is only linked once Navidrome says it is elsewhere in the library.
     skip_ids: set[str] = field(default_factory=set)
     searched: bool = False  # already looked for outside Releasomat's folder in this refresh
+    # An adopted track's old song, kept in the Navidrome playlist while its file waits in
+    # Tagwerk's inbox: Navidrome hides it meanwhile and shows it again in its place when the
+    # file comes back with the same ID (ADR 0010).
+    held_id: str | None = None
 
 
 class Refresh:
@@ -632,27 +636,39 @@ class Refresh:
 
     async def relink(self, states: list[TrackState]) -> None:
         """Adopted and "Don't like" tracks: their song is looked for outside Releasomat's folder
-        and linked when found (the Navidrome playlist then uses the library copy)."""
+        and linked when found (the Navidrome playlist then uses the library copy).
+
+        An adopted track first asks Navidrome about its old song: when Tagwerk's import kept
+        title and album, Navidrome finds the file again and keeps the song's ID, plays and
+        stars (ADR 0010), and that song is linked as it is. Until then the old song keeps its
+        place in the Navidrome playlist (``held_id``)."""
         if not states:
             return
         navidrome, threshold = self.services.navidrome, self.services.threshold
         adopted = moved = others = 0
         for state in states:
-            try:
-                found = await navidrome.find_elsewhere(
-                    state.track, threshold, skip_ids=state.skip_ids
-                )
-            except NavidromeError as exc:
-                raise self.failed("match", exc) from None
+            old_id = self.old_song(state)
+            song = await self.song_back(old_id) if old_id else None
+            method, score = "same_song", None
+            if song is None:
+                try:
+                    found = await navidrome.find_elsewhere(
+                        state.track, threshold, skip_ids=state.skip_ids
+                    )
+                except NavidromeError as exc:
+                    raise self.failed("match", exc) from None
+                if found is not None:
+                    song, method, score = found.song, found.method, found.score
             state.searched = True
-            if found is None:
+            if song is None:
+                state.held_id = old_id
                 continue
             with Session(self.engine) as session:
                 file = file_of(session, state.track.id)
                 guessed = file.disliked_reason == DislikeReason.VANISHED
                 was_adopted = file.status == FileStatus.ADOPTED
                 result = lifecycle.link_library_copy(
-                    session, file, found.song, matched_by=found.method, score=found.score
+                    session, file, song, matched_by=method, score=score
                 )
                 self.take_row(state, file)
             if not result.changed:
@@ -663,12 +679,34 @@ class Refresh:
                 adopted += 1
             else:
                 others += 1
-            self.log(f"{_name(state)}: found in your library, linked.")
+            if method == "same_song":
+                self.log(f"{_name(state)}: in your library now, the same song in Navidrome.")
+            else:
+                self.log(f"{_name(state)}: found in your library, linked.")
             self.track_event(state)
         self.changes["adopted"] += adopted
         self.changes["moved"] += moved
         if others:
             self.log(f"Don't like, but in your library: {count(others, 'track')} linked.")
+
+    def old_song(self, state: TrackState) -> str | None:
+        """An adopted track's song from before the adoption: Navidrome's ID of its file in
+        Releasomat's folder (``details.old_song_id``). None for every other track."""
+        if state.status != FileStatus.ADOPTED:
+            return None
+        with Session(self.engine) as session:
+            file = file_of(session, state.track.id)
+            return (file.details or {}).get("old_song_id") if file else None
+
+    async def song_back(self, song_id: str) -> dict | None:
+        """The old song of an adopted track if Navidrome has it in the library now (it kept
+        the ID when the file came back), else None. Only a shortcut: if Navidrome's own API
+        doesn't answer, the search by name still finds the library copy."""
+        try:
+            return await self.services.navidrome.song_elsewhere(song_id)
+        except NavidromeError as exc:
+            log.info("Can't check where song %s is (%s)", song_id, exc)
+            return None
 
     def take_row(self, state: TrackState, file: TrackFile) -> None:
         """The refresh's view of a track after its row changed (``app/lifecycle.py``)."""
@@ -946,13 +984,15 @@ class Refresh:
             self.track_event(state)
 
     async def update_playlist(self, snapshot: PlaylistSnapshot) -> str:
-        """Step 5: the Navidrome playlist, in the source's order (missing tracks left out).
-        Returns the run's summary. From here on the refresh can't be stopped: saving the
-        playlist is short, and Navidrome must never get half of it."""
+        """Step 5: the Navidrome playlist, in the source's order (missing tracks left out;
+        adopted songs keep their place, ``held_id``). Returns the run's summary. From here on
+        the refresh can't be stopped: saving the playlist is short, and Navidrome must never
+        get half of it."""
         self.step = "playlist"
         if self.stop is not None:
             self.stop.too_late = True
-        song_ids = [s.song_id for s in self.states if s.song_id]
+        # Adopted songs keep their place while they wait in Tagwerk's inbox (hidden by Navidrome).
+        song_ids = [s.song_id or s.held_id for s in self.states if s.song_id or s.held_id]
         summary = " ".join(p for p in (self.summary(), self.notes()) if p)
         problems = f" {' '.join(self.warnings)}" if self.warnings else ""
         if not song_ids:
@@ -982,14 +1022,14 @@ class Refresh:
         if existing is not None:
             await navidrome.replace_playlist(stored_id, song_ids)
             renamed = await self.rename_dated(stored_id, existing.get("name") or "")
-            return stored_id, f"Navidrome playlist updated ({songs(song_ids)}).{renamed}"
+            return stored_id, f"Navidrome playlist updated ({self.songs(song_ids)}).{renamed}"
         new_id = await navidrome.create_playlist(self.title, song_ids)
         await self.comment(new_id, f"Kept up to date by Releasomat from {self.url}")
         with Session(self.engine) as session:
             session.get(Playlist, self.playlist_id).navidrome_playlist_id = new_id
             session.commit()
         again = " (the old one was gone)" if stored_id else ""
-        return new_id, f"Navidrome playlist created{again} ({songs(song_ids)})."
+        return new_id, f"Navidrome playlist created{again} ({self.songs(song_ids)})."
 
     async def rename_dated(self, navidrome_id: str, name: str) -> str:
         """An older name with a date after a comma ("Weekly Exploration for rob, week of
@@ -1029,7 +1069,7 @@ class Refresh:
                 NavidromeSnapshot(playlist_id=self.playlist_id, navidrome_id=new_id, name=name)
             )
             session.commit()
-        what = f"Snapshot “{name}” created in Navidrome ({songs(song_ids)})."
+        what = f"Snapshot “{name}” created in Navidrome ({self.songs(song_ids)})."
         if self.services.snapshot_auto_delete:
             removed = await self.prune_snapshots(keep)
             if removed:
@@ -1073,6 +1113,16 @@ class Refresh:
         for state in gone:
             self.save_file(state, navidrome_song_id=None, forget_song=True)
         self.log(f"{len(gone)} linked song(s) no longer in Navidrome; they're looked for again.")
+
+    def songs(self, song_ids: list[str]) -> str:
+        """ "12 songs" in the Navidrome playlist; adopted songs that keep their place there are
+        counted apart, since Navidrome hides them: "11 songs + 1 adopted song waiting for your
+        library"."""
+        held = sum(1 for s in self.states if s.held_id and not s.song_id)
+        shown = count(len(song_ids) - held, "song")
+        return (
+            f"{shown} + {count(held, 'adopted song')} waiting for your library" if held else shown
+        )
 
     def summary(self) -> str:
         """ "12 tracks: 5 in your library, 4 downloaded, 1 adopted (waiting for your library),
@@ -1133,10 +1183,6 @@ class Refresh:
 def count(number: int, thing: str) -> str:
     """ "1 track", "12 tracks"."""
     return f"{number} {thing}" if number == 1 else f"{number} {thing}s"
-
-
-def songs(song_ids: list[str]) -> str:
-    return count(len(song_ids), "song")
 
 
 def _exists(music_dir: Path, file: TrackFile) -> bool:

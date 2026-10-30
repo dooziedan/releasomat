@@ -50,8 +50,9 @@ Owner's decisions in ADR 0008.
   in full without it): states "adopted" and "Don't like", files that leave the folder (moved →
   linked, deleted → Don't like, safety brake for an unmounted folder), downloads that appear in one
   step, the integration API (`/api/integration/…`, off without a key), Settings → Tagwerk, badges
-  and Undo on the playlist page. Tagwerk's side follows
-  separately (Tagwerk ADR 0044); "Give back" later.
+  and Undo on the playlist page; adopted songs keep their place in the Navidrome playlist and stay
+  the same song (ADR 0010). Tagwerk's side follows separately (Tagwerk ADR 0044; the two-step
+  import of ADR 0010 is still to do there); "Give back" later.
 - ⬜ Download folder overview: size, files no playlist uses any more, a delete button per file (only
   by the owner, with confirmation, ADR 0003; marks the track "Don't like"); snapshot mode with
   "keep last N"; retry of failed tracks; offering a better copy of a YouTube download (the owner

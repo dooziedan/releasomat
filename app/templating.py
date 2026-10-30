@@ -50,6 +50,7 @@ MATCHED_BY = {
     "isrc": "same ISRC",
     "name": "same artist, title and length",
     "path": "by its file",
+    "same_song": "the same song in Navidrome",
 }
 
 

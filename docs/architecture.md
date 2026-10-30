@@ -119,12 +119,22 @@ refresh, the integration API and the UI all call it.
 |---|---|---|
 | `done` | downloaded, in Releasomat's folder | – |
 | `in_library` | linked to a song elsewhere in the library (also an adopted or moved file, once Navidrome lists it there) | no |
-| `adopted` ("Adopted by Tagwerk") | Tagwerk took the file into its inbox; linked once it is in the library | never |
+| `adopted` ("Adopted by Tagwerk") | Tagwerk took the file into its inbox; its old song keeps its place in the Navidrome playlist (hidden by Navidrome) and is linked once it is in the library (ADR 0010) | never |
 | `disliked` ("Don't like") | the owner deleted it (in Releasomat, with Tagwerk's Delete, or threw the adopted file away in Tagwerk's inbox), or its file left the folder and isn't anywhere else in the library | never, until **Undo** on the playlist page |
 
 The status says where the song is now (the badge); `adopted_at`, `disliked_at`, `disliked_reason`
 (`vanished`, `deleted`, `discarded`, `owner`) and `former_path` remember what happened, so a "Don't
 like" track can also be `in_library` when the song is elsewhere in the library.
+
+**Adopted songs stay the same song** (ADR 0010): Navidrome keeps a song's ID when its file turns
+up elsewhere with the same title, album, album artist, release date and disc/track number (its
+"persistent ID"; the MusicBrainz recording ID Releasomat writes isn't part of it). So while an
+adopted file waits in Tagwerk's inbox, the refresh keeps its old song in the Navidrome playlist
+(`TrackState.held_id`; Navidrome hides it meanwhile), and each refresh first asks Navidrome about
+that song (`Navidrome.song_elsewhere`): back in the library means linked as it is
+(`matched_by: same_song`), with its plays and stars. Otherwise the search finds the library copy
+as for any adopted track. Tagwerk keeps the ID by importing an adopted file in two steps (move,
+Navidrome scan, then the new tags).
 
 **Without Tagwerk** (the default) all of this works through Navidrome alone: each refresh checks
 the files it downloaded. A file that has left the folder without an adoption notice is looked for
