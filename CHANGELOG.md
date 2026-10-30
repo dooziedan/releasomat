@@ -58,6 +58,11 @@ Each version's section becomes the text of its GitHub Release page.
   into your library (Releasomat then never downloads them again and links the library copy once
   Tagwerk has imported it) and delete ones you don't like. The key is sent as
   `Authorization: Bearer …`; the calls are documented at `/docs`.
+- An adopted song keeps its place in the Navidrome playlist while it waits in Tagwerk's inbox
+  (Navidrome hides it until then). When Navidrome recognises the imported file as the same song,
+  Releasomat keeps that song, with its plays, stars and rating. Navidrome recognises it when title
+  and album stay the same, or when Tagwerk changes them only after the file is in your library.
+  Keep Navidrome's `ND_SCANNER_PURGEMISSING` at `never` (its default) for this.
 - Stop button for a running refresh (playlist page and Activity): the current download ends right
   away, tracks already downloaded stay, and the Navidrome playlist is left as it is.
 - Docker image for Unraid with an Unraid template.

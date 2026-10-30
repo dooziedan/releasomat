@@ -28,7 +28,9 @@ Inspired by [Explo](https://github.com/LumePart/Explo). Runs as one Docker conta
   A song whose file you delete is marked "Don't like" and not downloaded again (with an Undo); a
   file you move into your library is linked there.
 - **Optional: Tagwerk.** If you manage your library with Tagwerk, a key in Settings → Tagwerk lets
-  it adopt Releasomat's downloads into your library. Releasomat works in full without it.
+  it adopt Releasomat's downloads into your library. Releasomat works in full without it. An
+  adopted song keeps its place in its playlists, and Navidrome can keep it as the same song with
+  its plays and stars (leave Navidrome's `ND_SCANNER_PURGEMISSING` at `never`, its default).
 
 ## Install on Unraid
 

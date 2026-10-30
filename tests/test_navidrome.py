@@ -381,6 +381,25 @@ async def test_song_info_tells_the_real_path_and_whether_it_is_missing():
 
 @respx.mock
 @pytest.mark.parametrize(
+    ("recorded", "status", "back"),
+    [
+        ("navidrome_native_song_area.json", 200, False),  # still in Releasomat's folder
+        ("navidrome_native_song_missing.json", 200, False),  # away (e.g. in Tagwerk's inbox)
+        ("navidrome_native_song_moved.json", 200, True),  # in the library: same ID (ADR 0010)
+        ("navidrome_native_song_not_found.json", 404, False),  # Navidrome forgot it
+    ],
+)
+async def test_song_elsewhere_is_the_old_song_back_in_the_library(recorded, status, back):
+    mock_native_login()
+    respx.get(f"{URL}/api/song/{EPLE_ID}").mock(return_value=native(recorded, status))
+    song = await area_nd().song_elsewhere(EPLE_ID)
+    assert (song is not None) is back
+    if back:  # what linking it needs
+        assert song["id"] == EPLE_ID and song["suffix"] == "flac" and "bitRate" in song
+
+
+@respx.mock
+@pytest.mark.parametrize(
     ("recorded", "found"),
     [
         ("navidrome_native_song_area.json", False),  # still in Releasomat's folder (stale)

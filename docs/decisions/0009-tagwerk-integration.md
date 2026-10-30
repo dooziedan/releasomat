@@ -118,7 +118,10 @@ And (2026-10-25):
   library) needs nothing from Releasomat.
 - After an adoption the song's Navidrome ID usually changes (new path, Tagwerk's tags). Releasomat
   repairs its playlists on the next refresh by finding the library copy. While a track waits in
-  Tagwerk's inbox it is missing from the Navidrome playlist.
+  Tagwerk's inbox it is missing from the Navidrome playlist. *Changed by
+  [ADR 0010](0010-adopted-songs-stay-the-same-song.md) (2026-10-30)*: the adopted song keeps its
+  place in the playlist while it waits, and stays the same song (same ID, plays and stars) when
+  Tagwerk imports it in two steps.
 - Tagwerk must be able to remove files from the area: both containers run with the same PUID/PGID.
 - Until Tagwerk's first step ships, Tagwerk still treats the area as library: avoid Tagwerk actions
   on those files.
