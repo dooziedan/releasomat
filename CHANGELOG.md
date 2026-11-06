@@ -66,3 +66,7 @@ Each version's section becomes the text of its GitHub Release page.
 - Stop button for a running refresh (playlist page and Activity): the current download ends right
   away, tracks already downloaded stay, and the Navidrome playlist is left as it is.
 - Docker image for Unraid with an Unraid template.
+
+### Fixed
+- Apple Music personal mixes (such as the New Music Mix) can be added: their links, which contain
+  `pl.pm-`, were refused with "Paste the link of an Apple Music playlist".

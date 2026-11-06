@@ -207,7 +207,9 @@ is against Apple's terms.
 - If the user has an Apple Developer account, allow an **official developer
   token**, risk low.
 - Playlist IDs: `pl.` followed by hex for editorial playlists, `pl.u-…` for
-  user playlists shared publicly.
+  user playlists shared publicly, `pl.pm-…` for personal mixes (New Music Mix
+  etc.). A personal mix has the same public page JSON as other playlists, with
+  no account needed (checked 2026-11-06).
 
 ---
 

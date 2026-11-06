@@ -30,8 +30,9 @@ from app.sources.web import (
     source_error,
 )
 
-# "pl.u-…" are playlists shared by people, "pl.<32 hex>" are Apple's own.
-PLAYLIST_ID = re.compile(r"^pl\.(u-)?[A-Za-z0-9]+$")
+# "pl.<32 hex>" are Apple's own, "pl.u-…" are shared by people, "pl.pm-…" are personal mixes
+# ("New Music Mix"). Only "pl." is checked: if Apple adds a new kind, its link keeps working.
+PLAYLIST_ID = re.compile(r"^pl\.[A-Za-z0-9-]+$")
 STOREFRONT = re.compile(r"^[a-z]{2}$")
 OTHER_KINDS = {
     "album": "an album",
