@@ -13,11 +13,16 @@ TIDAL = "36ea71a8-445e-41a4-82ab-6628c581535d"
 @pytest.mark.parametrize(
     ("link", "source", "playlist_id", "url"),
     [
-        # Apple Music: storefront, slug, shared (pl.u-) and editorial playlists
+        # Apple Music: storefront, slug, shared (pl.u-), personal mix (pl.pm-), editorial playlists
         (
             "https://music.apple.com/de/playlist/feel-good-hits/pl.u-AkAmPlyUxXXXxx",
             "apple_music", "pl.u-AkAmPlyUxXXXxx",
             "https://music.apple.com/de/playlist/feel-good-hits/pl.u-AkAmPlyUxXXXxx",
+        ),
+        (
+            "https://music.apple.com/de/playlist/neue-musik/pl.pm-0123456789abcdef0123456789abcdef",
+            "apple_music", "pl.pm-0123456789abcdef0123456789abcdef",
+            "https://music.apple.com/de/playlist/neue-musik/pl.pm-0123456789abcdef0123456789abcdef",
         ),
         ("https://music.apple.com/us/playlist/todays-hits/pl.f4d106fed2bd41149aaacabb233eb5eb?l=en",
          "apple_music", "pl.f4d106fed2bd41149aaacabb233eb5eb", None),
@@ -106,6 +111,8 @@ def test_beatport_charts_and_lists_are_recognised(link, playlist_id, url, label)
         ("spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M", "doesn't know spotify.com"),
         ("https://music.apple.com/de/album/random-access-memories/617154241", "an album"),
         ("https://music.apple.com/library/playlist/p.abcdef", "your own library"),
+        ("https://music.apple.com/de/playlist/neue-musik", "link of an Apple Music playlist"),
+        ("https://music.apple.com/de/playlist/x/p.abcdef", "link of an Apple Music playlist"),
         ("https://www.deezer.com/de/album/302127", "an album on Deezer"),
         ("https://link.deezer.com/s/30ABCdef", "Short Deezer links"),
         (f"https://tidal.com/browse/album/{TIDAL}", "an album on Tidal"),
