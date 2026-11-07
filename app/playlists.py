@@ -76,6 +76,8 @@ def update(session: Session, playlist: Playlist, changes: dict) -> Playlist:
 
     if "enabled" in changes:
         values["enabled"] = bool(changes["enabled"])
+    if "navidrome_cover" in changes:
+        values["navidrome_cover"] = bool(changes["navidrome_cover"])
     if "schedule" in changes:
         expression = " ".join(str(changes["schedule"] or "").split())
         try:

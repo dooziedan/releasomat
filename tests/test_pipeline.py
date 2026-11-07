@@ -161,6 +161,10 @@ class FakeNavidrome:
         self._call("delete_playlist")
         del self.playlists[playlist_id]
 
+    async def set_playlist_image(self, playlist_id, picture, mime):
+        self._call("set_playlist_image")
+        self.playlists[playlist_id]["image"] = (picture, mime)
+
 
 class FakeYouTube(Downloader):
     """Downloads the 2-second test tone for every track (or fails for ``fail`` titles)."""
@@ -1252,3 +1256,102 @@ async def test_each_track_tries_every_source_before_the_next_track_starts(world)
     )
     assert run.status == "done", run.message
     assert order == [(source, title) for title in titles for source in ("slskd", "youtube")]
+
+
+# --- The playlist's cover in Navidrome (ADR 0011) ------------------------------------------------
+
+COVER = "https://covers.test/mix.jpg"
+
+
+def with_cover(url=COVER, **values) -> PlaylistSnapshot:
+    return PlaylistSnapshot("My Mix", [QUEEN, EPLE, HALO], cover_url=url, **values)
+
+
+def covers_sent(world) -> int:
+    return world.navidrome.calls.count("set_playlist_image")
+
+
+async def test_the_sources_cover_is_given_to_the_navidrome_playlist_once(world):
+    world.source = FakeSource(with_cover(), with_cover(), with_cover("https://covers.test/new.jpg"))
+    pictures = {
+        COVER: b"\xff\xd8\xff first",
+        "https://covers.test/new.jpg": b"\x89PNG\r\n\x1a\nnew",
+    }
+
+    async def cover(url):
+        return pictures.get(url)
+
+    run = await world.refresh(cover=cover)
+    assert run.status == "done", run.message
+    navidrome_id = world.playlist().navidrome_playlist_id
+    assert world.navidrome.playlists[navidrome_id]["image"] == (pictures[COVER], "image/jpeg")
+    assert "The playlist's cover was set in Navidrome." in run.log
+    assert world.playlist().navidrome_cover_sent.startswith(f"{navidrome_id}:")
+
+    run = await world.refresh(cover=cover)  # the same picture: not sent again
+    assert covers_sent(world) == 1 and "cover" not in run.log
+
+    run = await world.refresh(cover=cover)  # the source changed its cover
+    assert covers_sent(world) == 2
+    assert world.navidrome.playlists[navidrome_id]["image"][1] == "image/png"
+
+
+async def test_a_new_navidrome_playlist_gets_the_cover_again(world):
+    world.source = FakeSource(with_cover())
+    await world.refresh()
+    del world.navidrome.playlists[world.playlist().navidrome_playlist_id]  # the owner deleted it
+    await world.refresh()
+    new_id = world.playlist().navidrome_playlist_id
+    assert covers_sent(world) == 2 and "image" in world.navidrome.playlists[new_id]
+
+
+async def test_every_snapshot_gets_the_cover(world):
+    world.source = FakeSource(with_cover())
+    with Session(world_engine(world)) as session:
+        session.get(Playlist, world.playlist_id).navidrome_mode = "snapshot"
+        session.commit()
+    await world.refresh()
+    await world.refresh()
+    assert covers_sent(world) == 2
+    assert all("image" in p for p in world.navidrome.playlists.values())
+
+
+async def test_no_cover_when_switched_off_or_not_the_playlists_own(world):
+    with Session(world_engine(world)) as session:
+        session.get(Playlist, world.playlist_id).navidrome_cover = False
+        session.commit()
+    world.source = FakeSource(with_cover())
+    assert (await world.refresh()).status == "done"
+    assert covers_sent(world) == 0
+
+    with Session(world_engine(world)) as session:
+        session.get(Playlist, world.playlist_id).navidrome_cover = True
+        session.commit()
+    world.source = FakeSource(with_cover(own_cover=False))  # ListenBrainz: a song's album cover
+    assert (await world.refresh()).status == "done"
+    world.source = FakeSource(with_cover(None))  # the source has none
+    assert (await world.refresh()).status == "done"
+    assert covers_sent(world) == 0
+
+
+async def test_a_cover_problem_never_fails_the_refresh(world):
+    world.source = FakeSource(with_cover())
+
+    async def no_picture(url):
+        return None
+
+    run = await world.refresh(cover=no_picture)
+    assert run.status == "done" and covers_sent(world) == 0
+    assert "The playlist's cover couldn't be loaded; Navidrome's picture stays." in run.log
+
+    world.navidrome.fail["set_playlist_image"] = NavidromeError(
+        "Navidrome doesn't let this user change playlist pictures."
+    )
+    run = await world.refresh()
+    assert run.status == "done", run.message
+    assert "The playlist's cover wasn't set in Navidrome: Navidrome doesn't let" in run.log
+    assert world.playlist().navidrome_cover_sent is None  # tried again next time
+
+    del world.navidrome.fail["set_playlist_image"]
+    await world.refresh()
+    assert world.playlist().navidrome_cover_sent is not None

@@ -268,3 +268,20 @@ def test_refresh_now_button(client):
     assert response.status_code == 200 and "<form" in response.text
     plain = client.post(f"/playlists/{playlist_id}/refresh", follow_redirects=False)
     assert plain.status_code == 303
+
+
+def test_the_cover_switch(client):
+    playlist_id = client.post("/api/playlists", json={"url": DEEZER}).json()["id"]
+    assert _playlist(playlist_id).navidrome_cover is True  # on for every new playlist
+    page = client.get(f"/playlists/{playlist_id}").text
+    assert 'name="navidrome_cover" checked' in page
+    assert "Use the playlist's cover from Deezer" in page
+
+    form = {"schedule_preset": "off", "navidrome_mode": "update"}  # unticked: not sent
+    client.post(f"/playlists/{playlist_id}/settings", data=form)
+    assert _playlist(playlist_id).navidrome_cover is False
+    client.post(f"/playlists/{playlist_id}/settings", data={**form, "navidrome_cover": "on"})
+    assert _playlist(playlist_id).navidrome_cover is True
+
+    answer = client.patch(f"/api/playlists/{playlist_id}", json={"navidrome_cover": False})
+    assert answer.status_code == 200 and answer.json()["navidrome_cover"] is False

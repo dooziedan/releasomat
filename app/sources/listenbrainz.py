@@ -171,6 +171,7 @@ def _snapshot(data: object, url: str, series_playlist: str | None) -> PlaylistSn
         title=without_date(title) if series_playlist else title,
         tracks=tracks,
         cover_url=next((t.cover_url for t in tracks if t.cover_url), None),
+        own_cover=False,  # only the first song's album cover
         description=html_to_text(playlist.get("annotation")),
         playlist_id=series_playlist,
         warnings=[f"Skipped {skipped} tracks without artist or title."] if skipped else [],

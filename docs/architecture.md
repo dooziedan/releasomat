@@ -42,6 +42,11 @@ Navidrome details (from `research/services.md` and the dev environment):
 - **Updating a playlist in place**: `createPlaylist` with `playlistId` replaces all songs and keeps
   the ID, so apps that sync playlists don't see a new one. Store the ID; never look playlists up
   by name. Send long song lists as a form POST.
+- **The playlist's cover** (ADR 0011): Navidrome's own API takes a picture per playlist
+  (`POST /api/playlist/<id>/image`, owner only, `ND_ENABLEARTWORKUPLOAD` or admin). Releasomat
+  sends the source's cover after saving the playlist, once per picture and Navidrome playlist
+  (`playlist.navidrome_cover_sent`), unless the playlist's switch is off or the source has no
+  cover of its own (ListenBrainz). Problems only go into the run's log.
 - **Scans**: `startScan` needs an admin account and can target just Releasomat's folder. It answers
   "ok" even while a scan is running and then ignores the request: wait until `getScanStatus` says
   no scan is running, then trigger, then wait again.

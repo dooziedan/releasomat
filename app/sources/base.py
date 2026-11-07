@@ -90,6 +90,9 @@ class PlaylistSnapshot:
     title: str
     tracks: list[SourceTrack]
     cover_url: str | None = None
+    # False when ``cover_url`` is only a song's album cover, not the playlist's own picture
+    # (ListenBrainz): Navidrome isn't given it (its tiles of the songs' covers are better).
+    own_cover: bool = True
     description: str | None = None
     # For a series: the ID of the concrete playlist that was the newest one this time.
     playlist_id: str | None = None

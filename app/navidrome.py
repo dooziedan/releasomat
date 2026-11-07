@@ -523,6 +523,40 @@ class Navidrome:
             params["name"] = name
         await self._call("updatePlaylist", params, post=True)
 
+    async def set_playlist_image(self, playlist_id: str, picture: bytes, mime: str) -> None:
+        """Give a playlist its own picture, replacing the one it has (``POST
+        /api/playlist/<id>/image``: Navidrome's own API, not Subsonic; tried with 0.64). Only the
+        playlist's owner may, with ``ND_ENABLEARTWORKUPLOAD`` on (the default) or as an admin.
+        Older Navidromes don't have it and answer 404 or 405."""
+        token = await self._login_native()
+        extension = "png" if mime == "image/png" else "jpg"
+        call = "api/playlist/{id}/image"
+        response = await self._send(
+            "POST",
+            f"{self.url}/api/playlist/{quote(playlist_id, safe='')}/image",
+            call,
+            files={"image": (f"cover.{extension}", picture, mime)},
+            headers={"X-ND-Authorization": f"Bearer {token}"},
+        )
+        if response.status_code == 200:
+            return
+        if response.status_code in (404, 405):
+            message = "This Navidrome can't take playlist pictures yet; update Navidrome."
+        elif response.status_code == 403:
+            message = (
+                "Navidrome doesn't let this user change playlist pictures. Turn "
+                "ND_ENABLEARTWORKUPLOAD on in Navidrome, or switch the cover off in the "
+                "playlist's settings."
+            )
+        else:
+            message = f"Navidrome answered the playlist picture with HTTP {response.status_code}."
+        raise NavidromeError(
+            message,
+            call=call,
+            http_status=response.status_code,
+            excerpt=_excerpt(response.text),
+        )
+
     async def delete_playlist(self, playlist_id: str) -> None:
         """Remove a playlist from Navidrome (only the snapshots Releasomat made itself)."""
         await self._call("deletePlaylist", {"id": playlist_id})
