@@ -214,6 +214,8 @@ class PlaylistChanges(BaseModel):
     schedule: str | None = None  # cron expression, "" = only Refresh now
     navidrome_mode: NavidromeMode | None = None
     snapshot_keep: int | None = None
+    # Give the Navidrome playlist the source's own cover (ListenBrainz has none of its own).
+    navidrome_cover: bool | None = None
 
 
 class Detection(BaseModel):
@@ -555,6 +557,7 @@ async def save_playlist_settings(playlist_id: int, request: Request, session: Se
         "enabled": form.get("enabled") == "on",
         "navidrome_mode": form.get("navidrome_mode", NavidromeMode.UPDATE),
         "snapshot_keep": form.get("snapshot_keep", playlist.snapshot_keep),
+        "navidrome_cover": form.get("navidrome_cover") == "on",
     }
     try:
         changes["schedule"] = schedule.to_cron()

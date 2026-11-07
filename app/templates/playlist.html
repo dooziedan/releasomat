@@ -51,6 +51,15 @@
       <small class="muted">Old snapshots stay until you delete them — <a href="/settings#playlists">Settings</a>.</small>
       {% endif %}
       {{ field_error(errors, "snapshot_keep") }}{{ field_error(errors, "navidrome_mode") }}
+      {% if playlist.source != "listenbrainz" %}
+      <label>
+        <input type="checkbox" role="switch" name="navidrome_cover" {% if playlist.navidrome_cover %}checked{% endif %}>
+        Use the playlist's cover from {{ source_label(playlist.source) }}
+      </label>
+      <small class="muted">Releasomat sets it when the playlist is new and whenever {{ source_label(playlist.source) }} changes it. A picture you choose in Navidrome stays until then. Off: Navidrome's picture is left alone.</small>
+      {% else %}
+      <input type="hidden" name="navidrome_cover" value="{{ 'on' if playlist.navidrome_cover else '' }}">
+      {% endif %}
     </fieldset>
 
     <p class="muted download-sources"><small>Downloads: {% if download_sources %}{{ download_sources }}{% else %}off, only songs already in Navidrome are linked{% endif %} (<a href="/settings#sources">Settings</a>). The same for every playlist.</small></p>

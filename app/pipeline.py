@@ -24,6 +24,7 @@ Navidrome playlist is left as it is.
 """
 
 import asyncio
+import hashlib
 import logging
 import os
 from collections.abc import Awaitable, Callable
@@ -1013,7 +1014,37 @@ class Refresh:
         except NavidromeError as exc:
             raise self.failed("playlist", exc) from None
         self.log(what)
+        await self.set_cover(navidrome_id, snapshot)
         return f"{summary} {what}{problems}"
+
+    async def set_cover(self, navidrome_id: str, snapshot: PlaylistSnapshot) -> None:
+        """Give the Navidrome playlist the source's own cover (ADR 0011), unless the playlist's
+        setting is off or the source has none. The same picture is sent only once per Navidrome
+        playlist, so a picture the owner chose in Navidrome stays until the source changes its
+        cover. A cover never fails the refresh: a problem is only noted in the run's log."""
+        with Session(self.engine) as session:
+            playlist = session.get(Playlist, self.playlist_id)
+            wanted, sent = playlist.navidrome_cover, playlist.navidrome_cover_sent
+        if not wanted or not snapshot.own_cover or not snapshot.cover_url:
+            return
+        picture = await self.services.cover(snapshot.cover_url)
+        mime = tagging.cover_mime(picture) if picture else None
+        if mime is None:
+            self.log("The playlist's cover couldn't be loaded; Navidrome's picture stays.")
+            return
+        mark = f"{navidrome_id}:{hashlib.sha256(picture).hexdigest()}"
+        if mark == sent:
+            return  # Navidrome has it already
+        try:
+            await self.services.navidrome.set_playlist_image(navidrome_id, picture, mime)
+        except NavidromeError as exc:
+            log.info("Cover for Navidrome playlist %s not set: %s", navidrome_id, exc)
+            self.log(f"The playlist's cover wasn't set in Navidrome: {exc}")
+            return
+        with Session(self.engine) as session:
+            session.get(Playlist, self.playlist_id).navidrome_cover_sent = mark
+            session.commit()
+        self.log("The playlist's cover was set in Navidrome.")
 
     async def save_update(self, song_ids: list[str], stored_id: str | None) -> tuple[str, str]:
         """Update mode: replace the songs of the same Navidrome playlist (its ID stays)."""

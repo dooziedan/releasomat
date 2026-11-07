@@ -468,3 +468,40 @@ async def test_find_in_library_checks_only_the_old_songs_of_files_that_left():
     info.mock(return_value=native("navidrome_native_song_moved.json"))
     found = await area_nd().find_in_library(EPLE, 85, skip_ids={EPLE_ID})
     assert found.song["id"] == EPLE_ID  # Navidrome noticed the move: it is the library copy
+
+
+# --- Playlist pictures ----------------------------------------------------------------------
+# The real answers were tried against the dev Navidrome 0.64.2: {"status":"ok"} with HTTP 200.
+
+
+@respx.mock
+async def test_a_playlist_picture_is_uploaded_with_navidromes_own_login():
+    mock_native_login()
+    route = respx.post(f"{URL}/api/playlist/pl%201/image").mock(
+        return_value=httpx.Response(200, json={"status": "ok"})
+    )
+    await nd().set_playlist_image("pl 1", b"\x89PNG\r\n\x1a\nxyz", "image/png")
+    request = route.calls.last.request
+    assert request.headers["X-ND-Authorization"].startswith("Bearer ")
+    body = request.content
+    assert b'name="image"; filename="cover.png"' in body and b"\x89PNG" in body
+    assert b"sesame" not in body
+
+
+@pytest.mark.parametrize(
+    ("status", "says"),
+    [
+        (403, "ND_ENABLEARTWORKUPLOAD"),
+        (404, "can't take playlist pictures yet"),
+        (405, "can't take playlist pictures yet"),
+        (500, "HTTP 500"),
+    ],
+)
+@respx.mock
+async def test_a_refused_playlist_picture_says_why(status, says):
+    mock_native_login()
+    respx.post(f"{URL}/api/playlist/pl1/image").mock(return_value=httpx.Response(status))
+    with pytest.raises(NavidromeError) as caught:
+        await nd().set_playlist_image("pl1", b"\xff\xd8\xffjpeg", "image/jpeg")
+    assert says in str(caught.value)
+    assert caught.value.details["http_status"] == status

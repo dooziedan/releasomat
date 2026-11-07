@@ -63,6 +63,11 @@ Each version's section becomes the text of its GitHub Release page.
   Releasomat keeps that song, with its plays, stars and rating. Navidrome recognises it when title
   and album stay the same, or when Tagwerk changes them only after the file is in your library.
   Keep Navidrome's `ND_SCANNER_PURGEMISSING` at `never` (its default) for this.
+- Navidrome playlists get the original cover from Apple Music, Deezer, Tidal, YouTube,
+  SoundCloud or Beatport (needs a Navidrome that can take playlist pictures, like 0.64). Releasomat
+  sets it when the playlist is new and again whenever the service changes its cover, so a picture
+  you choose in Navidrome stays until then. A switch in each playlist's settings turns it off.
+  ListenBrainz playlists have no cover of their own and keep Navidrome's picture.
 - A Downloads page: every file Releasomat downloaded, how much space they take together, and
   which ones no playlist uses any more. You can delete a file there, one at a time, after a
   confirmation page that says which playlists lose it. A deleted track becomes a Don't like track,

@@ -95,6 +95,13 @@ class Playlist(SQLModel, table=True):
     # playlists: DOWNLOAD_SOURCES, ADR 0008.)
     # Update mode: the Navidrome playlist Releasomat keeps in sync (its ID never changes).
     navidrome_playlist_id: str | None = None
+    # Give the Navidrome playlist the source's own cover (ADR 0011). Off: Navidrome's picture
+    # stays as it is (its tiles of the songs' covers, or one the owner uploaded).
+    navidrome_cover: bool = True
+    # The cover Releasomat last gave a Navidrome playlist: "<navidrome id>:<sha256 of the
+    # picture>". The same picture isn't sent again, so an owner's own picture in Navidrome
+    # stays until the source changes its cover.
+    navidrome_cover_sent: str | None = None
     last_refresh_at: datetime | None = None
     next_refresh_at: datetime | None = None
     last_status: str | None = None  # the RunStatus of the latest run
