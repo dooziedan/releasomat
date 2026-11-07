@@ -63,6 +63,11 @@ Each version's section becomes the text of its GitHub Release page.
   Releasomat keeps that song, with its plays, stars and rating. Navidrome recognises it when title
   and album stay the same, or when Tagwerk changes them only after the file is in your library.
   Keep Navidrome's `ND_SCANNER_PURGEMISSING` at `never` (its default) for this.
+- A Downloads page: every file Releasomat downloaded, how much space they take together, and
+  which ones no playlist uses any more. You can delete a file there, one at a time, after a
+  confirmation page that says which playlists lose it. A deleted track becomes a Don't like track,
+  so no refresh downloads it again (Undo on the Don't like page). Releasomat still never deletes a
+  file on its own.
 - Stop button for a running refresh (playlist page and Activity): the current download ends right
   away, tracks already downloaded stay, and the Navidrome playlist is left as it is.
 - Docker image for Unraid with an Unraid template.

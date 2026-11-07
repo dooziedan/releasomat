@@ -53,10 +53,11 @@ Owner's decisions in ADR 0008.
   and Undo on the playlist page; adopted songs keep their place in the Navidrome playlist and stay
   the same song (ADR 0010). Tagwerk's side follows separately (Tagwerk ADR 0044; the two-step
   import of ADR 0010 is still to do there); "Give back" later.
-- ⬜ Download folder overview: size, files no playlist uses any more, a delete button per file (only
-  by the owner, with confirmation, ADR 0003; marks the track "Don't like"); snapshot mode with
-  "keep last N"; retry of failed tracks; offering a better copy of a YouTube download (the owner
-  decides, the old file is only removed when they confirm).
+- ✅ Downloads page (`/downloads`): size, files no playlist uses any more, a delete button per file
+  (only by the owner, after a confirmation page, ADR 0003; marks the track "Don't like")
+- ✅ Snapshot mode with "keep last N" (`SNAPSHOT_AUTO_DELETE`, off by default)
+- ⬜ Retry of failed tracks; offering a better copy of a YouTube download (the owner decides, the
+  old file is only removed when they confirm).
 
 ## Phase 5: First release ⬜
 Setup wizard (it never asks for the optional Tagwerk key), optional login for the UI, notifications, README with screenshots, v0.1.0 on Unraid.

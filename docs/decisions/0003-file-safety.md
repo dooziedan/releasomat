@@ -17,9 +17,9 @@ waiting time. The owner decided against that on 2026-10-22: **tracks are only de
 - **Releasomat never deletes a music file on its own**: not on a refresh, not on a schedule, not when
   a track leaves a playlist, not when a playlist is removed. There is no setting that turns automatic
   deleting on.
-- Deleting happens only when the owner presses a delete button for that file (a later phase: an
-  overview of the download folder that shows which files no playlist uses any more), after a
-  confirmation, and only for files Releasomat downloaded (`track_file.downloaded_by_releasomat`).
+- Deleting happens only when the owner presses a delete button for that file (the Downloads page
+  `/downloads`, which also shows which files no playlist uses any more), after a confirmation
+  page, and only for files Releasomat downloaded (`track_file.downloaded_by_releasomat`).
   If a playlist still contains the track, the confirmation says which.
 - Songs that were already in Navidrome are linked, never downloaded again, moved or deleted.
 - **Files leave Releasomat's folder only by the owner's action**, in Releasomat or in another

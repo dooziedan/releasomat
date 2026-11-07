@@ -241,6 +241,13 @@ Server-rendered pages with htmx (ADR 0001). Port **8430**.
   badges, where each song comes from, **Undo** for Don't like: `DELETE /api/tracks/{id}/dislike`);
   settings (above).
 - **Activity** (`/activity`): runs and live download progress (Server-Sent Events).
+- **Downloads** (`/downloads`, `GET /api/downloads`): the files Releasomat downloaded that are in
+  its folder now, by artist and title, with size, format, when and from where, and the playlists
+  that use them; the folder's total size and the files in no playlist now (filter
+  `?unused=true`). **Delete…** per file opens a confirmation page (which file, which playlists
+  lose it); only its Delete button deletes (`DELETE /api/downloads/{id}`: the owner's delete,
+  `lifecycle.delete_and_dislike`, ADR 0003) and the track becomes "Don't like". Listing only
+  looks (`app/download_folder.py`, shared with `/api/integration/files`).
 - **Don't like** (`/dont-like`): the "Don't like" tracks of all playlists, newest first, with why,
   since when, the playlists they are in now and **Undo** (`GET /api/tracks/disliked`). Tracks
   linked from the library anyway are listed too.

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Delete download{% endblock %}
+{% block content %}
+{% set back = "/downloads?unused=true" if request.query_params.get("unused") else "/downloads" %}
+<div class="page-head">
+  <div>
+    <h1>Delete this file?</h1>
+    <p class="muted"><a href="{{ back }}">← Downloads</a></p>
+  </div>
+</div>
+{% if error %}<p class="notice warn">{{ error }}</p>{% endif %}
+{% if file %}
+<article>
+  <dl class="container-settings file-facts">
+    <dt>Track</dt><dd>{{ file.artist }} – {{ file.title }}{% if file.album %} <span class="muted">· {{ file.album }}</span>{% endif %}</dd>
+    <dt>File</dt><dd>{{ file.path }} <span class="muted">· {{ file.size | filesize }}</span></dd>
+    <dt>Playlists</dt>
+    <dd>{% for p in file.playlists %}<a href="/playlists/{{ p.id }}">{{ p.title }}</a>{% if not loop.last %}, {% endif %}{% else %}<span class="muted">In no playlist now</span>{% endfor %}</dd>
+  </dl>
+  <ul>
+    <li>The file is deleted from Releasomat's folder. This can't be undone.</li>
+    <li>The track becomes a Don't like track: no refresh downloads it again. If the song is elsewhere in your library, it is still linked.</li>
+    {% if file.playlists %}<li>Its playlists in Navidrome drop the song with their next refresh.</li>{% endif %}
+  </ul>
+  <form method="post" action="/downloads/{{ file.id }}/delete{% if request.query_params.get('unused') %}?unused=true{% endif %}" class="danger inline-actions">
+    <button type="submit" class="outline">Delete file</button>
+    <a href="{{ back }}" role="button" class="secondary outline">Cancel</a>
+  </form>
+</article>
+{% else %}
+<article class="empty">
+  <strong>This file isn't in Releasomat's folder now</strong>
+  It was moved, adopted by Tagwerk or deleted already. <a href="/downloads">Back to Downloads</a>
+</article>
+{% endif %}
+{% endblock %}

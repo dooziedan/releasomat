@@ -15,7 +15,7 @@ from app import __version__, events, files, pipeline, reports
 from app import settings as user_settings
 from app.config import get_config
 from app.db import get_engine, migrate
-from app.routes import activity, integration, playlists, settings, system
+from app.routes import activity, downloads, integration, playlists, settings, system
 from app.scheduler import PlaylistScheduler
 from app.worker import Worker
 
@@ -82,6 +82,7 @@ TAGS = [
     {"name": "system"},
     {"name": "playlists"},
     {"name": "activity"},
+    {"name": "downloads"},
     {"name": "settings"},
     {
         "name": "integration",
@@ -101,6 +102,7 @@ app.mount("/static", StaticFiles(directory=Path(__file__).parent / "static"), na
 app.include_router(system.router)
 app.include_router(playlists.router)
 app.include_router(activity.router)
+app.include_router(downloads.router)
 app.include_router(settings.router)
 # Optional (ADR 0009): off until the owner sets a key; Releasomat never calls Tagwerk itself.
 app.include_router(integration.router)
