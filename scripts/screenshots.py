@@ -43,6 +43,7 @@ PAGES = {
     "playlists": "/",
     "playlist-new": "/playlists/new",
     "activity": "/activity",
+    "downloads": "/downloads",
     "dont-like": "/dont-like",
     "settings": "/settings",
 }
@@ -59,12 +60,17 @@ def reachable(base: str) -> bool:
 
 
 def pages(base: str) -> dict[str, str]:
-    """The main pages, plus the first playlist's page (tracks, error reports) if there is one."""
+    """The main pages, plus the first playlist's page (tracks, error reports) and the first
+    download's delete confirmation, if there are some (that page only asks, it deletes nothing)."""
     found = dict(PAGES)
     with contextlib.suppress(OSError, ValueError, IndexError, KeyError):
         with urllib.request.urlopen(base + "/api/playlists", timeout=5) as answer:
             first = json.load(answer)[0]
         found["playlist"] = f"/playlists/{first['id']}"
+    with contextlib.suppress(OSError, ValueError, IndexError, KeyError):
+        with urllib.request.urlopen(base + "/api/downloads", timeout=5) as answer:
+            first = json.load(answer)["files"][0]
+        found["download-delete"] = f"/downloads/{first['id']}/delete"
     return found
 
 

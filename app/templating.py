@@ -80,6 +80,17 @@ def clock(seconds: float | None) -> str:
     return f"{minutes}:{rest:02d}"
 
 
+def filesize(size: int | None) -> str:
+    """A file size in plain units (1000-based, like Unraid and macOS): "8.4 MB", "1.2 GB"."""
+    if size is None:
+        return ""
+    for unit in ("B", "KB", "MB", "GB"):
+        if size < 1000 or unit == "GB":
+            break
+        size /= 1000
+    return f"{size:.0f} {unit}" if unit in ("B", "KB") else f"{size:.1f} {unit}"
+
+
 @cache
 def static_version(name: str) -> str:
     """A short fingerprint of a file in app/static, added to its URL (``theme.css?v=…``), so
@@ -101,4 +112,4 @@ templates.env.globals.update(
     matched_by=MATCHED_BY,
     report_text=as_text,
 )
-templates.env.filters.update(localtime=localtime, duration=duration, clock=clock)
+templates.env.filters.update(localtime=localtime, duration=duration, clock=clock, filesize=filesize)

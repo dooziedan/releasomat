@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Downloads{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>Downloads</h1>
+    <p class="muted">The files Releasomat downloaded into its folder. It never deletes one on its own: only you do, here.</p>
+  </div>
+</div>
+{% if deleted %}<p class="notice">“{{ deleted }}” was deleted and is now a Don't like track: no refresh downloads it again. <a href="/dont-like">Undo on the Don't like page</a></p>{% endif %}
+
+<div class="folder-summary">
+  <article>
+    <strong>{{ summary.size | filesize or "0 B" }}</strong>
+    <span class="muted">{{ summary.count }} file{{ "" if summary.count == 1 else "s" }}</span>
+  </article>
+  <article>
+    <strong>{{ summary.unused_size | filesize or "0 B" }}</strong>
+    <span class="muted">{{ summary.unused_count }} in no playlist now</span>
+  </article>
+</div>
+
+{% if summary.count %}
+<nav class="filter" aria-label="Show">
+  <ul>
+    <li><a href="/downloads"{% if not only_unused %} aria-current="page"{% endif %}>All files</a></li>
+    <li><a href="/downloads?unused=true"{% if only_unused %} aria-current="page"{% endif %}>In no playlist ({{ summary.unused_count }})</a></li>
+  </ul>
+</nav>
+{% endif %}
+
+{% if files %}
+<article>
+  <div class="table-wrap">
+    <table class="tracks">
+      <thead><tr><th scope="col">Track</th><th scope="col">File</th><th scope="col">Size</th><th scope="col">Downloaded</th><th scope="col">Playlists</th><th scope="col"><span class="visually-hidden">Actions</span></th></tr></thead>
+      <tbody>
+        {% for f in files %}
+        <tr>
+          <td>{{ f.title }}<small>{{ f.artist }}{% if f.album %} · {{ f.album }}{% endif %}</small></td>
+          <td class="file-path">{{ (f.format or "") | upper }}{% if f.bitrate %} {{ f.bitrate }} kbit/s{% endif %}<small>{{ f.path }}</small></td>
+          <td class="nowrap">{{ f.size | filesize }}</td>
+          <td class="nowrap">{{ f.downloaded_at | localtime("%d %b %Y") }}<small>{{ downloader_labels.get(f.downloader, f.downloader or "") }}</small></td>
+          <td>
+            {% for p in f.playlists %}<a href="/playlists/{{ p.id }}">{{ p.title }}</a>{% if not loop.last %}<br>{% endif %}
+            {% else %}<span class="muted">In no playlist now</span>{% endfor %}
+          </td>
+          <td class="danger"><a href="/downloads/{{ f.id }}/delete{% if only_unused %}?unused=true{% endif %}" role="button" class="outline">Delete…<span class="visually-hidden"> {{ f.title }}</span></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</article>
+{% elif only_unused %}
+<article class="empty">
+  <strong>Every file is in a playlist</strong>
+  A file shows up here when the last playlist that has its track drops it, or when you remove that playlist.
+</article>
+{% else %}
+<article class="empty">
+  <strong>No downloads yet</strong>
+  When a refresh downloads a missing track, its file shows up here.
+</article>
+{% endif %}
+{% endblock %}

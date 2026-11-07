@@ -23,7 +23,7 @@ Releasomat, never the other way round.
 
 import secrets
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime
 from pathlib import Path
 from typing import Annotated, Literal
 
@@ -40,12 +40,12 @@ from pydantic import BaseModel, Field
 from sqlmodel import Session, select
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from app import __version__, files, lifecycle
+from app import __version__, download_folder, files, lifecycle
 from app import settings as user_settings
 from app.config import ConfigDep, get_config
 from app.db import SessionDep, get_engine
 from app.lifecycle import Result
-from app.models import DislikeReason, FileStatus, Playlist, PlaylistTrack, Track, TrackFile, utcnow
+from app.models import DislikeReason, FileStatus, Track, TrackFile, utcnow
 
 API_VERSION = 1  # goes up only for changes an older Tagwerk can't handle
 PREFIX = "/api/integration"
@@ -450,15 +450,8 @@ def _each(session: Session, refs: list[FileRef], act) -> FileAnswers:
 
 
 def _stat(music_dir: Path, path: str):
-    """The file's size and time if it is a plain file inside Releasomat's folder, else None.
-    Only looks; changes nothing."""
-    try:
-        target = files.inside(music_dir, path)
-        if target.is_symlink() or not target.is_file():
-            return None
-        return target.stat()
-    except (files.UnsafePath, OSError):
-        return None
+    """The file's size and time if it is in Releasomat's folder, else None. Only looks."""
+    return download_folder.stat(music_dir, path)
 
 
 def _size_differs(music_dir: Path, file: TrackFile, size: int | None) -> bool:
@@ -470,35 +463,24 @@ def _size_differs(music_dir: Path, file: TrackFile, size: int | None) -> bool:
 
 
 def _downloaded_at(file: TrackFile, mtime: float) -> datetime:
-    """When the download was saved (kept since 2026-10; for older files the file's time)."""
-    stored = (file.details or {}).get("downloaded_at")
-    if stored:
-        try:
-            return datetime.fromisoformat(stored)
-        except ValueError:
-            pass
-    return datetime.fromtimestamp(mtime, UTC)
+    return download_folder.downloaded_at(file, mtime)
 
 
 def _playlists_of(
     request: Request, session: Session, track_ids: list[int]
 ) -> dict[int, list[PlaylistLink]]:
-    """The playlists that contain each track now (one query)."""
-    if not track_ids:
-        return {}
-    rows = session.exec(
-        select(PlaylistTrack.track_id, Playlist.id, Playlist.title)
-        .join(Playlist, Playlist.id == PlaylistTrack.playlist_id)
-        .where(PlaylistTrack.track_id.in_(track_ids), PlaylistTrack.removed_at.is_(None))
-        .order_by(Playlist.title)
-    ).all()
-    found: dict[int, list[PlaylistLink]] = {}
-    for track_id, playlist_id, title in rows:
-        url = str(request.url_for("playlist_page", playlist_id=playlist_id))
-        links = found.setdefault(track_id, [])
-        if all(link.id != playlist_id for link in links):
-            links.append(PlaylistLink(id=playlist_id, name=title, url=url))
-    return found
+    """The playlists that contain each track now, with their page's full address."""
+    return {
+        track_id: [
+            PlaylistLink(
+                id=p.id,
+                name=p.title,
+                url=str(request.url_for("playlist_page", playlist_id=p.id)),
+            )
+            for p in found
+        ]
+        for track_id, found in download_folder.playlists_of(session, track_ids).items()
+    }
 
 
 # --- For the Settings page ------------------------------------------------------------------
