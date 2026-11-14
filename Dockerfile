@@ -1,4 +1,4 @@
-FROM python:3.14-slim
+FROM python:3.15-slim
 
 # Container settings (ADR 0002). Change them with env vars, e.g. in the Unraid template.
 ENV PYTHONDONTWRITEBYTECODE=1 \
